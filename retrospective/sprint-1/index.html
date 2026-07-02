@@ -11,24 +11,28 @@
       
       
       
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../sprint-2/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>ADR-0003: 브랜치 전략 — dev 경유 엄격한 사다리 - Edge Architecture Portal</title>
+        <title>Sprint 1 - Edge Architecture Portal</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -47,7 +51,7 @@
       
     
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -72,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#adr-0003-dev" class="md-skip">
+        <a href="#sprint-1-kpt" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -86,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+    <a href="../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -106,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ADR-0003: 브랜치 전략 — dev 경유 엄격한 사다리
+              Sprint 1
             
           </span>
         </div>
@@ -207,7 +211,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -226,7 +230,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../evolution/" class="md-tabs__link">
+      <a href="../../evolution/" class="md-tabs__link">
         
   
   
@@ -245,7 +249,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../artifacts/" class="md-tabs__link">
+      <a href="../../artifacts/" class="md-tabs__link">
         
   
   
@@ -262,11 +266,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../retrospective/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -286,7 +292,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../architecture/" class="md-tabs__link">
+        <a href="../../reference/architecture/" class="md-tabs__link">
           
   
   
@@ -320,7 +326,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+    <a href="../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -338,7 +344,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -365,7 +371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../evolution/" class="md-nav__link">
+      <a href="../../evolution/" class="md-nav__link">
         
   
   
@@ -392,7 +398,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../artifacts/" class="md-nav__link">
+      <a href="../../artifacts/" class="md-nav__link">
         
   
   
@@ -416,26 +422,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -453,7 +464,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -471,7 +482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../retrospective/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -496,10 +507,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../retrospective/sprint-1/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 1
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -515,6 +553,103 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 스프린트 요약
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ KEEP — 잘 됐던 것, 계속 유지할 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❗ PROBLEM — 문제가 됐던 것, 개선이 필요한 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 TRY — 다음 스프린트에 시도할 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#action-items" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 Action Items
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#action-item" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔁 이전 스프린트 Action Item 추적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 회고 개선 메모
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -527,7 +662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../retrospective/sprint-2/" class="md-nav__link">
+      <a href="../sprint-2/" class="md-nav__link">
         
   
   
@@ -614,7 +749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../architecture/" class="md-nav__link">
+      <a href="../../reference/architecture/" class="md-nav__link">
         
   
   
@@ -642,7 +777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../schema/" class="md-nav__link">
+      <a href="../../reference/schema/" class="md-nav__link">
         
   
   
@@ -670,7 +805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../reference/adr/" class="md-nav__link">
         
   
   
@@ -728,7 +863,62 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        맥락
+        📊 스프린트 요약
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ KEEP — 잘 됐던 것, 계속 유지할 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❗ PROBLEM — 문제가 됐던 것, 개선이 필요한 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 TRY — 다음 스프린트에 시도할 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#action-items" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 Action Items
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#action-item" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔁 이전 스프린트 Action Item 추적
       
     </span>
   </a>
@@ -739,29 +929,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        결정
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        대안
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        결과
+        📝 회고 개선 메모
       
     </span>
   </a>
@@ -785,33 +953,184 @@
 
 
 
-<h1 id="adr-0003-dev">ADR-0003: 브랜치 전략 — dev 경유 엄격한 사다리<a class="headerlink" href="#adr-0003-dev" title="Permanent link">&para;</a></h1>
+<h1 id="sprint-1-kpt">Sprint 1 회고 (KPT)<a class="headerlink" href="#sprint-1-kpt" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">회고 개요</p>
 <ul>
-<li>상태: 승인됨</li>
-<li>날짜: 2026-06-21</li>
+<li><strong>스프린트</strong>: Sprint 1</li>
+<li><strong>일자</strong>: 2026-06-24</li>
+<li><strong>참여자</strong>: 정준영, 조영서, 김진기</li>
+<li><strong>방식</strong>: KPT (Keep · Problem · Try)</li>
+<li><strong>스프린트 골</strong>: 뉴스·가격 데이터를 수집해 분석 DB에 적재하고, ML 분류 결과를 API 표준 응답으로 반환하여 위젯에 띄우는 첫 번째 얇은 E2E 사이클을 만든다.</li>
 </ul>
-<h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p><code>main</code>은 항상 배포 가능해야 하고, 변경을 모아 검증할 통합 지점이 필요하다.
-직접 push로 <code>main</code>이 불안정해지는 것을 막아야 한다.</p>
-<h2 id="_2">결정<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>네 종류의 브랜치를 둔다 — <code>main</code>(릴리스 기준, 항상 배포 가능) / <code>dev</code>(통합) / <code>feature/*</code> / <code>fix/*</code>.
-<strong>엄격한 사다리</strong>로 PR 경로를 고정한다:
-- <code>feature/*</code>·<code>fix/*</code> → <strong><code>dev</code>에만</strong> PR.
-- <code>dev</code> → <strong><code>main</code>에만</strong> PR.
-- 따라서 <code>main</code>은 <strong>오직 <code>dev</code>에서 온 PR만</strong> 받는다. 핫픽스도 예외 없이 <code>fix/* → dev → main</code>.
-- 릴리스는 <code>dev → main</code> 머지 후 <code>main</code>에 태그.</p>
-<p>운영 규칙 본문은 <a href="https://github.com/alphaeveryday/edge/blob/dev/README.md">README.md</a>의 "Git 컨벤션"이 SSOT.</p>
-<h2 id="_3">대안<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+</div>
+<h2 id="_1">📊 스프린트 요약<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>시작 커밋</th>
+<th>최종 스코프</th>
+<th>완료</th>
+<th>이월</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>37 SP</td>
+<td>48 SP</td>
+<td>37 SP</td>
+<td>11 SP</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>시작 커밋 37 SP를 100% 완료했다. 다만 스프린트 중 스코프가 48 SP로 늘며(순 +11) 11 SP를 이월했다 — 여러 스토리를 스프린트에서 빼고 대신 Spike·게이트웨이 스텁·E2E·분석 작업을 추가하는 스코프 재편이 잦았고, 이월분은 콘솔 트랙(Organization·Application·Embed Key)에 집중됐다. 달성률은 <strong>시작 커밋 대비 100%, 최종 스코프 대비 77%</strong>. (출처: Jira 스프린트 리포트 <code>SCRUM 1 스프린트</code>, 2026-06-17~06-23)</p>
+</blockquote>
+<h2 id="keep">✅ KEEP — 잘 됐던 것, 계속 유지할 것<a class="headerlink" href="#keep" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>내용</th>
+<th>제안자</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>분석 트랙은 외부 의존 없이 독립적으로 진행할 수 있는 구조여서 집중도가 높았고, 계획한 작업을 거의 대부분 소화했다 → <strong>트랙 독립성 유지</strong></td>
+<td>정준영</td>
+</tr>
+<tr>
+<td>스코프 이상을 스프린트 중간에 빠르게 감지해 작업물 손실 없이 Spike로 보존했다 → <strong>스코프 변경 시 즉시 팀에 공유하는 습관 유지</strong></td>
+<td>김진기</td>
+</tr>
+<tr>
+<td>레포지토리 셋업을 스프린트 초반에 집중 처리해 후반에는 개발에만 집중할 수 있는 환경을 만들었다 → <strong>공통 기반 작업은 초반 우선 수행</strong></td>
+<td>조영서</td>
+</tr>
+</tbody>
+</table>
+<h2 id="problem">❗ PROBLEM — 문제가 됐던 것, 개선이 필요한 것<a class="headerlink" href="#problem" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>내용</th>
+<th>제안자</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M2/M3 스토리가 플래닝 때 M1에 잘못 포함 → 스코프 경계 모호</td>
+<td>김진기</td>
+</tr>
+<tr>
+<td>예비군 등 개인 일정으로 인한 가용 시간 감소를 플래닝 캐파에 미반영 → 콘솔 트랙 전부 이월</td>
+<td>조영서</td>
+</tr>
+<tr>
+<td>분석 결과(FF5·SCM)가 위젯 E2E에 붙을 인터페이스 부재 → 트랙 간 연동 공백</td>
+<td>정준영</td>
+</tr>
+<tr>
+<td>이슈를 막판에 일괄 완료 처리(bulk close) → 번다운 왜곡, 진척 파악 어려움</td>
+<td>팀 전체</td>
+</tr>
+<tr>
+<td>스프린트 중 추가 스토리가 많음(약 12 SP) → 계획 안정성 저하</td>
+<td>팀 전체</td>
+</tr>
+<tr>
+<td>Admin Console의 화면 설계(UI/UX)와 API 스펙이 확정되지 않은 채 개발 진입 → 구현 착수 시점이 계속 밀림</td>
+<td>조영서</td>
+</tr>
+<tr>
+<td>프로젝트 초기 세팅(프로젝트 구조)이 되어 있지 않은 채 개발 진입 → 코드 병합 시점이 계속 밀림</td>
+<td>조영서</td>
+</tr>
+</tbody>
+</table>
+<h2 id="try">🚀 TRY — 다음 스프린트에 시도할 것<a class="headerlink" href="#try" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>내용</th>
+<th>제안자</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>트랙 간 의존 작업(Gateway 스텁·인터페이스)을 스프린트 초반에 먼저 처리</td>
+<td>김진기</td>
+</tr>
+<tr>
+<td>플래닝 시 개인 일정을 캐파에서 명시적으로 차감 (→ AI-2)</td>
+<td>조영서</td>
+</tr>
+<tr>
+<td>분석↔위젯 응답 계약을 공동 정의하는 세션 잡기</td>
+<td>정준영</td>
+</tr>
+<tr>
+<td>데일리마다 Jira 상태 실시간 갱신 (bulk close 금지) (→ AI-1)</td>
+<td>팀 전체</td>
+</tr>
+<tr>
+<td>스프린트 중 추가 수용 기준(WIP 한도·버퍼) 정하기</td>
+<td>팀 전체</td>
+</tr>
+<tr>
+<td>Sprint 2 Week 1에 Admin Console·위젯 핵심 화면 와이어프레임을 확정한 뒤 구현 착수</td>
+<td>조영서</td>
+</tr>
+<tr>
+<td>프로젝트 초기 세팅(모노레포 구조 포함)을 먼저 끝내놓고 안정적으로 개발 (→ AI-3)</td>
+<td>조영서</td>
+</tr>
+</tbody>
+</table>
+<h2 id="action-items">🎯 Action Items<a class="headerlink" href="#action-items" title="Permanent link">&para;</a></h2>
+<p>TRY 중 우선순위 상위 항목을 다음 스프린트(Sprint 2)의 실행 과제로 확정했다.</p>
+<table>
+<thead>
+<tr>
+<th>번호</th>
+<th>Action Item</th>
+<th>담당자</th>
+<th>완료 기한</th>
+<th>달성 여부</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI-1</td>
+<td>매일 데일리 전에 팀원이 Jira 상태를 최신화했는지 확인한다 (스프린트 말 bulk close 0건 목표)</td>
+<td>김진기</td>
+<td>Sprint 2 전체</td>
+<td>미확인</td>
+</tr>
+<tr>
+<td>AI-2</td>
+<td>Sprint 플래닝에서 각자의 가용 시간을 산정해 커밋 SP에 반영한다</td>
+<td>김진기</td>
+<td>Sprint 2 플래닝 (Week 1)</td>
+<td>미확인</td>
+</tr>
+<tr>
+<td>AI-3</td>
+<td>Sprint 2 Week 1까지 모노레포 모듈 구조·브랜치 전략·공통 패키지 구성을 확정하고 README에 문서화한다</td>
+<td>조영서</td>
+<td>Sprint 2 전체</td>
+<td>미확인</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>달성 여부 표기: <code>미확인</code> · <code>✅ 달성</code> · <code>❌ 미달성</code> · <code>🔄 진행중</code></p>
+</blockquote>
+<h2 id="action-item">🔁 이전 스프린트 Action Item 추적<a class="headerlink" href="#action-item" title="Permanent link">&para;</a></h2>
+<p>첫 스프린트로, 추적할 이전 스프린트의 Action Item이 없다. (해당 없음)</p>
+<h2 id="_2">📝 회고 개선 메모<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>GitHub Flow(main + feature만)</strong> — 통합 검증 지점이 없고, 다수 변경이 곧장 main으로 향해 위험하다.</li>
-<li><strong>핫픽스의 main 직결 경로 허용</strong> — main 브랜치 보호에 예외 경로와 dev 백머지 규칙이 추가로 필요해 복잡해진다. 단순함을 위해 폐기(모든 변경 dev 경유).</li>
-</ul>
-<h2 id="_4">결과<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>main</code>은 항상 배포 가능한 상태로 유지된다.</li>
-<li>브랜치 보호 규칙이 단순하다 — <code>main</code>의 허용 소스가 <code>dev</code> 하나뿐.</li>
-<li>긴급 핫픽스도 <code>dev</code>를 한 단계 거치므로 약간 느리다(수용한 트레이드오프).</li>
-<li>머지 방식은 [[0007-merge-strategy]]를 따른다.</li>
+<li>PROBLEM 6·7이 "X가 안 된 채 개발 진입 → 밀림"으로 패턴이 겹친다. 각각 "Admin Console 설계 미확정" vs "프로젝트 구조·인프라 미비"로 구분을 명확히 하면 더 좋다. (기록은 원문 유지)</li>
 </ul>
 
 
@@ -862,10 +1181,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
