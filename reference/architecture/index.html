@@ -951,7 +951,7 @@
 <li><strong>widget-api</strong> (JVM) — 위젯용 백엔드. <strong>읽기 전용·좁은 표면</strong>.</li>
 <li><strong>tenant-console-api</strong> (JVM) — 콘솔용 백엔드. <strong>읽기/쓰기·넓은 표면</strong>(한 테넌트 범위).</li>
 <li><strong>super-admin-api</strong> (JVM) — 운영 콘솔용 백엔드. <strong>cross-tenant 읽기/쓰기 = 최고 권한 표면</strong>.</li>
-<li><strong>data-pipeline</strong> (Python) — 스케줄러로 외부 데이터를 DB에 적재.</li>
+<li><strong>data-pipeline</strong> (Python) — 스케줄러로 외부 데이터를 raw lake에 보존하고, 후속 DB 적재 단계의 입력을 만든다.</li>
 <li><strong>analysis-engine</strong> (Python) — 스케줄러로 적재 데이터를 분석해 분석 마트(<code>analysis_reports</code> 등)를 DB에 저장.</li>
 <li><strong>libs/schema</strong> — DB 스키마 SSOT(마이그레이션 + 생성 모델). [[adr/0005-db-as-contract]].</li>
 <li><strong>libs/jvm-common</strong> — 공통 API 응답 규약(apipayload — <code>ApiResponse</code>·<code>BaseErrorCode</code>·<code>GeneralException</code>)·공유 도메인 + 분석 마트(<code>analysis_reports</code> 등) 접근 로직.</li>
@@ -963,7 +963,7 @@
 - 콘솔: <code>테넌트 직원 → tenant-console-ui → gateway(console 라우트) → tenant-console-api → DB(읽기/쓰기, 한 테넌트)</code>
 - 운영: <code>운영자 → super-admin-ui → gateway(admin 라우트) → super-admin-api → DB(읽기/쓰기, cross-tenant)</code></p>
 <p><strong>배치(스케줄러 트리거)</strong>
-- <code>스케줄러 → data-pipeline → DB(적재)</code>
+- <code>스케줄러 → data-pipeline → raw lake(S3 원본 저장)</code>; 후속 정규화·마트 적재는 별도 단계
 - <code>스케줄러 → analysis-engine → DB에서 적재분 읽기 → 분석 마트 쓰기</code></p>
 <p><strong>DB를 통한 통합(핵심)</strong>
 서비스끼리 서로를 직접 호출하지 않는다. analysis-engine이 만든 분석 마트(<code>analysis_reports</code> 등)를
@@ -1057,7 +1057,7 @@ gateway가 <strong>widget·console·admin 트래픽을 모두</strong> 앞단에
            └────────────────────┼──────────────────────────┘
                                  │
                               ┌──┴──┐
-                              │  DB │ ◀── data-pipeline (적재)   ◀─ 스케줄러
+                              │  DB │ ◀── data-pipeline 후속 적재 ◀─ 스케줄러
                               └──┬──┘ ◀── analysis-engine (분석)  ◀─ 스케줄러
                                  │
                            libs/schema = 계약(SSOT)
@@ -1065,7 +1065,7 @@ gateway가 <strong>widget·console·admin 트래픽을 모두</strong> 앞단에
 <h2 id="6">6. 범위 밖<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>클라우드/배포 토폴로지</strong> — 리전, 네트워크, 매니지드 서비스, 스케일링, 시크릿 관리 인프라. 토폴로지·단계 스택은 <a href="https://github.com/alphaeveryday/edge/blob/dev/docs/제안됨">[adr/0009-aws-deployment-topology]</a>, 세부는 infra/terraform/README.md.</li>
-<li><strong>CD(지속적 배포)</strong> — dev 는 GitHub Actions 로 구현됐다: 스키마(<code>src/libs/schema/**</code>) 변경이 dev 에 머지되면 <code>schema-migrate.yml</code> 이 실 dev RDS 에 마이그레이션을 적용한다. 백엔드 앱별 워크플로(<code>deploy-&lt;app&gt;.yml</code>, 4종 widget-api·tenant-console-api·super-admin-api·gateway)는 자기 path 변경에 트리거되는 독립 배포다(ECR semver 이미지 → ECS 롤링). 프론트별 워크플로(<code>deploy-&lt;ui&gt;.yml</code>, 3종 widget-ui·tenant-console-ui·super-admin-ui)는 <code>deploy-ui.yml</code> 을 재사용해 pnpm 빌드 → S3 sync → CloudFront 무효화한다. 모두 마이그레이션 CD와 분리돼 있어 CI 에서 migrate 를 기다리지 않는다(순서는 확장-수축 + PR 순서 규율로 지킴 — 확장 마이그레이션 먼저 머지·적용 후 의존 코드). 인프라(<code>infra/terraform/envs/dev</code>) 자체도 CD 된다 — PR 은 <code>terraform-plan.yml</code>(read-only 역할)이 plan 을 PR 코멘트로 게시하고, dev 머지 시 <code>terraform-apply.yml</code>(apply 역할, trust 가 <code>ref:refs/heads/dev</code> 라 PR 은 assume 불가)이 apply 한다. bootstrap·foundation 스택은 수동. 원칙은 그대로다 — "전체 일괄 자동 배포"는 두지 않고, 마이그레이션 확장 단계가 코드 배포보다 먼저다. prod 배포는 prod 인프라 확정 후 같은 구조로 잇는다.</li>
+<li><strong>CD(지속적 배포)</strong> — dev 는 GitHub Actions 로 구현됐다: 스키마(<code>src/libs/schema/**</code>) 변경이 dev 에 머지되면 <code>schema-migrate.yml</code> 이 실 dev RDS 에 마이그레이션을 적용한다. 백엔드 앱별 워크플로(<code>deploy-&lt;app&gt;.yml</code>, 4종 widget-api·tenant-console-api·super-admin-api·gateway)는 자기 path 변경에 트리거되는 독립 배포다(ECR semver 이미지 → ECS 롤링). <code>data-pipeline</code> 은 <code>deploy-data-pipeline.yml</code> 로 raw 수집 배치 이미지를 ECR 에 push 한다. 프론트별 워크플로(<code>deploy-&lt;ui&gt;.yml</code>, 3종 widget-ui·tenant-console-ui·super-admin-ui)는 <code>deploy-ui.yml</code> 을 재사용해 pnpm 빌드 → S3 sync → CloudFront 무효화한다. 모두 마이그레이션 CD와 분리돼 있어 CI 에서 migrate 를 기다리지 않는다(순서는 확장-수축 + PR 순서 규율로 지킴 — 확장 마이그레이션 먼저 머지·적용 후 의존 코드). 인프라(<code>infra/terraform/envs/dev</code>) 자체도 CD 된다 — PR 은 <code>terraform-plan.yml</code>(read-only 역할)이 plan 을 PR 코멘트로 게시하고, dev 머지 시 <code>terraform-apply.yml</code>(apply 역할, trust 가 <code>ref:refs/heads/dev</code> 라 PR 은 assume 불가)이 apply 한다. bootstrap·foundation 스택은 수동. 원칙은 그대로다 — "전체 일괄 자동 배포"는 두지 않고, 마이그레이션 확장 단계가 코드 배포보다 먼저다. prod 배포는 prod 인프라 확정 후 같은 구조로 잇는다.</li>
 </ul>
 
 
