@@ -885,11 +885,21 @@
   position: absolute;
   left: 0;
   top: 0.2rem;
+  display: inline-flex;
   width: 1rem;
   height: 1rem;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #c1c7d0;
   border-radius: 2px;
   background: #fff;
+  color: #0c66e4;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.retro-actions.done li::before {
+  content: "✓";
 }
 </style>
 
@@ -976,36 +986,12 @@
 <details class="note">
 <summary>이전 Action Item</summary>
 <p><a href="../sprint-2/">Sprint 2</a>에서 정한 Action Item의 이행 여부를 점검한다.</p>
-<table>
-<thead>
-<tr>
-<th>출처</th>
-<th>Action Item</th>
-<th>담당자</th>
-<th>완료 기한</th>
-<th>달성 여부</th>
-<th>비고</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Sprint 2</td>
-<td>데일리 스크럼 작성</td>
-<td>조영서</td>
-<td>Sprint 3 전체</td>
-<td>✅ 달성</td>
-<td>이번 회고의 KEEP에 데일리 스크럼 진행이 포함됨</td>
-</tr>
-<tr>
-<td>Sprint 2</td>
-<td>이슈를 더 작은 서브테스크로 나누고, 완료 기준을 명확히 한다</td>
-<td>김진기</td>
-<td>Sprint 3 전체</td>
-<td>✅ 달성</td>
-<td>Sprint 3에서 백로그 산정과 작업 가용 시간 제한을 Action Item으로 구체화함</td>
-</tr>
-</tbody>
-</table>
+<p><div class="retro-actions done">
+  <ul>
+    <li>데일리 스크럼 작성</li>
+    <li>이슈를 더 작은 서브테스크로 나누고, 완료 기준을 명확히 한다</li>
+  </ul>
+</div></p>
 </details>
 
 
