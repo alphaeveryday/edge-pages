@@ -548,6 +548,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../retrospective/sprint-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -802,7 +830,7 @@
 <p>경계마다 머지 방식을 다르게 둔다.</p>
 <p><strong>feature/* · fix/* → dev: Squash 머지</strong>
 - PR 하나 = 커밋 하나 = 되돌릴 수 있는 단위. PR 내부 중간 커밋은 <code>dev</code>에 남기지 않는다.
-- Squash 시 <strong>PR 제목이 최종 커밋 메시지</strong>가 되므로 Conventional Commits 형식([[0003-branch-strategy]], <a href="https://github.com/alphaeveryday/edge/blob/dev/README.md">README.md</a>)을 정확히 따른다.
+- Squash 시 <strong>PR 제목이 최종 커밋 메시지</strong>가 되므로 Conventional Commits 형식([[0003-branch-strategy]], <a href="https://github.com/alphaeveryday/edge/blob/feature/sprint-3-retrospective/README.md">README.md</a>)을 정확히 따른다.
 - 머지 후 feature/fix 브랜치는 <strong>삭제</strong>한다. 브랜치가 일회용이라 발산이 생기지 않는다.</p>
 <p><strong>dev → main: Merge commit (<code>--no-ff</code>), PR 필수</strong>
 - 릴리스 단위 PR. 리뷰와 CI 게이트(<code>pull_request</code> 이벤트 + required status checks)를 이 PR에서 통과시킨다.

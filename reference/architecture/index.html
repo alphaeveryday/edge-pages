@@ -11,7 +11,7 @@
       
       
       
-        <link rel="prev" href="../../retrospective/sprint-2/">
+        <link rel="prev" href="../../retrospective/sprint-3/">
       
       
         <link rel="next" href="../schema/">
@@ -554,6 +554,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../retrospective/sprint-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -933,7 +961,7 @@
 
 <h1 id="_1">시스템 아키텍처<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>이 문서는 <strong>시스템(소프트웨어) 아키텍처</strong> — 컴포넌트, 상호작용, 데이터 흐름, 신뢰 경계 — 를 다룬다.
-정적인 폴더·역할 목록은 <a href="https://github.com/alphaeveryday/edge/blob/dev/README.md">README.md</a>가, 결정의 배경은 <a href="adr/">ADR</a>이 SSOT다.
+정적인 폴더·역할 목록은 <a href="https://github.com/alphaeveryday/edge/blob/feature/sprint-3-retrospective/README.md">README.md</a>가, 결정의 배경은 <a href="adr/">ADR</a>이 SSOT다.
 클라우드/배포 토폴로지는 이 문서의 범위 밖이다(§6).</p>
 <h2 id="1">1. 개요<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>멀티테넌트 시스템이다. 고객사(테넌트)는 자기 사이트에 <strong>임베드 위젯</strong>을 띄우고,
@@ -942,7 +970,7 @@
 백그라운드에서 데이터가 적재되고 분석된다.
 모든 서비스는 <strong>하나의 공유 DB</strong>를 통해 결합한다 — 서비스 간 직접 호출이 아니라 DB가 통합 지점이다.</p>
 <h2 id="2">2. 컴포넌트와 책임<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
-<p>역할 요약은 <a href="https://github.com/alphaeveryday/edge/blob/dev/README.md">README.md</a>에 있다. 여기서는 상호작용 관점에서만 본다.</p>
+<p>역할 요약은 <a href="https://github.com/alphaeveryday/edge/blob/feature/sprint-3-retrospective/README.md">README.md</a>에 있다. 여기서는 상호작용 관점에서만 본다.</p>
 <ul>
 <li><strong>widget-ui</strong> (Node) — 고객 사이트에 임베드되는 위젯. 익명 최종 사용자에게 노출.</li>
 <li><strong>tenant-console-ui</strong> (Node) — 테넌트 직원이 로그인해 쓰는 관리 콘솔. <strong>한 테넌트 내부 범위</strong>.</li>
@@ -1064,7 +1092,7 @@ gateway가 <strong>widget·console·admin 트래픽을 모두</strong> 앞단에
 </code></pre></div>
 <h2 id="6">6. 범위 밖<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>클라우드/배포 토폴로지</strong> — 리전, 네트워크, 매니지드 서비스, 스케일링, 시크릿 관리 인프라. 토폴로지·단계 스택은 <a href="https://github.com/alphaeveryday/edge/blob/dev/docs/제안됨">[adr/0009-aws-deployment-topology]</a>, 세부는 infra/terraform/README.md.</li>
+<li><strong>클라우드/배포 토폴로지</strong> — 리전, 네트워크, 매니지드 서비스, 스케일링, 시크릿 관리 인프라. 토폴로지·단계 스택은 <a href="https://github.com/alphaeveryday/edge/blob/feature/sprint-3-retrospective/docs/제안됨">[adr/0009-aws-deployment-topology]</a>, 세부는 infra/terraform/README.md.</li>
 <li><strong>CD(지속적 배포)</strong> — dev 는 GitHub Actions 로 구현됐다: 스키마(<code>src/libs/schema/**</code>) 변경이 dev 에 머지되면 <code>schema-migrate.yml</code> 이 실 dev RDS 에 마이그레이션을 적용한다. 백엔드 앱별 워크플로(<code>deploy-&lt;app&gt;.yml</code>, 4종 widget-api·tenant-console-api·super-admin-api·gateway)는 자기 path 변경에 트리거되는 독립 배포다(ECR semver 이미지 → ECS 롤링). <code>data-pipeline</code> 은 <code>deploy-data-pipeline.yml</code> 로 raw 수집 배치 이미지를 ECR 에 push 한다. 프론트별 워크플로(<code>deploy-&lt;ui&gt;.yml</code>, 3종 widget-ui·tenant-console-ui·super-admin-ui)는 <code>deploy-ui.yml</code> 을 재사용해 pnpm 빌드 → S3 sync → CloudFront 무효화한다. 모두 마이그레이션 CD와 분리돼 있어 CI 에서 migrate 를 기다리지 않는다(순서는 확장-수축 + PR 순서 규율로 지킴 — 확장 마이그레이션 먼저 머지·적용 후 의존 코드). 인프라(<code>infra/terraform/envs/dev</code>) 자체도 CD 된다 — PR 은 <code>terraform-plan.yml</code>(read-only 역할)이 plan 을 PR 코멘트로 게시하고, dev 머지 시 <code>terraform-apply.yml</code>(apply 역할, trust 가 <code>ref:refs/heads/dev</code> 라 PR 은 assume 불가)이 apply 한다. bootstrap·foundation 스택은 수동. 원칙은 그대로다 — "전체 일괄 자동 배포"는 두지 않고, 마이그레이션 확장 단계가 코드 배포보다 먼저다. prod 배포는 prod 인프라 확정 후 같은 구조로 잇는다.</li>
 </ul>
 
