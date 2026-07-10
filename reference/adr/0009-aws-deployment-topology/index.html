@@ -840,7 +840,7 @@
 <li><strong>단일 모놀리식 state</strong> — 배선은 단순하나 blast-radius 격리가 없다(env destroy 가 zone·ECR 까지 파괴). 폐기.</li>
 <li><strong>CDK 유지(TF·CDK 이원 운영)</strong> — 파이프라인만 CDK 로 남기면 도구가 갈린다. TF 단일화로 수렴.</li>
 <li><strong>import(B안)로 CDK 파이프라인 흡수</strong> — CDK 물리명·커스텀 리소스가 TF 와 diff 지옥. 병행 재작성(A안) 채택.</li>
-<li><strong>배치를 Queue→Worker 로</strong>(<a href="https://github.com/alphaeveryday/edge/blob/feature/sprint-3-retrospective/docs/proposals/system-architecture.md">proposals</a> 초안) — 분석 파이프라인은 <strong>순차 다단계</strong>라 상태·재시도·관측에서 Step Functions 가 낫다. 큐 패턴은 위젯쪽 비동기(이메일·웹훅·알림)에 남긴다.</li>
+<li><strong>배치를 Queue→Worker 로</strong>(<a href="https://github.com/alphaeveryday/edge/blob/dev/docs/proposals/system-architecture.md">proposals</a> 초안) — 분석 파이프라인은 <strong>순차 다단계</strong>라 상태·재시도·관측에서 Step Functions 가 낫다. 큐 패턴은 위젯쪽 비동기(이메일·웹훅·알림)에 남긴다.</li>
 <li><strong><code>-target</code> 기반 단계 apply</strong> — break-glass 도구라 상시 운영엔 부적합. 스택 분리로 단계 경계를 만든다.</li>
 </ul>
 <h2 id="_4">결과<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
@@ -851,7 +851,7 @@
 <li>원격 state(S3) 전환을 RDS 데이터 이관/컷오버 <strong>전에</strong> 완료(로컬 state 유실 방지).</li>
 <li>파이프라인 컷오버 절차 준수 — 스케줄러 DISABLED 로 검증 → ENABLED + CDK 제거 → 데이터 이관.</li>
 <li>ECR 이미지 push 는 TF 밖(CI)이라 서비스 기동 전 이미지 선행(placeholder + <code>ignore_changes</code> 패턴).</li>
-<li>세부 구성은 <a href="https://github.com/alphaeveryday/edge/blob/feature/sprint-3-retrospective/infra/terraform/README.md">infra/terraform/README.md</a>가 SSOT. [[0005-db-as-contract]]·[[0001-monorepo-structure]]와 일관.</li>
+<li>세부 구성은 <a href="https://github.com/alphaeveryday/edge/blob/dev/infra/terraform/README.md">infra/terraform/README.md</a>가 SSOT. [[0005-db-as-contract]]·[[0001-monorepo-structure]]와 일관.</li>
 </ul>
 
 
