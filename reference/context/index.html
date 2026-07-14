@@ -1,0 +1,1836 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Edge 시스템 아키텍처 문서 포털 — 설계 문서·산출물·발전 과정">
+      
+      
+      
+      
+        <link rel="prev" href="../../retrospective/sprint-3/">
+      
+      
+        <link rel="next" href="../scope/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Context - Edge Architecture Portal</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#edge-on-premise" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Edge Architecture Portal
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Context
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="다크 모드로 전환"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="다크 모드로 전환" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="라이트 모드로 전환"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="라이트 모드로 전환" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../evolution/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Evolution
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../artifacts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Artifacts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../retrospective/" class="md-tabs__link">
+          
+  
+  
+  Retrospective
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Edge Architecture Portal
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../artifacts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Artifacts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Retrospective
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Retrospective
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../retrospective/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../retrospective/sprint-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../retrospective/sprint-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../retrospective/sprint-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 제품 정의 및 변경 배경
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 기존 구조 vs 신규 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 하이브리드 아키텍처 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-cloud-on-premise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Cloud / On-Premise 책임 분리
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Cloud / On-Premise 책임 분리">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-vendor-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Vendor Cloud 구성요소
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-on-premise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 증권사 On-Premise 구성요소
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 서비스/API 변경표
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scope/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scope
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contracts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contracts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contracts/sync-protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contracts/event-bundle-schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Bundle Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contracts/sync-auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync Auth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contracts/serving-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serving API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Domain
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Domain
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../domain/state-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    State Machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../domain/data-residency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Residency
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../domain/exposure-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exposure Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Console IA
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Console IA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../console-ia/super-admin-console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Super Admin Console
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../console-ia/tenant-console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tenant Console
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 제품 정의 및 변경 배경
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 기존 구조 vs 신규 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 하이브리드 아키텍처 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-cloud-on-premise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Cloud / On-Premise 책임 분리
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Cloud / On-Premise 책임 분리">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-vendor-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Vendor Cloud 구성요소
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-on-premise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 증권사 On-Premise 구성요소
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 서비스/API 변경표
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="edge-on-premise">EDGE 프로젝트 컨텍스트 — 하이브리드 On-Premise 피벗<a class="headerlink" href="#edge-on-premise" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>문서 목적</strong>: EDGE 프로젝트에 참여하는 모든 에이전트/팀원이 현재 제품 방향을 모호함 없이 이해하기 위한 단일 기준(Single Source of Truth) 문서.</p>
+<p><strong>적용 시점</strong>: 2026-07 아키텍처 피벗 이후. 이 문서와 충돌하는 기존 문서(Cloud-only / embed widget 구조)는 전부 폐기된 방향이다.</p>
+<p><strong>작성 기준</strong>: 제품 방향 지시 문서 + 기존 아키텍처 pptx(IA/Application/System/Cloud/Data Pipeline) 대조 + 8건의 미결 사항에 대한 PM(조영서) 확정 결정.</p>
+<p><strong>용어 — On-Prem(ise)</strong>: 이 문서군의 On-Prem은 물리 서버가 아니라 <strong>증권사가 통제하는 실행 환경</strong>을 뜻한다 — 자체 IDC·내부 가상화는 물론, 증권사 명의로 운영하는 전용/금융 클라우드도 포함한다. 요건은 위치가 아니라 ① 고객 데이터 비반출(벤더 측으로 나가지 않음) ② 망분리 토폴로지 상당 구성(§3 네트워크 배치 — 클라우드 기반이면 VPC 서브넷 분리로 DMZ/내부망을 사상) ③ 증권사 통제권이다. 배제 대상은 클라우드 일반이 아니라 <strong>벤더 통제 환경에 고객 데이터·검수·노출을 두는 구조</strong>다. 대외 산출물에서는 "증권사 관리 환경"을 기본 표현으로 쓴다 (<a href="../writing-rules/">writing-rules.md</a>).</p>
+</blockquote>
+<h2 id="1">1. 제품 정의 및 변경 배경<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p><strong>한 줄 정의</strong>: EDGE는 "AI 리포트 생성기"가 아니라, <strong>증권사가 통제 가능한 '종목 가격 변동 이유 설명' 운영 인프라</strong>다.</p>
+<p><strong>표현 원칙</strong>: 고객에게 제공되는 것은 "가격 변동의 확정 원인"이 아니라 <strong>"공개 정보 기반 변동 요인 후보"</strong>다. 모든 문서·UI·설명 문구에서 이 표현을 유지한다.</p>
+<p><strong>변경 배경</strong>:</p>
+<ul>
+<li>기존 구조는 모든 기능을 Vendor Cloud에 두고 증권사 MTS/HTS에 임베드 widget을 제공하는 방식이었다 (widget-api, 클라우드 tenant-console-api, 범용 gateway, Super Admin의 API Key 관리 포함).</li>
+<li>금융권 고객 데이터 비반출 요구와 준법감시인 통제 요구를 충족하기 위해, <strong>고객 접점·컴플라이언스·검수·노출 이력을 전부 증권사 On-Premise로 이동</strong>하는 하이브리드 구조로 전환했다.</li>
+<li><strong>규제 서사 (2026-07-13 재정렬)</strong>: 2026년 망분리 규제 완화 흐름(4월 SaaS 망분리 예외 시행세칙 시행, 6월 보안 목적 생성형 AI 비조치의견서 발급, 일정 보안역량 충족 금융회사 대상 전면 해제 방안 검토 중 — 시한은 당국 미공표)으로 "클라우드는 승인이 어려우니 온프렘"이라는 회피 논거는 시효가 짧아지고 있다. EDGE의 온프렘 배치 근거는 규제 회피가 아니라 다음 두 가지다: ① 개인신용정보를 직접 처리하는 핵심 시스템은 완화 이후에도 엄격한 통제가 유지된다 ② 규제 패러다임이 자율보안-결과책임으로 전환되면서 사고 책임은 금융사에 남으므로, 통제권·감사 재현성을 금융사 내부에 두는 구조 자체가 제품 가치다. 모든 대외 문서·발표에서 이 프레임을 사용한다.</li>
+<li>MVP는 <strong>종목 단위 가격 변동 이유 설명 기능</strong> 하나에 집중한다.</li>
+</ul>
+<p><strong>핵심 가치 (판매 논리)</strong>:</p>
+<ol>
+<li>고객 데이터 비반출 — 고객 ID, 보유/관심 종목, 노출 이력이 벤더 클라우드로 나가지 않는다.</li>
+<li>컴플라이언스 통제권 — 증권사별 정책 적용, 검수 워크플로우, 감사 로그가 증권사 환경 안에 있다.</li>
+<li><strong>"검수 없이 고객 노출 문구가 변경되는 경로가 존재하지 않는다"</strong> — 정정 이벤트조차 재검수를 거친다 (<a href="../domain/state-machine/">domain/state-machine.md</a>).</li>
+</ol>
+<p><strong>MVP 제공 기능</strong>: 종목별 가격 변동 이벤트 탐지 / 뉴스·공시·시세·수급 기반 변동 요인 후보 생성 / AI 설명 후보 생성 / 증권사별 컴플라이언스 정책 적용 / 자동 노출·검수 대기·차단 라우팅 / 검수자 승인·수정 승인·반려·차단 / 고객 노출 이력 및 민원 대응용 재현</p>
+<h2 id="2-vs">2. 기존 구조 vs 신규 구조<a class="headerlink" href="#2-vs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>기존 (폐기)</th>
+<th>신규 (현행)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>배치</td>
+<td>모든 기능 Vendor Cloud</td>
+<td>Cloud = 비개인화 공통 분석만 / On-Prem = 고객 접점·컴플라이언스 전부</td>
+</tr>
+<tr>
+<td>고객 화면</td>
+<td>벤더 embed widget (widget-api)</td>
+<td>증권사 MTS/HTS 자체 UI → On-Prem Serving API</td>
+</tr>
+<tr>
+<td>Tenant Console</td>
+<td>클라우드 tenant-console-api</td>
+<td>증권사 On-Premise 배포</td>
+</tr>
+<tr>
+<td>연동 방향</td>
+<td>클라우드 → 증권사 (widget 서빙)</td>
+<td>On-Prem Sync Agent → Cloud <strong>Pull only</strong> (outbound HTTPS/mTLS)</td>
+</tr>
+<tr>
+<td>Gateway</td>
+<td>범용 클라우드 gateway</td>
+<td>Cloud에는 Super Admin·Tenant Sync API용 gateway만</td>
+</tr>
+<tr>
+<td>API Key</td>
+<td>Super Admin이 테넌트 API Key 관리</td>
+<td>API Key 메뉴 없음. Cloud Sync 인증서만 존재</td>
+</tr>
+<tr>
+<td>고객 데이터</td>
+<td>클라우드 저장 (RLS 격리)</td>
+<td>On-Prem에만 저장 (물리 격리)</td>
+</tr>
+<tr>
+<td>멀티테넌시</td>
+<td>단일 스키마 PostgreSQL RLS</td>
+<td>테넌트별 On-Prem 물리 격리 (RLS 폐기, <a href="../implementation/">implementation.md</a>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>금지 사항 (불변 규칙)</strong>:</p>
+<ul>
+<li>클라우드가 증권사 내부망으로 직접 Push하지 않는다.</li>
+<li>MTS/HTS는 벤더 클라우드를 직접 호출하지 않는다.</li>
+<li>WebSocket/SSE는 MVP 필수가 아니다. 필요 시 Tenant Console 운영 알림에만 제한적으로 고려한다.</li>
+</ul>
+<h2 id="3">3. 하이브리드 아키텍처 개요<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    subgraph cloud[&quot;Vendor Cloud&quot;]
+        SRC[&quot;뉴스/공시/시세/수급&quot;] --&gt; DP[&quot;Data Pipeline&quot;]
+        DP --&gt; CAE[&quot;Common Analysis Engine&quot;]
+        DP --&gt; CES[&quot;Cloud Event Store&quot;]
+        CAE --&gt; EB[&quot;Event Bundle 생성&quot;]
+        CES --&gt; EB
+        CES --&gt; TSA[&quot;Tenant Sync API&quot;]
+    end
+    subgraph onprem[&quot;증권사 On-Premise&quot;]
+        MTS[&quot;MTS / HTS / Internal&quot;] --&gt;|증권사 내부 Backend/API GW 경유| SVA[&quot;Serving API&quot;]
+        PS[&quot;Published Store&quot;] --&gt; SC[&quot;Serving Cache&quot;] --&gt; SVA
+        SA[&quot;Sync Agent&quot;] --&gt; RES[&quot;Raw Event Store&quot;]
+        RES --&gt; CE[&quot;Compliance Engine&quot;]
+        CE --&gt;|승인/자동노출| PS
+        CE --&gt; RQ[&quot;Review Queue(논리)&quot;]
+        RQ --- TC[&quot;Tenant Console&lt;br/&gt;(검수/정책/감사)&quot;]
+    end
+    SA --&gt;|&quot;Pull (mTLS)&quot;| TSA
+</code></pre></div>
+<ul>
+<li>데이터는 항상 <strong>Cloud → On-Prem 단방향</strong>으로 흐르고, 연결은 항상 <strong>On-Prem → Cloud outbound</strong>로만 열린다.</li>
+<li>Cloud는 "어느 증권사가 무엇을 노출했는지" 알지 못한다. Cloud가 아는 테넌트 정보는 동기화 상태(마지막 sync 시각, 성공/실패, 전달 이벤트 수)까지다.</li>
+<li><strong>네트워크 배치 (확정, 2026-07-13)</strong>: Sync Agent는 증권사 내부 업무망이 아닌 <strong>DMZ(외부연계망) 구간</strong>에 배치한다. 망분리 환경에서 내부 업무망은 외부 인터넷으로 직접 outbound를 열 수 없으므로, 외부 통신 경로는 DMZ에 한정한다. ① 방화벽 outbound 허용 대상은 벤더 Tenant Sync API의 <strong>고정 FQDN:443 (mTLS) 단일 목적지 화이트리스트</strong>로 제한 ② 증권사 표준 forward proxy 경유를 지원 ③ Sync Agent → 내부망 On-Prem DB 접근은 증권사 내부 방화벽 정책에 따라 전용 포트·계정으로 최소화 — 단, DMZ→내부망 직접 DB 커넥션 자체를 금지하고 망연계 솔루션(망간자료전송 시스템) 경유를 요구하는 증권사를 위해 <strong>망연계 솔루션 경유 배치도 지원</strong>한다. 이 경우 Sync Agent는 Pull·무결성 검증까지만 DMZ에서 수행하고, 내부망 저장은 별도 수신 모듈이 담당하는 2단 구성으로 분리한다. 나머지 온프렘 컴포넌트(Compliance Engine, Tenant Console, Serving API, DB)는 전부 내부 업무망에 위치하며 외부 통신이 없다. "외부와 닿는 것은 DMZ의 Sync Agent 하나, 방향은 outbound 하나, 목적지는 하나"가 준법감시인 대상 설명 문구다.</li>
+</ul>
+<h2 id="4-cloud-on-premise">4. Cloud / On-Premise 책임 분리<a class="headerlink" href="#4-cloud-on-premise" title="Permanent link">&para;</a></h2>
+<h3 id="41-vendor-cloud">4.1 Vendor Cloud 구성요소<a class="headerlink" href="#41-vendor-cloud" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>컴포넌트</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data Pipeline</td>
+<td>뉴스/공시/시세/수급 수집 (Step Functions + ECS 워커 구조 유지)</td>
+</tr>
+<tr>
+<td>Common Analysis Engine</td>
+<td>가격 변동 이벤트 생성, 공통 변동 요인 후보 생성</td>
+</tr>
+<tr>
+<td>(AI 설명 생성)</td>
+<td>AI 설명 후보 + 근거 데이터 연결, 신뢰도/반대 요인 산출</td>
+</tr>
+<tr>
+<td>Cloud Event Store</td>
+<td>비개인화 이벤트·설명 후보·근거 저장, 정정/무효화 이벤트 발행</td>
+</tr>
+<tr>
+<td>Tenant Sync API</td>
+<td>Sync Agent가 Pull하는 Event Bundle 제공 (cursor 기반 delta)</td>
+</tr>
+<tr>
+<td>Super Admin Console + super-admin-api</td>
+<td>테넌트 생성, 파이프라인 조회, 공통 이벤트 정정/무효화</td>
+</tr>
+<tr>
+<td>Data Source Monitor</td>
+<td>소스별 수집 상태 모니터링</td>
+</tr>
+<tr>
+<td>Admin Activity Log</td>
+<td>Super Admin 작업 이력</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-on-premise">4.2 증권사 On-Premise 구성요소<a class="headerlink" href="#42-on-premise" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>컴포넌트</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sync Agent</td>
+<td>Tenant Sync API를 outbound Pull, 번들 무결성 검증, On-Prem DB 저장</td>
+</tr>
+<tr>
+<td>Raw Event Store</td>
+<td>수신한 원본 이벤트 보존 (수신 원본 불변)</td>
+</tr>
+<tr>
+<td>Compliance Engine</td>
+<td>증권사별 금칙어/금지 표현/처리 기준 적용 → 상태 분기</td>
+</tr>
+<tr>
+<td>Review Queue</td>
+<td><strong>물리 DB 아님.</strong> analysis_items 중 status=REVIEW_REQUIRED의 논리적 작업함</td>
+</tr>
+<tr>
+<td>Tenant Console + Tenant Console API</td>
+<td>검수, 정책 관리, 감사 로그, 설정 (증권사 내부 사용자 전용)</td>
+</tr>
+<tr>
+<td>Published Store</td>
+<td>최종 노출 확정 문구 저장</td>
+</tr>
+<tr>
+<td>Serving Cache</td>
+<td>Published 데이터 조회 캐시 (Redis)</td>
+</tr>
+<tr>
+<td>Serving API</td>
+<td>MTS/HTS/Internal에 Published 상태만 반환</td>
+</tr>
+<tr>
+<td>Exposure Log</td>
+<td>고객 노출 이력 (민원/감사 재현용)</td>
+</tr>
+<tr>
+<td>Audit Log</td>
+<td>콘텐츠 상태 변경/검수/정책 변경 이력</td>
+</tr>
+<tr>
+<td>Tenant On-Prem DB</td>
+<td>위 전부의 저장소 (PostgreSQL)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-api">5. 서비스/API 변경표<a class="headerlink" href="#5-api" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>기존</th>
+<th>처리</th>
+<th>신규 위치/내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>super-admin-api</td>
+<td><strong>유지</strong></td>
+<td>Vendor Cloud. 테넌트 생성, 파이프라인 조회, 정정/무효화, Admin Activity Log</td>
+</tr>
+<tr>
+<td>tenant-console-api</td>
+<td><strong>이동</strong></td>
+<td>증권사 On-Premise. 설명 조회, 검수, 컴플라이언스 정책, 감사 로그, 설정</td>
+</tr>
+<tr>
+<td>gateway</td>
+<td><strong>축소</strong></td>
+<td>Cloud에는 Super Admin·Tenant Sync API용 gateway만. On-Prem은 Serving API 또는 증권사 내부 API GW</td>
+</tr>
+<tr>
+<td>widget-api</td>
+<td><strong>제거</strong></td>
+<td>MVP에 embed widget 없음. 고객 화면은 증권사 MTS/HTS가 직접 구성</td>
+</tr>
+<tr>
+<td>Tenant Sync API</td>
+<td><strong>신규</strong></td>
+<td>Vendor Cloud. cursor 기반 delta sync, 신규/정정/무효화 이벤트 전달, mTLS</td>
+</tr>
+<tr>
+<td>Sync Agent</td>
+<td><strong>신규</strong></td>
+<td>On-Premise. outbound Pull, 무결성 검증 후 저장</td>
+</tr>
+<tr>
+<td>Compliance Engine</td>
+<td><strong>신규</strong></td>
+<td>On-Premise. 금칙어/금지 표현/자동노출·검수·차단 기준 적용</td>
+</tr>
+<tr>
+<td>Serving API</td>
+<td><strong>신규</strong></td>
+<td>On-Premise. Published 데이터만 조회 제공</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
