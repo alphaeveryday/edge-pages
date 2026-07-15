@@ -943,6 +943,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serving API
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -959,6 +977,75 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        원칙 (확정)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alpha-366" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        엔드포인트 스펙 (초안 — ALPHA-366)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="엔드포인트 스펙 (초안 — ALPHA-366)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        조회 — ETF 가격 변동 설명 (단건)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        미확정 목록
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1294,6 +1381,64 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        원칙 (확정)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alpha-366" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        엔드포인트 스펙 (초안 — ALPHA-366)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="엔드포인트 스펙 (초안 — ALPHA-366)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        조회 — ETF 가격 변동 설명 (단건)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        미확정 목록
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1310,13 +1455,86 @@
 
 
 <h1 id="mtshts-serving-api">MTS/HTS 연동 방식 — Serving API<a class="headerlink" href="#mtshts-serving-api" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>이 문서는 증권사 백엔드 개발자에게 전달되는 연동 기준의 원본이다(대외 산출물 — 표현은 <a href="../../writing-rules/">../writing-rules.md</a> 준수). 문법 명세(OpenAPI)는 serving-api 모듈 생성 시 코드 옆에 두고 이 문서가 상위 시맨틱이다.</p>
+</blockquote>
+<h2 id="_1">원칙 (확정)<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
 <li>MTS/HTS는 증권사 소유 UI이며 벤더 widget을 임베드하지 않는다.</li>
-<li>경로: <strong>MTS/HTS → 증권사 Backend/API Gateway → On-Premise Serving API</strong></li>
-<li>Serving API는 <strong>Published(AUTO_PUBLISHED, APPROVED) 상태만 반환</strong>. 검수 대기/차단/반려/무효화/노출중단 상태는 절대 반환하지 않는다.</li>
-<li>Serving API 호출 시 증권사 백엔드가 고객 식별 해시를 전달 → Exposure Log 기록 (<a href="../../domain/exposure-log/">../domain/exposure-log.md</a>).</li>
+<li>경로: <strong>MTS/HTS → 증권사 Backend/API Gateway → On-Premise Serving API</strong>. MTS가 Serving API를 직접 호출하지 않는다.</li>
+<li>Serving API는 <strong>Published(AUTO_PUBLISHED, APPROVED) 상태만 반환</strong>. 검수 대기/차단/반려/무효화/노출중단 상태는 절대 반환하지 않는다 — 응답에 존재할 수 없는 것이 제품 보장이다.</li>
+<li>Serving API 호출 시 증권사 백엔드가 <strong>고객 식별 해시</strong>를 전달 → 조회 시점에 Exposure Log 자동 기록(조회=노출 간주, <a href="../../domain/exposure-log/">../domain/exposure-log.md</a>). 원본 고객 ID/계좌번호는 절대 받지 않는다.</li>
 <li>Serving API 자체의 인증은 증권사 내부망 정책(내부 API GW)에 위임한다. 벤더 API Key 없음.</li>
 </ul>
+<h2 id="alpha-366">엔드포인트 스펙 (초안 — ALPHA-366)<a class="headerlink" href="#alpha-366" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><code>[확정 필요]</code> 표기 항목 외에는 기확정 결정에서 도출된 제안값이다. 데모 페이지(가상 MTS)는 이 스펙 기준으로 mock을 만든다.</p>
+</blockquote>
+<h3 id="etf">조회 — ETF 가격 변동 설명 (단건)<a class="headerlink" href="#etf" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>GET /api/v1/explanations/{etf_ticker}?trade_date={yyyy-MM-dd}
+X-Customer-Hash: &lt;증권사 백엔드가 생성한 고객 식별 해시&gt;
+X-Channel: MTS | HTS | INTERNAL
+</code></pre></div>
+<ul>
+<li><code>etf_ticker</code>: 국내 상장 ETF 종목코드 (MVP 커버리지 — <a href="../../adr/0024-scope-domestic-etf/">../adr/0024</a>). <code>[확정 필요 — 식별자 체계: 종목코드 vs ISIN. 초안은 종목코드]</code></li>
+<li><code>trade_date</code> 생략 시 가장 최근 게시분.</li>
+<li><code>X-Customer-Hash</code> 필수 — 해시 생성 규칙·salt는 증권사 관리 영역(벤더 불관여). 누락 시 400.</li>
+<li><code>X-Channel</code> 필수 — Exposure Log의 채널 필드.</li>
+</ul>
+<p><strong>응답 200</strong> (노출 가능한 설명이 있을 때):</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;publication_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;etf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;ticker&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;069500&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;KODEX 200&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;trade_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-07-15&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;반도체 비중 상위 구성종목의 동반 상승이 반영된 것으로 보이는 공개 정보 기반 변동 요인 후보입니다.&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;confidence_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MEDIUM&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;evidences&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NEWS&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;반도체 수출 반등&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;published_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;disclaimer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;본 내용은 공개 정보 기반의 변동 요인 후보이며 투자 권유가 아닙니다.&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;published_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-07-15T16:40:00+09:00&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>summary</code>는 검수를 거친 <strong>최종 노출 문구</strong>다(원본 AI 문구가 아니라 검수자 수정 반영본). 원천은 Cloud <code>explanation_result.summary</code>(물리 스키마의 유일한 고객 노출 텍스트 필드) — 번들로 온프렘에 수신된 뒤 검수를 거친 값이다.</li>
+<li><code>disclaimer</code>는 테넌트 정책의 기본 안내 문구 — 화면에 반드시 함께 노출한다.</li>
+<li><code>evidences</code> 요소 형상은 <code>[확정 필요 — 화면 요구에 맞춰 데모 페이지 작업과 함께 확정]</code>. 반대 요인 등 부가 텍스트는 물리 스키마에 전용 컬럼이 없어(candidate: <code>stage_results</code> JSONB) 계약에 넣지 않는다 — 필요해지면 스키마 확장(양자 합의) 후 추가.</li>
+<li><strong>이 200 응답이 Exposure Log 기록 시점</strong>이다 — 응답한 문구 스냅샷·고객 해시·채널·시각이 기록되어 민원·감사 시 재현된다.</li>
+</ul>
+<p><strong>응답 204</strong> (해당 ETF·일자에 노출 가능한 설명이 없을 때): 정상 상태다 — 모든 ETF가 매일 설명을 갖지 않는다. body 없음, Exposure Log 기록 없음.</p>
+<p><strong>에러</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>400</td>
+<td><code>X-Customer-Hash</code>/<code>X-Channel</code> 누락, 잘못된 <code>trade_date</code> 형식</td>
+</tr>
+<tr>
+<td>404</td>
+<td>알 수 없는 ETF 종목코드</td>
+</tr>
+<tr>
+<td>5xx</td>
+<td>서버 오류 — 증권사 백엔드는 폴백 문구 처리 권장(설명 미제공이 고객 화면 오류로 보이지 않게)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>에러 body 형상은 <code>[확정 필요 — 봉투 정책, serving-api 모듈 스캐폴드 시]</code>.</li>
+</ul>
+<h3 id="_2">미확정 목록<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ol>
+<li>식별자 체계 (종목코드 vs ISIN)</li>
+<li>목록/배치 조회(여러 ETF 한 번에) 필요 여부 — MTS 관심목록 화면이 요구하면 추가</li>
+<li>에러 body 봉투 정책</li>
+<li>캐싱 지시(ETag 등) — 조회=노출 시맨틱과의 상호작용 검토 필요 (<code>[주의]</code> 증권사 백엔드가 응답을 캐시하면 Exposure Log가 실노출보다 적게 기록된다 — 연동 가이드에 캐시 금지 또는 노출 콜백(로드맵, <a href="../../roadmap/">../roadmap.md</a>) 안내)</li>
+</ol>
 
 
 
