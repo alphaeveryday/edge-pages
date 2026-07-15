@@ -946,6 +946,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Cloud Event Store 스키마">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        번들에 실리는 것 (영서가 읽는 면)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        아직 합의 안 된 것
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1357,6 +1385,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Cloud Event Store 스키마">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        번들에 실리는 것 (영서가 읽는 면)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        아직 합의 안 된 것
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1387,9 +1443,60 @@
 <li>전송 단위: Event Bundle (신규 이벤트 + 정정 이벤트 + 무효화 이벤트 포함). 무결성은 번들 단위 SHA-256 체크섬.</li>
 </ul>
 <h2 id="cloud-event-store">Cloud Event Store 스키마<a class="headerlink" href="#cloud-event-store" title="Permanent link">&para;</a></h2>
+<p><strong>물리 정의는 <a href="https://github.com/alphaeveryday/edge/blob/dev/src/libs/schema/migrations"><code>src/libs/schema/migrations/</code></a>의 Flyway SQL이다</strong> — generated 모델 생성기가 없는 현재는 이 SQL이 계약을 정의한다(<a href="../../implementation/">implementation.md</a> §4). 최초 도입은 <code>V202607150001__replace_analysis_mart_with_etf_explanation_schema.sql</code>(ALPHA-359, 48개 테이블, <code>public</code> 스키마). 이 경로는 CODEOWNERS로 이 문서와 같은 양자 합의 게이트에 묶여 있다.</p>
+<p>아래는 Sync 채널이 실제로 소비하는 <strong>경계면</strong>만 추린 것이다. 48개 전체가 인터페이스는 아니다 — 나머지는 진기 측 내부 구현이며 양자 합의 없이 바뀔 수 있다.</p>
+<h3 id="_1">번들에 실리는 것 (영서가 읽는 면)<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>테이블</th>
+<th>역할</th>
+<th>키</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>explanation_result</code></td>
+<td>고객 노출 후보 문구. 번들의 본체</td>
+<td><code>explanation_result_id</code></td>
+</tr>
+<tr>
+<td><code>explanation_run</code></td>
+<td>어느 실행이 그 결과를 냈는지 + 사용한 릴리스 번들 버전</td>
+<td><code>explanation_run_id</code></td>
+</tr>
+<tr>
+<td><code>source_event</code></td>
+<td>설명이 근거로 삼은 소스 이벤트</td>
+<td><code>source_event_id</code></td>
+</tr>
+<tr>
+<td><code>event_evidence</code></td>
+<td>이벤트를 뒷받침하는 문서 주장 근거</td>
+<td><code>evidence_id</code></td>
+</tr>
+<tr>
+<td><code>event_thread</code></td>
+<td>동일 실제 사건의 계보(정정·후속 판정의 기준)</td>
+<td><code>thread_id</code></td>
+</tr>
+<tr>
+<td><code>release_bundle</code></td>
+<td>고객사가 승인·적용하는 제품 버전 manifest</td>
+<td><code>bundle_version</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>게시 grain</strong>: <code>explanation_result</code>의 결과 grain은 <code>(etf_instrument_id, trade_date, explanation_as_of)</code>이며, 이 grain에서 <code>publication_status = 'PUBLISHED'</code>인 행은 <strong>부분 유니크 인덱스로 하나만 강제</strong>된다(<code>uq_explanation_result_published_grain</code>). 재게시는 기존 게시본을 <code>WITHDRAWN</code>으로 내린 뒤 새 행을 게시한다. <code>DRAFT</code>·<code>WITHDRAWN</code> 이력은 같은 grain에 여러 건 남는다.</p>
 <blockquote>
-<p><strong>미확정</strong> — 필드 수준 스키마는 아직 합의되지 않았다. 확정되는 대로 이 파일에 기록한다(변경은 양자 합의).</p>
+<p><strong>합의 필요</strong> — 여기서 <code>publication_status</code>는 <strong>Cloud 내부의 확정 상태</strong>이지 고객 노출 상태가 아니다(고객 노출은 On-Prem 검수를 거친 <code>publications</code>가 결정한다, <a href="../../domain/state-machine/">state-machine.md</a>). Sync가 <code>PUBLISHED</code>만 번들에 싣는지, <code>WITHDRAWN</code> 전이를 무효화 이벤트로 전달하는지는 아직 정하지 않았다.</p>
 </blockquote>
+<h3 id="_2">아직 합의 안 된 것<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>outbox 테이블</strong> — 테넌트별 fan-out 레코드와 cursor 발번 지점. 위 마이그레이션에 <strong>없다.</strong> 설계는 영서 소관이며 확정 시 이 문서와 <code>sync-protocol.md</code>에 함께 기록한다(<a href="../../adr/0021-design-reinforcement/">ADR-0021</a>).</li>
+<li><strong><code>tenant</code> · <code>tenant_credential</code> · <code>tenant_sync_cursor</code> · <code>tenant_release_history</code></strong> — 위 마이그레이션이 함께 생성했으나, 이 4개는 <strong>Tenant Sync API 이후 영역(영서 오너십, <a href="../../adr/0019-team-ownership-interface/">ADR-0019</a>)</strong> 이다. 현재 정의는 릴리스 번들 배포·동기화 상태를 담는 최소 형태이며 <strong>영서 확정안이 우선한다</strong> — 인증 모델(키 로테이션 등)이나 커서 의미가 다르게 정해지면 수축-확장으로 교체한다.</li>
+<li>이벤트 타입별(신규/정정/무효화) 번들 JSON 구조와 체크섬 대상 바이트.</li>
+</ul>
 
 
 
