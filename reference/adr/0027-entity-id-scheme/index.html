@@ -11,26 +11,24 @@
       
       
       
-        <link rel="prev" href="../console-ia/tenant-console/">
-      
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>ADR - Edge Architecture Portal</title>
+        <title>ADR-0027: 도메인 ID 체계 — 불투명 서로게이트, 외부 식별자는 속성 - Edge Architecture Portal</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,7 +47,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#architecture-decision-records-adr" class="md-skip">
+        <a href="#adr-0027-id" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -88,7 +86,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+    <a href="../../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ADR
+              ADR-0027: 도메인 ID 체계 — 불투명 서로게이트, 외부 식별자는 속성
             
           </span>
         </div>
@@ -209,7 +207,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -228,7 +226,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../evolution/" class="md-tabs__link">
+      <a href="../../../evolution/" class="md-tabs__link">
         
   
   
@@ -247,7 +245,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../artifacts/" class="md-tabs__link">
+      <a href="../../../artifacts/" class="md-tabs__link">
         
   
   
@@ -268,7 +266,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../retrospective/" class="md-tabs__link">
+        <a href="../../../retrospective/" class="md-tabs__link">
           
   
   
@@ -284,13 +282,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../context/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../context/" class="md-tabs__link">
           
   
   
@@ -324,7 +320,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+    <a href="../../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -342,7 +338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -369,7 +365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../evolution/" class="md-nav__link">
+      <a href="../../../evolution/" class="md-nav__link">
         
   
   
@@ -396,7 +392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../artifacts/" class="md-nav__link">
+      <a href="../../../artifacts/" class="md-nav__link">
         
   
   
@@ -475,7 +471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/" class="md-nav__link">
+      <a href="../../../retrospective/" class="md-nav__link">
         
   
   
@@ -503,7 +499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-1/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-1/" class="md-nav__link">
         
   
   
@@ -531,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-2/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-2/" class="md-nav__link">
         
   
   
@@ -559,7 +555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-3/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-3/" class="md-nav__link">
         
   
   
@@ -591,31 +587,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -633,7 +624,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -651,7 +642,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../context/" class="md-nav__link">
+      <a href="../../context/" class="md-nav__link">
         
   
   
@@ -679,7 +670,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scope/" class="md-nav__link">
+      <a href="../../scope/" class="md-nav__link">
         
   
   
@@ -707,7 +698,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../implementation/" class="md-nav__link">
+      <a href="../../implementation/" class="md-nav__link">
         
   
   
@@ -735,7 +726,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../roadmap/" class="md-nav__link">
+      <a href="../../roadmap/" class="md-nav__link">
         
   
   
@@ -763,7 +754,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../writing-rules/" class="md-nav__link">
+      <a href="../../writing-rules/" class="md-nav__link">
         
   
   
@@ -797,20 +788,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
         
           
-          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
             
   
   
@@ -846,7 +834,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/sync-protocol/" class="md-nav__link">
+      <a href="../../contracts/sync-protocol/" class="md-nav__link">
         
   
   
@@ -874,7 +862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/event-bundle-schema/" class="md-nav__link">
+      <a href="../../contracts/event-bundle-schema/" class="md-nav__link">
         
   
   
@@ -902,7 +890,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/sync-auth/" class="md-nav__link">
+      <a href="../../contracts/sync-auth/" class="md-nav__link">
         
   
   
@@ -930,7 +918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/serving-api/" class="md-nav__link">
+      <a href="../../contracts/serving-api/" class="md-nav__link">
         
   
   
@@ -972,20 +960,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
         
           
-          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
             
   
   
@@ -1021,7 +1006,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/state-machine/" class="md-nav__link">
+      <a href="../../domain/state-machine/" class="md-nav__link">
         
   
   
@@ -1049,7 +1034,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/data-residency/" class="md-nav__link">
+      <a href="../../domain/data-residency/" class="md-nav__link">
         
   
   
@@ -1077,7 +1062,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/exposure-log/" class="md-nav__link">
+      <a href="../../domain/exposure-log/" class="md-nav__link">
         
   
   
@@ -1119,20 +1104,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
         
           
-          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
             
   
   
@@ -1168,7 +1150,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/super-admin-console/" class="md-nav__link">
+      <a href="../../console-ia/super-admin-console/" class="md-nav__link">
         
   
   
@@ -1196,7 +1178,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/tenant-console/" class="md-nav__link">
+      <a href="../../console-ia/tenant-console/" class="md-nav__link">
         
   
   
@@ -1229,19 +1211,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -1257,7 +1230,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1290,6 +1262,69 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        맥락
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        대안
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결과
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        참조
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1305,159 +1340,45 @@
 
 
 
-<h1 id="architecture-decision-records-adr">Architecture Decision Records (ADR)<a class="headerlink" href="#architecture-decision-records-adr" title="Permanent link">&para;</a></h1>
-<p>중요한 설계·운영 결정을 한 형식으로 기록한다. 회의록이나 PRD가 아니라, <strong>결정과 그 이유</strong>만 증류한다.</p>
+<h1 id="adr-0027-id">ADR-0027: 도메인 ID 체계 — 불투명 서로게이트, 외부 식별자는 속성<a class="headerlink" href="#adr-0027-id" title="Permanent link">&para;</a></h1>
 <ul>
-<li>형식은 <a href="0000-template/">0000-template.md</a> 하나로 고정한다 — 맥락 · 결정 · 대안 · 결과.</li>
-<li>한 번 승인된 ADR은 수정하지 않는다. 결정이 바뀌면 <strong>새 ADR을 추가하고</strong> 옛 ADR의 상태를 <code>대체됨(→ ADR-XXXX)</code>으로 표시한다.</li>
-<li>번호는 순차 증가. 파일명은 <code>NNNN-kebab-제목.md</code>.</li>
+<li>상태: 승인됨</li>
+<li>날짜: 2026-07-15</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>ADR</th>
-<th>제목</th>
-<th>상태</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="0001-monorepo-structure/">0001</a></td>
-<td>모노레포·폴리글랏 워크스페이스 구조</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0002-agent-instructions-ssot/">0002</a></td>
-<td>에이전트 지침은 AGENTS.md 단일 출처</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0003-branch-strategy/">0003</a></td>
-<td>브랜치 전략 — dev 경유 엄격한 사다리</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0004-squash-only-merge/">0004</a></td>
-<td>Squash 전용 머지</td>
-<td>대체됨 (→ <a href="0007-merge-strategy/">0007</a>)</td>
-</tr>
-<tr>
-<td><a href="0005-db-as-contract/">0005</a></td>
-<td>DB를 단일 계약으로 · 확장-수축 마이그레이션</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0006-gateway-single-edge/">0006</a></td>
-<td>gateway 단일 엣지 · 라우트별 신뢰 필터</td>
-<td>대체됨 (→ <a href="0010-hybrid-onprem-pivot/">0010</a>)</td>
-</tr>
-<tr>
-<td><a href="0007-merge-strategy/">0007</a></td>
-<td>머지 전략 — 경계별(feature→dev Squash, dev→main Merge commit)</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0008-super-admin-console/">0008</a></td>
-<td>super-admin 콘솔 — cross-tenant 운영자 표면</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0009-aws-deployment-topology/">0009</a></td>
-<td>AWS 배포 토폴로지 — Terraform IaC · 단계 스택</td>
-<td>제안됨</td>
-</tr>
-<tr>
-<td><a href="0010-hybrid-onprem-pivot/">0010</a></td>
-<td>하이브리드 On-Premise 피벗 — 고객 접점·컴플라이언스의 증권사 이전</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0011-rls-to-physical-isolation/">0011</a></td>
-<td>RLS 멀티테넌시에서 테넌트별 물리 격리로 전환</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0012-sync-cert-bootstrap/">0012</a></td>
-<td>Sync 인증서 부트스트랩 — CSR 방식, 개인키 비반출</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0013-exposure-log-recording/">0013</a></td>
-<td>Exposure Log 기록 — 조회 시점 자동 기록, 고객 해시는 증권사 생성</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0014-correction-repreview/">0014</a></td>
-<td>정정 이벤트 처리 — 무조건 재검수</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0015-sync-protocol-mvp/">0015</a></td>
-<td>Sync 프로토콜 — cursor 기반 delta, MVP 스펙과 목표 계약 분리</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0016-single-repo-two-artifacts/">0016</a></td>
-<td>코드베이스 — 단일 레포, 배포 아티팩트 2종</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0017-demo-topology-compose/">0017</a></td>
-<td>데모/개발 토폴로지 — 별도 EC2 + Docker Compose 가상 온프렘</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0018-rule-deployment-path/">0018</a></td>
-<td>Compliance Rule 배포 경로 — Rule Type은 릴리스, Sync 채널은 데이터 전용</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0019-team-ownership-interface/">0019</a></td>
-<td>팀 오너십 — Sync 프로토콜 양단 단일 오너, 인터페이스 계약 고정</td>
-<td>대체됨 (→ <a href="0026-ownership-boundary-db/">0026</a>)</td>
-</tr>
-<tr>
-<td><a href="0020-verification-realign/">0020</a></td>
-<td>검증 반영 — 규제 서사 재정렬 및 설계 정합 일괄 정정</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0021-design-reinforcement/">0021</a></td>
-<td>설계 보강 — DMZ 배치·cursor 발번 시점·정정 리비전 모델 확정</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0022-verification-round2/">0022</a></td>
-<td>검증·보강 2차 — 규제 사실관계 외부 검증 및 배치·온보딩 옵션 보강</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0023-customer-validation/">0023</a></td>
-<td>고객 검증 반영 — 증권사 현업 리뷰 확보·이해상충은 노출 범위 제외로 통제</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0024-scope-domestic-etf/">0024</a></td>
-<td>MVP 상품 범위 — 국내 ETF, 스키마는 미국 확장성 선반영</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0025-onprem-auth-hybrid/">0025</a></td>
-<td>온프렘 콘솔 인증 — SSO/AD 지향 + 데모 자체 계정 하이브리드</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0026-ownership-boundary-db/">0026</a></td>
-<td>팀 오너십 경계 정정 — 진기는 DB 적재까지, 인터페이스는 DB 스키마</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0027-entity-id-scheme/">0027</a></td>
-<td>도메인 ID 체계 — 불투명 서로게이트(ULID), 외부 식별자는 속성</td>
-<td>승인됨</td>
-</tr>
-</tbody>
-</table>
+<h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>Cloud Event Store 물리 스키마(V202607150001)는 <code>entity_id</code>·<code>actor_id</code>·<code>instrument_id</code>를 <code>TEXT</code>로만 정의하고 <strong>포맷을 정하지 않았다.</strong> <a href="../../contracts/event-bundle-schema/">event-bundle-schema.md</a>도 "Cloud 발번 TEXT"라고 타입만 못박았을 뿐이다(UUIDv7 제안은 기각되고 물리 스키마의 TEXT 도메인 ID가 채택됐다). <code>market_code VARCHAR(30) NOT NULL</code>과 <code>instrument.ticker</code>도 마찬가지로 CHECK·문서가 없다.</p>
+<p>지금 결정해야 하는 이유는 <strong>엔터티 마스터 시딩(ALPHA-362)이 첫 값을 넣는 순간 그 포맷이 사실상 계약이 되기 때문</strong>이다. 이 마스터 ID들은 스키마 전역에서 <strong>21개 FK</strong>가 참조한다(<code>instrument</code> 10 · <code>entity</code> 7 · <code>actor</code> 2 · <code>company_profile</code> 2). 한 번 적재된 뒤 포맷을 바꾸려면 참조 전부를 마이그레이션해야 하고, assertion·event는 point-in-time 재현 대상이라 소급 수정이 특히 비싸다. 형제 사례가 이미 있다 — <code>document_assertion.modality_code</code>는 어휘가 정의된 적 없는 채 <code>NOT NULL</code>이라 적재를 통째로 막았고 ALPHA-361로 제약을 되물러야 했다. 값보다 규약을 먼저 박는다.</p>
+<h2 id="_2">결정<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>도메인 ID는 불투명 서로게이트다</strong> — <code>&lt;타입접두사&gt;_&lt;ULID&gt;</code> 형식의 <code>TEXT</code>. 접두사는 <code>actor_</code>·<code>inst_</code>·<code>concept_</code>이며 서브타입을 눈으로 식별하게 한다. 예: <code>inst_01KXJB6W2EFQRP1D5TBRF0EBEK</code>.</li>
+<li><code>entity</code>의 서브타입 테이블은 같은 값을 쓴다 — 회사의 <code>entity_id</code> = 그 회사의 <code>actor_id</code>(FK가 <code>(actor_id, entity_type)</code> → <code>(entity_id, entity_type)</code>이므로 값이 같아야 한다).</li>
+<li>ULID를 쓰는 이유는 시간 정렬 가능하고 <code>TEXT</code> 한 컬럼에 담기며 별도 생성기 인프라가 필요 없어서다. UUID <strong>컬럼 타입</strong>을 쓰자는 게 아니므로 event-bundle-schema.md의 "TEXT 도메인 ID" 채택과 충돌하지 않는다.</li>
+<li><strong>외부 식별자는 ID가 아니라 속성이다</strong> — 도메인 ID에 외부 식별자를 인코딩하지 않는다. 현재 컬럼이 있는 건 <code>instrument.ticker</code>(+<code>uq(market_code, ticker)</code>)와 <code>company_profile.dart_corp_code</code>(UNIQUE)뿐이다. <strong>ISIN·LEI·FIGI는 아직 컬럼이 없다</strong> — 필요해지는 시점에 확장으로 추가하며, 그때도 PK가 아니라 유니크 속성으로 붙인다.</li>
+<li><strong><code>market_code</code>는 MIC(ISO 10383)</strong> — KRX 유가증권시장 <code>XKRX</code>, 코스닥 <code>XKOS</code>. 미국 확장 시 <code>XNAS</code>·<code>XNYS</code>. 거래소 어휘를 자체 정의하지 않는다.</li>
+<li><strong>도메인 ID는 소비자에게 불투명하다</strong> — On-Prem·tenant-sync-api를 포함한 어떤 소비자도 ID를 파싱해 의미(티커·시장)를 얻어선 안 된다. 필요한 속성은 컬럼에서 읽는다.</li>
+</ul>
+<h2 id="_3">대안<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>자연키 파생 ID</strong>(<code>inst_KRX:005930</code>처럼 시장+티커를 ID에 인코딩) — 사람이 읽기 쉽고 조인 없이 종목을 알아본다. 그러나 증권 마스터 업계 관행이 이걸 명시적으로 배격한다: 티커는 회사명 변경 시 함께 바뀌고 죽은 티커는 다른 회사에 재사용된다. 티커가 바뀌면 서로게이트는 <code>instrument.ticker</code> 한 컬럼만 UPDATE하면 그 종목을 참조하는 FK가 전부 그대로 살지만, 파생 ID는 <strong>영구히 잘못된 ID</strong>로 남거나(<code>005930</code>인데 실제론 다른 코드로 거래) FK 전부를 마이그레이션해야 한다. 가독성은 <code>entity.display_name</code>·<code>instrument.ticker</code>가 같은 행에 있어 조인 한 번으로 회복되므로, 되돌릴 수 없는 결합과 바꿀 값이 아니다.</li>
+<li><strong>ISIN을 PK로</strong> — 표준이고 KRX가 이미 발급한다(<code>KR7005930003</code>). 그러나 ISIN은 <strong>증권의 수명 동안만</strong> 유효하고 그 배후 사업체의 식별자가 아니다. 합병·분할은 새 법인을 만들어 새 ISIN을 낳고, 상폐된 ISIN은 유예 후 재할당된다 — 이력 DB가 ISIN을 재활용해 실제 결제 오류를 낸 사례가 보고돼 있다. 속성으로 두는 게 맞다.</li>
+<li><strong>UUIDv4</strong> — 불투명하다는 목적은 같지만 정렬 불가라 인덱스 지역성이 나쁘고 시드·로그를 눈으로 훑기 더 어렵다. ULID는 같은 불투명성에 시간 정렬을 얹는다.</li>
+<li><strong>FIGI 채택</strong> — 재사용 없음·기업행위 불변을 표준에 못박은 유일한 식별자라 이론적으로 가장 옳다. 그러나 외부 발급 의존이 생기고(OpenFIGI 조회) KR 커버리지 검증이 선행돼야 한다. 내부 ID는 서로게이트로 두고 FIGI는 필요해질 때 속성으로 추가하면 되므로 이 결정과 배타적이지 않다.</li>
+</ul>
+<h2 id="_4">결과<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li>시딩·적재 코드는 ID를 <strong>발번</strong>하고, 조회는 자연키(<code>(market_code, ticker)</code>·<code>dart_corp_code</code>)로 한다. 즉 upsert는 "자연키로 찾아보고 없으면 새 ULID 발번"이 표준 절차가 된다.</li>
+<li>사람이 DB를 훑을 때 ID만으로는 종목을 못 알아본다 — <code>entity</code>/<code>instrument</code>를 조인해야 한다. 의도된 비용이다.</li>
+<li>티커 변경 <strong>이력</strong>은 보존되지 않는다. 현업 증권 마스터는 식별자 변경에 effective dating을 붙여 과거 시점의 표기를 복원하지만, 현재 스키마는 <code>instrument.ticker</code> 단일 값이라 UPDATE하면 옛 티커가 사라진다. MVP 단순화로 수용하되, 과거 시점 티커 조회가 필요해지면 확장-수축으로 이력 테이블을 추가한다.</li>
+<li><code>market_code</code>에 MIC를 쓰면 레이크 파티션의 <code>market=KR|US</code>와 값이 다르다(<code>XKRX</code> vs <code>KR</code>). 레이크는 시장 <strong>지역</strong> 파티션이고 RDB는 <strong>거래소</strong> 식별자라 층이 다르므로 의도적이다 — 적재 코드가 매핑한다.</li>
+<li>이 ADR은 <code>libs/schema</code> CODEOWNERS(<code>@jingi723 @choyoungseo20</code>) 게이트를 통과해야 한다 — ADR-0026이 진기-영서 인터페이스를 DB 스키마 하나로 확정했으므로 ID 체계는 양자 합의 대상이다.</li>
+</ul>
+<h2 id="_5">참조<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../0005-db-as-contract/">ADR-0005</a> db-as-contract · <a href="../0026-ownership-boundary-db/">ADR-0026</a> 오너십 경계 · <a href="../0024-scope-domestic-etf/">ADR-0024</a> 국내 ETF MVP</li>
+<li><a href="../../contracts/event-bundle-schema/">event-bundle-schema.md</a> — "Cloud 발번 TEXT" 도메인 ID</li>
+<li>ALPHA-362(시딩) · ALPHA-361(modality — 미정의 어휘가 적재를 막은 형제 사례)</li>
+<li>외부: <a href="https://intrinio.com/blog/modern-security-master-architecture-unifying-ticker-cusip-isin-and-figi-data-at-scale">Modern Security Master Architecture (Intrinio)</a> · <a href="https://en.wikipedia.org/wiki/Financial_Instrument_Global_Identifier">FIGI</a> · <a href="https://www.tradinghours.com/mic/s/xkrx">ISO 10383 MIC — XKRX</a> · <a href="https://www.gleif.org/en/about-lei/introducing-the-legal-entity-identifier">LEI (GLEIF)</a></li>
+</ul>
 
 
 
@@ -1507,10 +1428,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
