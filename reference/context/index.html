@@ -1090,14 +1090,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/serving-api/" class="md-nav__link">
+      <a href="../contracts/publication-api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Serving API
+    Publication API
   
 
     
@@ -1588,7 +1588,7 @@
 <tr>
 <td>고객 화면</td>
 <td>벤더 embed widget (widget-api)</td>
-<td>증권사 MTS/HTS 자체 UI → On-Prem Serving API</td>
+<td>증권사 MTS/HTS 자체 UI → On-Prem Publication API</td>
 </tr>
 <tr>
 <td>Tenant Console</td>
@@ -1639,8 +1639,8 @@
         CES --&gt; TSA[&quot;Tenant Sync API&quot;]
     end
     subgraph onprem[&quot;증권사 On-Premise&quot;]
-        MTS[&quot;MTS / HTS / Internal&quot;] --&gt;|증권사 내부 Backend/API GW 경유| SVA[&quot;Serving API&quot;]
-        PS[&quot;Published Store&quot;] --&gt; SC[&quot;Serving Cache&quot;] --&gt; SVA
+        MTS[&quot;MTS / HTS / Internal&quot;] --&gt;|증권사 내부 Backend/API GW 경유| SVA[&quot;Publication API&quot;]
+        PS[&quot;Published Store&quot;] --&gt; SC[&quot;Publication Cache&quot;] --&gt; SVA
         SA[&quot;Sync Agent&quot;] --&gt; RES[&quot;Raw Event Store&quot;]
         RES --&gt; CE[&quot;Compliance Engine&quot;]
         CE --&gt;|승인/자동노출| PS
@@ -1652,7 +1652,7 @@
 <ul>
 <li>데이터는 항상 <strong>Cloud → On-Prem 단방향</strong>으로 흐르고, 연결은 항상 <strong>On-Prem → Cloud outbound</strong>로만 열린다.</li>
 <li>Cloud는 "어느 증권사가 무엇을 노출했는지" 알지 못한다. Cloud가 아는 테넌트 정보는 동기화 상태(마지막 sync 시각, 성공/실패, 전달 이벤트 수)까지다.</li>
-<li><strong>네트워크 배치 (확정, 2026-07-13)</strong>: Sync Agent는 증권사 내부 업무망이 아닌 <strong>DMZ(외부연계망) 구간</strong>에 배치한다. 망분리 환경에서 내부 업무망은 외부 인터넷으로 직접 outbound를 열 수 없으므로, 외부 통신 경로는 DMZ에 한정한다. ① 방화벽 outbound 허용 대상은 벤더 Tenant Sync API의 <strong>고정 FQDN:443 (mTLS) 단일 목적지 화이트리스트</strong>로 제한 ② 증권사 표준 forward proxy 경유를 지원 ③ Sync Agent → 내부망 On-Prem DB 접근은 증권사 내부 방화벽 정책에 따라 전용 포트·계정으로 최소화 — 단, DMZ→내부망 직접 DB 커넥션 자체를 금지하고 망연계 솔루션(망간자료전송 시스템) 경유를 요구하는 증권사를 위해 <strong>망연계 솔루션 경유 배치도 지원</strong>한다. 이 경우 Sync Agent는 Pull·무결성 검증까지만 DMZ에서 수행하고, 내부망 저장은 별도 수신 모듈이 담당하는 2단 구성으로 분리한다. 나머지 온프렘 컴포넌트(Compliance Engine, Tenant Console, Serving API, DB)는 전부 내부 업무망에 위치하며 외부 통신이 없다. "외부와 닿는 것은 DMZ의 Sync Agent 하나, 방향은 outbound 하나, 목적지는 하나"가 준법감시인 대상 설명 문구다.</li>
+<li><strong>네트워크 배치 (확정, 2026-07-13)</strong>: Sync Agent는 증권사 내부 업무망이 아닌 <strong>DMZ(외부연계망) 구간</strong>에 배치한다. 망분리 환경에서 내부 업무망은 외부 인터넷으로 직접 outbound를 열 수 없으므로, 외부 통신 경로는 DMZ에 한정한다. ① 방화벽 outbound 허용 대상은 벤더 Tenant Sync API의 <strong>고정 FQDN:443 (mTLS) 단일 목적지 화이트리스트</strong>로 제한 ② 증권사 표준 forward proxy 경유를 지원 ③ Sync Agent → 내부망 On-Prem DB 접근은 증권사 내부 방화벽 정책에 따라 전용 포트·계정으로 최소화 — 단, DMZ→내부망 직접 DB 커넥션 자체를 금지하고 망연계 솔루션(망간자료전송 시스템) 경유를 요구하는 증권사를 위해 <strong>망연계 솔루션 경유 배치도 지원</strong>한다. 이 경우 Sync Agent는 Pull·무결성 검증까지만 DMZ에서 수행하고, 내부망 저장은 별도 수신 모듈이 담당하는 2단 구성으로 분리한다. 나머지 온프렘 컴포넌트(Compliance Engine, Tenant Console, Publication API, DB)는 전부 내부 업무망에 위치하며 외부 통신이 없다. "외부와 닿는 것은 DMZ의 Sync Agent 하나, 방향은 outbound 하나, 목적지는 하나"가 준법감시인 대상 설명 문구다.</li>
 </ul>
 <h2 id="4-cloud-on-premise">4. Cloud / On-Premise 책임 분리<a class="headerlink" href="#4-cloud-on-premise" title="Permanent link">&para;</a></h2>
 <h3 id="41-vendor-cloud">4.1 Vendor Cloud 구성요소<a class="headerlink" href="#41-vendor-cloud" title="Permanent link">&para;</a></h3>
@@ -1732,11 +1732,11 @@
 <td>최종 노출 확정 문구 저장</td>
 </tr>
 <tr>
-<td>Serving Cache</td>
+<td>Publication Cache</td>
 <td>Published 데이터 조회 캐시 (Redis)</td>
 </tr>
 <tr>
-<td>Serving API</td>
+<td>Publication API</td>
 <td>MTS/HTS/Internal에 Published 상태만 반환</td>
 </tr>
 <tr>
@@ -1776,7 +1776,7 @@
 <tr>
 <td>gateway</td>
 <td><strong>축소</strong></td>
-<td>Cloud에는 Super Admin·Tenant Sync API용 gateway만. On-Prem은 Serving API 또는 증권사 내부 API GW</td>
+<td>Cloud에는 Super Admin·Tenant Sync API용 gateway만. On-Prem은 Publication API 또는 증권사 내부 API GW</td>
 </tr>
 <tr>
 <td>widget-api</td>
@@ -1799,7 +1799,7 @@
 <td>On-Premise. 금칙어/금지 표현/자동노출·검수·차단 기준 적용</td>
 </tr>
 <tr>
-<td>Serving API</td>
+<td>Publication API</td>
 <td><strong>신규</strong></td>
 <td>On-Premise. Published 데이터만 조회 제공</td>
 </tr>

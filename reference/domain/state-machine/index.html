@@ -11,7 +11,7 @@
       
       
       
-        <link rel="prev" href="../../contracts/serving-api/">
+        <link rel="prev" href="../../contracts/publication-api/">
       
       
         <link rel="next" href="../data-residency/">
@@ -960,14 +960,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contracts/serving-api/" class="md-nav__link">
+      <a href="../../contracts/publication-api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Serving API
+    Publication API
   
 
     
@@ -1476,7 +1476,7 @@
 <tr>
 <td>저위험/정책 통과</td>
 <td>AUTO_PUBLISHED</td>
-<td>Published Store 저장 → Serving Cache 반영 → MTS/HTS 조회 가능</td>
+<td>Published Store 저장 → Publication Cache 반영 → MTS/HTS 조회 가능</td>
 </tr>
 <tr>
 <td>검수 필요</td>
@@ -1491,7 +1491,7 @@
 <tr>
 <td>검수 승인</td>
 <td>APPROVED</td>
-<td>Published Store 저장 → Serving Cache 반영 → 조회 가능</td>
+<td>Published Store 저장 → Publication Cache 반영 → 조회 가능</td>
 </tr>
 <tr>
 <td>반려</td>
@@ -1506,14 +1506,14 @@
 <tr>
 <td>무효화</td>
 <td>INVALIDATED</td>
-<td>Serving Cache 제거 + publications.status → INVALIDATED 전이, 즉시 비노출</td>
+<td>Publication Cache 제거 + publications.status → INVALIDATED 전이, 즉시 비노출</td>
 </tr>
 </tbody>
 </table>
 <h2 id="_3">컴플라이언스 플로우 — 정정/무효화 처리 (확정 결정)<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><strong>원칙: 검수 없이 고객 노출 문구가 변경되는 경로는 존재하지 않는다.</strong></p>
 <ul>
-<li><strong>무효화(INVALIDATED)</strong>: 노출 "제거"는 검수 불요. Sync Agent가 무효화 이벤트 수신 즉시 Serving Cache에서 제거하고 상태 전이. (제거는 보수적 방향이므로 자동 허용)</li>
+<li><strong>무효화(INVALIDATED)</strong>: 노출 "제거"는 검수 불요. Sync Agent가 무효화 이벤트 수신 즉시 Publication Cache에서 제거하고 상태 전이. (제거는 보수적 방향이므로 자동 허용)</li>
 <li><strong>정정(CORRECTED)</strong>: 노출 "변경"은 반드시 재검수.<ol>
 <li>Cloud가 정정 이벤트 발행 (Super Admin은 정정 시 사유 입력 필수)</li>
 <li>On-Prem이 수신 → 기존 발행 콘텐츠 즉시 <strong>UNPUBLISHED</strong> (고객 화면에서 제거)</li>
