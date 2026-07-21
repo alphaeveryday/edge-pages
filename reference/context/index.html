@@ -1643,7 +1643,7 @@
         PS[&quot;Published Store&quot;] --&gt; SC[&quot;Publication Cache&quot;] --&gt; SVA
         SA[&quot;Sync Agent (DMZ)&quot;] --&gt;|&quot;검증 번들 전달&quot;| IN[&quot;Intake (내부망)&quot;]
         IN --&gt; RES[&quot;Raw Event Store&quot;]
-        RES --&gt; CE[&quot;Compliance Engine&quot;]
+        RES --&gt; CE[&quot;Screening Worker&quot;]
         CE --&gt;|승인/자동노출| PS
         CE --&gt; RQ[&quot;Review Queue(논리)&quot;]
         RQ --- TC[&quot;Tenant Console&lt;br/&gt;(검수/정책/감사)&quot;]
@@ -1653,7 +1653,7 @@
 <ul>
 <li>데이터는 항상 <strong>Cloud → On-Prem 단방향</strong>으로 흐르고, 연결은 항상 <strong>On-Prem → Cloud outbound</strong>로만 열린다.</li>
 <li>Cloud는 "어느 증권사가 무엇을 노출했는지" 알지 못한다. Cloud가 아는 테넌트 정보는 동기화 상태(마지막 sync 시각, 성공/실패, 전달 이벤트 수)까지다.</li>
-<li><strong>네트워크 배치 (확정, 2026-07-21 — <a href="../adr/0036-sync-agent-intake-topology/">ADR-0036</a>)</strong>: Sync는 <strong>Sync Agent(DMZ)+Intake(내부망) 2모듈</strong>로 분리 배치한다. <strong>Sync Agent</strong>는 DMZ(외부연계망)에 두어 벤더 Tenant Sync API를 outbound Pull(mTLS)·번들 무결성 검증까지 수행하고 <strong>내부망 DB에 직접 접근하지 않는다</strong>. <strong>Intake</strong>는 내부망에 두어 Sync Agent가 검증한 번들을 넘겨받아 Raw Event Store에 적재하며 외부 통신이 없다. Sync Agent→Intake 전달은 증권사의 승인된 DMZ→내부망 경계 메커니즘(망연계 솔루션(망간자료전송) 또는 통제된 내부 전송 채널)을 경유한다 — 이 경계가 곧 망분리 지점이다. ① 방화벽 outbound 허용 대상은 벤더 Tenant Sync API의 <strong>고정 FQDN:443 (mTLS) 단일 목적지 화이트리스트</strong>로 제한 ② 증권사 표준 forward proxy 경유를 지원 ③ <strong>옵션</strong>: DMZ→내부망 직접 DB 커넥션을 허용하고 컴포넌트 최소화를 원하는 증권사는 Sync Agent+Intake를 <strong>단일 모듈</strong>(DMZ 배치·내부망 DB 직접 적재)로 합쳐 배포할 수 있다(기존 단일 Sync Agent 구성). 나머지 온프렘 컴포넌트(Compliance Engine, Tenant Console, Publication API, DB)는 전부 내부 업무망에 위치하며 외부 통신이 없다. "외부와 닿는 것은 DMZ의 Sync Agent 하나, 방향은 outbound 하나, 목적지는 하나"가 준법감시인 대상 설명 문구다.</li>
+<li><strong>네트워크 배치 (확정, 2026-07-21 — <a href="../adr/0036-sync-agent-intake-topology/">ADR-0036</a>)</strong>: Sync는 <strong>Sync Agent(DMZ)+Intake(내부망) 2모듈</strong>로 분리 배치한다. <strong>Sync Agent</strong>는 DMZ(외부연계망)에 두어 벤더 Tenant Sync API를 outbound Pull(mTLS)·번들 무결성 검증까지 수행하고 <strong>내부망 DB에 직접 접근하지 않는다</strong>. <strong>Intake</strong>는 내부망에 두어 Sync Agent가 검증한 번들을 넘겨받아 Raw Event Store에 적재하며 외부 통신이 없다. Sync Agent→Intake 전달은 증권사의 승인된 DMZ→내부망 경계 메커니즘(망연계 솔루션(망간자료전송) 또는 통제된 내부 전송 채널)을 경유한다 — 이 경계가 곧 망분리 지점이다. ① 방화벽 outbound 허용 대상은 벤더 Tenant Sync API의 <strong>고정 FQDN:443 (mTLS) 단일 목적지 화이트리스트</strong>로 제한 ② 증권사 표준 forward proxy 경유를 지원 ③ <strong>옵션</strong>: DMZ→내부망 직접 DB 커넥션을 허용하고 컴포넌트 최소화를 원하는 증권사는 Sync Agent+Intake를 <strong>단일 모듈</strong>(DMZ 배치·내부망 DB 직접 적재)로 합쳐 배포할 수 있다(기존 단일 Sync Agent 구성). 나머지 온프렘 컴포넌트(Screening Worker, Tenant Console, Publication API, DB)는 전부 내부 업무망에 위치하며 외부 통신이 없다. "외부와 닿는 것은 DMZ의 Sync Agent 하나, 방향은 outbound 하나, 목적지는 하나"가 준법감시인 대상 설명 문구다.</li>
 </ul>
 <h2 id="4-cloud-on-premise">4. Cloud / On-Premise 책임 분리<a class="headerlink" href="#4-cloud-on-premise" title="Permanent link">&para;</a></h2>
 <h3 id="41-vendor-cloud">4.1 Vendor Cloud 구성요소<a class="headerlink" href="#41-vendor-cloud" title="Permanent link">&para;</a></h3>
@@ -1721,8 +1721,8 @@
 <td>수신한 원본 이벤트 보존 (수신 원본 불변)</td>
 </tr>
 <tr>
-<td>Compliance Engine</td>
-<td>증권사별 금칙어/금지 표현/처리 기준 적용 → 상태 분기</td>
+<td>Screening Worker</td>
+<td>증권사별 금칙어/금지 표현/처리 기준(점검) 적용 → 상태 분기</td>
 </tr>
 <tr>
 <td>Review Queue</td>
@@ -1799,9 +1799,9 @@
 <td>On-Premise 2모듈(<a href="../adr/0036-sync-agent-intake-topology/">ADR-0036</a>). Sync Agent=DMZ outbound Pull·검증, Intake=내부망 수신·저장. 단일 모듈 옵션</td>
 </tr>
 <tr>
-<td>Compliance Engine</td>
+<td>Screening Worker</td>
 <td><strong>신규</strong></td>
-<td>On-Premise. 금칙어/금지 표현/자동노출·검수·차단 기준 적용</td>
+<td>On-Premise. 금칙어/금지 표현/자동노출·검수·차단 기준(점검) 적용</td>
 </tr>
 <tr>
 <td>Publication API</td>

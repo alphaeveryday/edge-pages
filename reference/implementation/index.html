@@ -1497,7 +1497,7 @@
 <p>결정 배경: <a href="../adr/0016-single-repo-two-artifacts/">ADR-0016</a>, <a href="../adr/0011-rls-to-physical-isolation/">ADR-0011</a></p>
 </blockquote>
 <ul>
-<li><strong>단일 레포 유지</strong>, 배포 아티팩트 2종으로 분리: <code>edge-cloud</code> (super-admin, tenant-sync-api, pipeline 연동) / <code>edge-onprem</code> (sync-agent, intake, compliance-engine, tenant-console, publication-api). sync-agent=DMZ Pull·검증, intake=내부망 수신·저장(<a href="../adr/0036-sync-agent-intake-topology/">adr/0036</a>; 단일 모듈 옵션에서는 합침). <strong>위젯 UI는 이 두 런타임 아티팩트와 별개인 정적 빌드 산출물</strong>로 납품된다(컨테이너·compose 서비스가 아님, 증권사가 자기 환경에서 임베드·호스팅 — <a href="../adr/0035-widget-ui-build-artifact/">adr/0035</a>).</li>
+<li><strong>단일 레포 유지</strong>, 배포 아티팩트 2종으로 분리: <code>edge-cloud</code> (super-admin, tenant-sync-api, pipeline 연동) / <code>edge-onprem</code> (sync-agent, intake, screening-worker, tenant-console, publication-api). sync-agent=DMZ Pull·검증, intake=내부망 수신·저장(<a href="../adr/0036-sync-agent-intake-topology/">adr/0036</a>; 단일 모듈 옵션에서는 합침). <strong>위젯 UI는 이 두 런타임 아티팩트와 별개인 정적 빌드 산출물</strong>로 납품된다(컨테이너·compose 서비스가 아님, 증권사가 자기 환경에서 임베드·호스팅 — <a href="../adr/0035-widget-ui-build-artifact/">adr/0035</a>).</li>
 <li>기존 Gradle 멀티모듈에서 <strong>widget 모듈 삭제</strong>, tenant-console은 onprem 아티팩트로 이동.</li>
 <li><strong>shared-tenancy(RLS) 모듈 삭제.</strong> On-Prem이 테넌트별 물리 격리이므로 RLS의 존재 이유가 소멸. "RLS 설계 → 물리 격리 전환" 의사결정 자체는 기술 스토리로 문서화해 보존 (<a href="../adr/0011-rls-to-physical-isolation/">ADR-0011</a>).</li>
 <li>Flyway 중앙화(shared-migration)는 유지하되 cloud/onprem 마이그레이션 세트를 분리.</li>
@@ -1507,7 +1507,7 @@
 <p>결정 배경: <a href="../adr/0017-demo-topology-compose/">ADR-0017</a></p>
 </blockquote>
 <ul>
-<li>가상 온프렘 = <strong>별도 EC2 1대 + Docker Compose</strong>로 온프렘 스택 전체 구동 (Publication API, Compliance Engine, Tenant Console, Sync Agent, Intake, PostgreSQL, Redis).</li>
+<li>가상 온프렘 = <strong>별도 EC2 1대 + Docker Compose</strong>로 온프렘 스택 전체 구동 (Publication API, Screening Worker, Tenant Console, Sync Agent, Intake, PostgreSQL, Redis).</li>
 <li>딜리버리 스토리: "증권사 서버에 Compose 파일 하나로 설치된다."</li>
 <li>On-Prem 스택: <strong>PostgreSQL + Redis 유지</strong>.</li>
 <li>Cloud 측은 기존 AWS 구조(ECS, Step Functions, RDS, 3-layer subnet) 유지하되 serving cluster 구성을 신규 컴포넌트에 맞게 개정.</li>
