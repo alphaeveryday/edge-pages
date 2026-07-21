@@ -1549,7 +1549,7 @@
 <h1 id="edge-on-premise">EDGE 프로젝트 컨텍스트 — 하이브리드 On-Premise 피벗<a class="headerlink" href="#edge-on-premise" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p><strong>문서 목적</strong>: EDGE 프로젝트에 참여하는 모든 에이전트/팀원이 현재 제품 방향을 모호함 없이 이해하기 위한 단일 기준(Single Source of Truth) 문서.</p>
-<p><strong>적용 시점</strong>: 2026-07 아키텍처 피벗 이후. 이 문서와 충돌하는 기존 문서(Cloud-only / embed widget 구조)는 전부 폐기된 방향이다.</p>
+<p><strong>적용 시점</strong>: 2026-07 아키텍처 피벗 이후. 이 문서와 충돌하는 기존 문서(Cloud-only / <strong>벤더 서빙형</strong> embed widget 구조)는 전부 폐기된 방향이다. (위젯 UI 자체는 빌드 산출물로 납품 — <a href="../adr/0035-widget-ui-build-artifact/">adr/0035</a>.)</p>
 <p><strong>작성 기준</strong>: 제품 방향 지시 문서 + 기존 아키텍처 pptx(IA/Application/System/Cloud/Data Pipeline) 대조 + 8건의 미결 사항에 대한 PM(조영서) 확정 결정.</p>
 <p><strong>용어 — On-Prem(ise)</strong>: 이 문서군의 On-Prem은 물리 서버가 아니라 <strong>증권사가 통제하는 실행 환경</strong>을 뜻한다 — 자체 IDC·내부 가상화는 물론, 증권사 명의로 운영하는 전용/금융 클라우드도 포함한다. 요건은 위치가 아니라 ① 고객 데이터 비반출(벤더 측으로 나가지 않음) ② 망분리 토폴로지 상당 구성(§3 네트워크 배치 — 클라우드 기반이면 VPC 서브넷 분리로 DMZ/내부망을 사상) ③ 증권사 통제권이다. 배제 대상은 클라우드 일반이 아니라 <strong>벤더 통제 환경에 고객 데이터·검수·노출을 두는 구조</strong>다. 대외 산출물에서는 "증권사 관리 환경"을 기본 표현으로 쓴다 (<a href="../writing-rules/">writing-rules.md</a>).</p>
 </blockquote>
@@ -1587,8 +1587,8 @@
 </tr>
 <tr>
 <td>고객 화면</td>
-<td>벤더 embed widget (widget-api)</td>
-<td>증권사 MTS/HTS 자체 UI → On-Prem Publication API</td>
+<td>벤더 서빙 embed widget (widget-api)</td>
+<td>EDGE 위젯 UI <strong>빌드 산출물 납품</strong>(증권사가 MTS/HTS에 임베드·호스팅) 또는 증권사 자체 UI → 증권사 백엔드 → On-Prem Publication API (<a href="../adr/0035-widget-ui-build-artifact/">ADR-0035</a>)</td>
 </tr>
 <tr>
 <td>Tenant Console</td>
@@ -1598,7 +1598,7 @@
 <tr>
 <td>연동 방향</td>
 <td>클라우드 → 증권사 (widget 서빙)</td>
-<td>On-Prem Sync Agent → Cloud <strong>Pull only</strong> (outbound HTTPS/mTLS)</td>
+<td>On-Prem Sync Agent(DMZ) → Cloud <strong>Pull only</strong> (outbound HTTPS/mTLS)</td>
 </tr>
 <tr>
 <td>Gateway</td>
@@ -1641,7 +1641,8 @@
     subgraph onprem[&quot;증권사 On-Premise&quot;]
         MTS[&quot;MTS / HTS / Internal&quot;] --&gt;|증권사 내부 Backend/API GW 경유| SVA[&quot;Publication API&quot;]
         PS[&quot;Published Store&quot;] --&gt; SC[&quot;Publication Cache&quot;] --&gt; SVA
-        SA[&quot;Sync Agent&quot;] --&gt; RES[&quot;Raw Event Store&quot;]
+        SA[&quot;Sync Agent (DMZ)&quot;] --&gt;|&quot;검증 번들 전달&quot;| IN[&quot;Intake (내부망)&quot;]
+        IN --&gt; RES[&quot;Raw Event Store&quot;]
         RES --&gt; CE[&quot;Compliance Engine&quot;]
         CE --&gt;|승인/자동노출| PS
         CE --&gt; RQ[&quot;Review Queue(논리)&quot;]
@@ -1652,7 +1653,7 @@
 <ul>
 <li>데이터는 항상 <strong>Cloud → On-Prem 단방향</strong>으로 흐르고, 연결은 항상 <strong>On-Prem → Cloud outbound</strong>로만 열린다.</li>
 <li>Cloud는 "어느 증권사가 무엇을 노출했는지" 알지 못한다. Cloud가 아는 테넌트 정보는 동기화 상태(마지막 sync 시각, 성공/실패, 전달 이벤트 수)까지다.</li>
-<li><strong>네트워크 배치 (확정, 2026-07-13)</strong>: Sync Agent는 증권사 내부 업무망이 아닌 <strong>DMZ(외부연계망) 구간</strong>에 배치한다. 망분리 환경에서 내부 업무망은 외부 인터넷으로 직접 outbound를 열 수 없으므로, 외부 통신 경로는 DMZ에 한정한다. ① 방화벽 outbound 허용 대상은 벤더 Tenant Sync API의 <strong>고정 FQDN:443 (mTLS) 단일 목적지 화이트리스트</strong>로 제한 ② 증권사 표준 forward proxy 경유를 지원 ③ Sync Agent → 내부망 On-Prem DB 접근은 증권사 내부 방화벽 정책에 따라 전용 포트·계정으로 최소화 — 단, DMZ→내부망 직접 DB 커넥션 자체를 금지하고 망연계 솔루션(망간자료전송 시스템) 경유를 요구하는 증권사를 위해 <strong>망연계 솔루션 경유 배치도 지원</strong>한다. 이 경우 Sync Agent는 Pull·무결성 검증까지만 DMZ에서 수행하고, 내부망 저장은 별도 수신 모듈이 담당하는 2단 구성으로 분리한다. 나머지 온프렘 컴포넌트(Compliance Engine, Tenant Console, Publication API, DB)는 전부 내부 업무망에 위치하며 외부 통신이 없다. "외부와 닿는 것은 DMZ의 Sync Agent 하나, 방향은 outbound 하나, 목적지는 하나"가 준법감시인 대상 설명 문구다.</li>
+<li><strong>네트워크 배치 (확정, 2026-07-21 — <a href="../adr/0036-sync-agent-intake-topology/">ADR-0036</a>)</strong>: Sync는 <strong>Sync Agent(DMZ)+Intake(내부망) 2모듈</strong>로 분리 배치한다. <strong>Sync Agent</strong>는 DMZ(외부연계망)에 두어 벤더 Tenant Sync API를 outbound Pull(mTLS)·번들 무결성 검증까지 수행하고 <strong>내부망 DB에 직접 접근하지 않는다</strong>. <strong>Intake</strong>는 내부망에 두어 Sync Agent가 검증한 번들을 넘겨받아 Raw Event Store에 적재하며 외부 통신이 없다. Sync Agent→Intake 전달은 증권사의 승인된 DMZ→내부망 경계 메커니즘(망연계 솔루션(망간자료전송) 또는 통제된 내부 전송 채널)을 경유한다 — 이 경계가 곧 망분리 지점이다. ① 방화벽 outbound 허용 대상은 벤더 Tenant Sync API의 <strong>고정 FQDN:443 (mTLS) 단일 목적지 화이트리스트</strong>로 제한 ② 증권사 표준 forward proxy 경유를 지원 ③ <strong>옵션</strong>: DMZ→내부망 직접 DB 커넥션을 허용하고 컴포넌트 최소화를 원하는 증권사는 Sync Agent+Intake를 <strong>단일 모듈</strong>(DMZ 배치·내부망 DB 직접 적재)로 합쳐 배포할 수 있다(기존 단일 Sync Agent 구성). 나머지 온프렘 컴포넌트(Compliance Engine, Tenant Console, Publication API, DB)는 전부 내부 업무망에 위치하며 외부 통신이 없다. "외부와 닿는 것은 DMZ의 Sync Agent 하나, 방향은 outbound 하나, 목적지는 하나"가 준법감시인 대상 설명 문구다.</li>
 </ul>
 <h2 id="4-cloud-on-premise">4. Cloud / On-Premise 책임 분리<a class="headerlink" href="#4-cloud-on-premise" title="Permanent link">&para;</a></h2>
 <h3 id="41-vendor-cloud">4.1 Vendor Cloud 구성요소<a class="headerlink" href="#41-vendor-cloud" title="Permanent link">&para;</a></h3>
@@ -1682,7 +1683,7 @@
 </tr>
 <tr>
 <td>Tenant Sync API</td>
-<td>Sync Agent가 Pull하는 Event Bundle 제공 (cursor 기반 delta)</td>
+<td>Sync Agent(DMZ)가 Pull하는 Event Bundle 제공 (cursor 기반 delta)</td>
 </tr>
 <tr>
 <td>Super Admin Console + super-admin-api</td>
@@ -1708,8 +1709,12 @@
 </thead>
 <tbody>
 <tr>
-<td>Sync Agent</td>
-<td>Tenant Sync API를 outbound Pull, 번들 무결성 검증, On-Prem DB 저장</td>
+<td>Sync Agent (DMZ)</td>
+<td>Tenant Sync API를 outbound Pull(mTLS), 번들 무결성 검증 (내부망 DB 미접근)</td>
+</tr>
+<tr>
+<td>Intake (내부망)</td>
+<td>Sync Agent가 검증한 번들 수신, Raw Event Store 적재 (외부 통신 없음). 옵션 배치에서는 Sync Agent와 단일 모듈로 합침</td>
 </tr>
 <tr>
 <td>Raw Event Store</td>
@@ -1781,7 +1786,7 @@
 <tr>
 <td>widget-api</td>
 <td><strong>제거</strong></td>
-<td>MVP에 embed widget 없음. 고객 화면은 증권사 MTS/HTS가 직접 구성</td>
+<td>벤더 서빙 위젯 서버 제거 유지. 단 EDGE 위젯 UI는 <strong>빌드 산출물로 납품</strong>(실행 서버 없음, 증권사가 임베드·호스팅) — <a href="../adr/0035-widget-ui-build-artifact/">ADR-0035</a></td>
 </tr>
 <tr>
 <td>Tenant Sync API</td>
@@ -1789,9 +1794,9 @@
 <td>Vendor Cloud. cursor 기반 delta sync, 신규/정정/무효화 이벤트 전달, mTLS</td>
 </tr>
 <tr>
-<td>Sync Agent</td>
+<td>Sync Agent (DMZ) + Intake (내부망)</td>
 <td><strong>신규</strong></td>
-<td>On-Premise. outbound Pull, 무결성 검증 후 저장</td>
+<td>On-Premise 2모듈(<a href="../adr/0036-sync-agent-intake-topology/">ADR-0036</a>). Sync Agent=DMZ outbound Pull·검증, Intake=내부망 수신·저장. 단일 모듈 옵션</td>
 </tr>
 <tr>
 <td>Compliance Engine</td>
