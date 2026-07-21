@@ -1603,7 +1603,7 @@
 <tr>
 <td>Gateway</td>
 <td>범용 클라우드 gateway</td>
-<td>Cloud에는 Super Admin·Tenant Sync API용 gateway만</td>
+<td>제거 — 공개 엣지는 ALB 직결(ADR-0032)</td>
 </tr>
 <tr>
 <td>API Key</td>
@@ -1775,8 +1775,8 @@
 </tr>
 <tr>
 <td>gateway</td>
-<td><strong>축소</strong></td>
-<td>Cloud에는 Super Admin·Tenant Sync API용 gateway만. On-Prem은 Publication API 또는 증권사 내부 API GW</td>
+<td><strong>제거</strong></td>
+<td>앱 레벨 프록시 폐지(ADR-0032). 공개 엣지는 super-admin 공개화 시 ALB 직결. On-Prem은 증권사 내부 API GW</td>
 </tr>
 <tr>
 <td>widget-api</td>
