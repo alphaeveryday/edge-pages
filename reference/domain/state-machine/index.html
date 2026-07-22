@@ -1526,7 +1526,7 @@
 </ul>
 <h2 id="erd">ERD 방향 및 상태값<a class="headerlink" href="#erd" title="Permanent link">&para;</a></h2>
 <p>핵심 도메인 추상화 (기능 확장을 막지 않되 MVP UI는 가격 변동 설명에 집중):</p>
-<p><code>event</code> / <code>evidence</code> / <code>analysis_item</code> / <code>compliance_check</code> / <code>review_task</code> / <code>publication</code> / <code>exposure_log</code></p>
+<p><code>event</code> / <code>evidence</code> / <code>analysis_item</code> / <code>screening_check</code> / <code>review_task</code> / <code>publication</code> / <code>exposure_log</code></p>
 <ul>
 <li><code>analysis_item.analysis_type</code>: 현재 <strong>PRICE_MOVEMENT</strong>만 사용. 향후 MARKET_BRIEFING, DISCLOSURE_SUMMARY 확장 가능하나 MVP UI 비노출.</li>
 <li><strong>정정 시 레코드 모델 (확정, 2026-07-13)</strong>: 정정은 단일 레코드의 상태 왕복이 아니라 <strong>리비전 분리</strong>로 처리한다. ① 기존 analysis_item은 <strong>CORRECTED로 종결(terminal 상태)</strong> ② 해당 publication은 UNPUBLISHED로 전이 ③ 정정 문구는 원본을 참조하는(<code>supersedes_item_id</code>) <strong>새 analysis_item 리비전</strong>으로 생성되어 REVIEW_REQUIRED로 진입한다. 즉 위 <a href="#데이터-플로우">데이터 플로우</a> 표의 CORRECTED는 구 리비전의 최종 상태이고, 재검수 대상은 신규 리비전이다. 감사 재현은 리비전 체인을 따라 "어느 시점에 어느 문구가 노출되었는지"를 완전 복원한다.</li>
