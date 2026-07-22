@@ -1591,6 +1591,11 @@
 <td><code>evidence_id</code></td>
 </tr>
 <tr>
+<td><code>explanation_run_event_evidence</code></td>
+<td>번들 <code>evidences</code>의 lineage — 어느 evidence 가 어느 <code>explanation_run</code> 에 속하는지 아는 유일 경로. "내부 구현·자유 변경" 아님, 양자 합의 대상 (ALPHA-363)</td>
+<td><code>(explanation_run_id, evidence_id, stage_code)</code></td>
+</tr>
+<tr>
 <td><code>event_thread</code></td>
 <td>동일 실제 사건의 계보(정정·후속 판정의 기준)</td>
 <td><code>thread_id</code></td>
@@ -1642,7 +1647,7 @@
 <span class="w">        </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;confidence_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MEDIUM&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;primary_thread_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">      </span><span class="nt">&quot;explanation_run&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;explanation_run_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;release_bundle_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">},</span>
 <span class="w">      </span><span class="nt">&quot;source_events&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;source_event_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[합의 필요 — 경계면 컬럼 선정. 확정 전 번들은 빈 배열]&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;evidences&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;evidence_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[합의 필요 — 경계면 컬럼 선정(ALPHA-363 lineage 포함). 확정 전 번들은 빈 배열]&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span>
+<span class="w">      </span><span class="nt">&quot;evidences&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;evidence_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[합의 필요 — 실을 컬럼 선정(영서, reader 자유). run↔evidence lineage 는 `explanation_run_event_evidence`(경계면 표) 로 확정. 확정 전 번들은 빈 배열]&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;cursor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">102</span><span class="p">,</span>
