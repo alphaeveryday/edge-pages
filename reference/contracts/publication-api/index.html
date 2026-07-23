@@ -1582,13 +1582,13 @@ X-Channel: MTS | HTS | INTERNAL
 </tbody>
 </table>
 <ul>
-<li>에러 body 형상은 <code>[확정 필요 — 봉투 정책, publication-api 모듈 스캐폴드 시]</code>.</li>
+<li>에러 body 형상은 <code>[확정 필요 — 공통 응답 포맷 정책, publication-api 모듈 스캐폴드 시]</code>.</li>
 </ul>
 <h3 id="_2">미확정 목록<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <ol>
 <li>식별자 체계 (종목코드 vs ISIN)</li>
 <li>목록/배치 조회(여러 ETF 한 번에) 필요 여부 — MTS 관심목록 화면이 요구하면 추가</li>
-<li>에러 body 봉투 정책</li>
+<li>에러 body 공통 응답 포맷 정책</li>
 <li>캐싱 지시(ETag 등) — 조회=노출 시맨틱과의 상호작용 검토 필요 (<code>[주의]</code> 증권사 백엔드가 응답을 캐시하면 Exposure Log가 실노출보다 적게 기록된다 — 연동 가이드에 캐시 금지 또는 노출 콜백(로드맵, <a href="../../roadmap/">../roadmap.md</a>) 안내)</li>
 </ol>
 
