@@ -1366,6 +1366,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="API 매핑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mock-alpha-513" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        콘솔 mock 표면 (ALPHA-513 — 한시 예외)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1647,6 +1664,85 @@ API(tenant-console-api)가 세션의 역할 클레임으로 아래 표를 강제
 <td><code>POST /api/v1/review/items/{id}/reject</code></td>
 <td>검수 액션</td>
 <td>CR</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mock-alpha-513">콘솔 mock 표면 (ALPHA-513 — 한시 예외)<a class="headerlink" href="#mock-alpha-513" title="Permanent link">&para;</a></h3>
+<p>아래 표면은 tenant-console-ui 화면 계약대로 만든 <strong>mock 데이터 반환 표면</strong>이다
+(응답 원천 = <code>mock</code> 패키지 in-memory 스토어, DB 미연동). UI 에 로그인·역할 화면이
+없는(ALPHA-486 범위 밖) mock 단계라 <strong>인증만 강제하고 역할은 전 역할 허용</strong>으로
+등록한다 — "데모에서도 동일 적용" 원칙의 <strong>명시적 한시 예외</strong>(2026-07-23 사용자
+결정)로, 도메인이 DB 로 전환될 때마다 그 도메인의 행을 위 매트릭스의 역할
+(검수·정책·문구·종목 제외=CR, 사용자·시장 커버리지=TA, 이관·중단=CR·OP)로
+좁힌다. 역할 세분화 전까지 이 표면들은 실데이터를 다루지 않는다.</p>
+<table>
+<thead>
+<tr>
+<th>엔드포인트</th>
+<th>매트릭스 행 (DB 전환 시 적용)</th>
+<th>mock 단계 요구 역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/v1/explanations</code> · <code>GET /api/v1/explanations/feed-status</code></td>
+<td>목록·상세 조회</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>PATCH /api/v1/explanations/{id}/final</code></td>
+<td>최종 문구 수정 (CR)</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/explanations/{id}/stop</code></td>
+<td>제공 중단 (CR·OP)</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/explanations/{id}/move-to-review</code></td>
+<td>검수로 이관 (CR·OP)</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/explanations/{id}/approve</code> · <code>.../reject</code> · <code>PATCH .../draft</code></td>
+<td>검수 액션 (CR)</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/screening/words</code> · <code>.../criteria</code> · <code>.../disclaimer</code></td>
+<td>정책 조회</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/screening/words</code> · <code>POST .../words/{id}/toggle</code> · <code>PATCH .../criteria</code> · <code>PATCH .../disclaimer</code></td>
+<td>정책 변경 (CR)</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/scope/markets</code> · <code>GET /api/v1/scope/stocks</code></td>
+<td>제공 범위 조회</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/scope/markets/{market}/toggle</code></td>
+<td>커버리지 변경 (TA)</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/scope/stocks/{code}/toggle</code></td>
+<td>이해상충 제외 변경 (CR)</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/members</code> · <code>POST /api/v1/members/invitations</code></td>
+<td>Users &amp; Roles (TA)</td>
+<td>인증된 전 역할</td>
+</tr>
+<tr>
+<td><code>GET /api/v1/session</code> · <code>PATCH /api/v1/session/profile</code></td>
+<td>세션·프로필 (전 역할)</td>
+<td>인증된 전 역할</td>
 </tr>
 </tbody>
 </table>
