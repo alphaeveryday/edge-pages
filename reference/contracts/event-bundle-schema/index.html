@@ -1621,6 +1621,7 @@
 </ul>
 <h2 id="cloud-event-store">Cloud Event Store 스키마<a class="headerlink" href="#cloud-event-store" title="Permanent link">&para;</a></h2>
 <p><strong>물리 정의는 <a href="https://github.com/alphaeveryday/edge/blob/dev/src/libs/schema/migrations-cloud"><code>src/libs/schema/migrations-cloud/</code></a>의 Flyway SQL이다</strong> — generated 모델 생성기가 없는 현재는 이 SQL이 계약을 정의한다(<a href="../../implementation/">implementation.md</a> §4). 최초 도입은 <code>V202607150001__replace_analysis_mart_with_etf_explanation_schema.sql</code>(ALPHA-359, 47개 테이블, <code>public</code> 스키마), sync cursor 정정은 <code>V202607150002</code>(ALPHA-356). 이 경로는 CODEOWNERS로 이 문서와 같은 양자 합의 게이트에 묶여 있다.</p>
+<p><strong>v4 아규먼트 축 확장(ALPHA-544, <code>V202607242020__add_event_argument_axes.sql</code>)</strong>: <code>event_measure</code> 신규(값형 아규먼트) + <code>event_argument.slot·mention_text·entity_kind·group_ord</code> + <code>source_event.predicate_code·confidence_level·completeness</code>. 전부 additive(nullable 컬럼·신규 테이블)라 <strong>경계면 컬럼 선별(ALPHA-395)과 번들 형상에 영향 없음</strong> — 번들 미탑재, reader 무영향. 값·참여자 축의 번들 탑재 여부는 검수 UI 요구 발생 시 별도 합의.</p>
 <p>아래는 Sync 채널이 실제로 소비하는 <strong>경계면</strong>만 추린 것이다. 47개 전체가 인터페이스는 아니다 — 나머지는 진기 측 내부 구현이며 양자 합의 없이 바뀔 수 있다.</p>
 <h3 id="_1">번들에 실리는 것 (영서가 읽는 면)<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
 <table>
