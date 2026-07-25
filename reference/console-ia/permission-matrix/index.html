@@ -1665,6 +1665,21 @@ API(tenant-console-api)가 세션의 역할 클레임으로 아래 표를 강제
 <td>검수 액션</td>
 <td>CR</td>
 </tr>
+<tr>
+<td><code>GET /api/v1/members</code></td>
+<td>Users &amp; Roles 조회</td>
+<td>TA</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/members</code></td>
+<td>사용자 등록</td>
+<td>TA</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/members/{id}/deactivate</code></td>
+<td>사용자 비활성화</td>
+<td>TA</td>
+</tr>
 </tbody>
 </table>
 <h3 id="mock-alpha-513">콘솔 mock 표면 (ALPHA-513 — 한시 예외)<a class="headerlink" href="#mock-alpha-513" title="Permanent link">&para;</a></h3>
@@ -1732,11 +1747,6 @@ API(tenant-console-api)가 세션의 역할 클레임으로 아래 표를 강제
 <tr>
 <td><code>POST /api/v1/scope/stocks/{code}/toggle</code></td>
 <td>이해상충 제외 변경 (CR)</td>
-<td>인증된 전 역할</td>
-</tr>
-<tr>
-<td><code>GET /api/v1/members</code> · <code>POST /api/v1/members/invitations</code></td>
-<td>Users &amp; Roles (TA)</td>
 <td>인증된 전 역할</td>
 </tr>
 <tr>
