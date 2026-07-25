@@ -1512,7 +1512,8 @@
 
 <h1 id="mtshts-publication-api">MTS/HTS 연동 방식 — Publication API<a class="headerlink" href="#mtshts-publication-api" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>이 문서는 증권사 백엔드 개발자에게 전달되는 연동 기준의 원본이다(대외 산출물 — 표현은 <a href="../../writing-rules/">../writing-rules.md</a> 준수). 문법 명세(OpenAPI)는 publication-api 모듈 생성 시 코드 옆에 두고 이 문서가 상위 시맨틱이다.</p>
+<p>이 문서는 증권사 백엔드 개발자에게 전달되는 연동 기준의 원본이다(대외 산출물 — 표현은 <a href="../../writing-rules/">../writing-rules.md</a> 준수).</p>
+<p><strong>문법 명세(기계가독)</strong> — 경로·필드·타입의 기계가독 명세는 <a href="https://github.com/alphaeveryday/edge/blob/dev/src/apps/onprem/publication-api/openapi.yaml">publication-api/openapi.yaml</a>(OpenAPI 3.1, ALPHA-498). 이 문서(시맨틱 계약)가 상위 SSOT이고 openapi 는 하위 문법 층이다(TODO §5 2층 구조) — 의미가 충돌하면 이 문서가 이긴다.</p>
 </blockquote>
 <h2 id="_1">원칙 (확정)<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1582,13 +1583,12 @@ X-Channel: MTS | HTS | INTERNAL
 </tbody>
 </table>
 <ul>
-<li>에러 body 형상은 <code>[확정 필요 — 공통 응답 포맷 정책, publication-api 모듈 스캐폴드 시]</code>.</li>
+<li>에러 body 형상은 jvm-common 공통 응답 포맷 <code>ApiResponse</code> — <code>{ "isSuccess": false, "code": "SERV4001", "message": "..." }</code>(result 생략). 도메인 코드 <code>SERV4001</code>~<code>SERV4004</code>(400)·<code>SERV4040</code>(404), 프레임워크 예외는 상태코드 기반 공통 코드(<code>COMMON404</code> 등). 성공(200) 본문은 이 포맷으로 감싸지 않는다. (확정 — ALPHA-498, 코드 <code>PublicationErrorStatus</code>·openapi <code>ErrorResponse</code>)</li>
 </ul>
 <h3 id="_2">미확정 목록<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <ol>
 <li>식별자 체계 (종목코드 vs ISIN)</li>
 <li>목록/배치 조회(여러 ETF 한 번에) 필요 여부 — MTS 관심목록 화면이 요구하면 추가</li>
-<li>에러 body 공통 응답 포맷 정책</li>
 <li>캐싱 지시(ETag 등) — 조회=노출 시맨틱과의 상호작용 검토 필요 (<code>[주의]</code> 증권사 백엔드가 응답을 캐시하면 Exposure Log가 실노출보다 적게 기록된다 — 연동 가이드에 캐시 금지 또는 노출 콜백(로드맵, <a href="../../roadmap/">../roadmap.md</a>) 안내)</li>
 </ol>
 
