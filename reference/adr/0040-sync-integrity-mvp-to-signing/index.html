@@ -1387,7 +1387,7 @@
 
 <h1 id="adr-0040-sync-byte-mvp">ADR-0040: Sync 번들 무결성 — 체크섬·byte[] 응답을 MVP에서 목표 계약(서명)으로 이관<a class="headerlink" href="#adr-0040-sync-byte-mvp" title="Permanent link">&para;</a></h1>
 <ul>
-<li>상태: 제안됨</li>
+<li>상태: 승인됨</li>
 <li>날짜: 2026-07-27</li>
 </ul>
 <h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
@@ -1429,7 +1429,7 @@ sha256=&lt;hex&gt;</code> 헤더를 실으며, <code>BundleSerializer</code>가 
   흡수할 뿐 오염을 탐지하지 않는다) — 남는 잔여는 아래 결과에 명시하고 수용 근거를 단다.</li>
 <li><strong>목표 계약</strong>: byte-exact가 실제 요구가 되는 시점 — 즉 <strong>번들 서명 착수 시</strong> — 에 수신 바이트 원본
   보존과 서명 검증을 함께 도입한다. 그때 "받은 바이트 바로 그것"을 보존·검증할 정당한 이유가 생긴다.</li>
-<li><strong>[[0015-sync-protocol-mvp]] 승계</strong>: 이 ADR은 승인 시 ADR-0015를 <strong>승계(supersede)하여 sync 프로토콜
+<li><strong>[[0015-sync-protocol-mvp]] 승계</strong>: 이 ADR은 ADR-0015를 <strong>승계(supersede)하여 sync 프로토콜
   MVP 결정의 현행 권위</strong>가 된다. 실제로 바뀌는 건 체크섬(+<code>byte[]</code>) 한 항목뿐이지만, README 상태
   어휘에 "부분 정정" 값이 없어 살아 있는 결정을 오해 없이 표기할 방법이 승계밖에 없다. 따라서 ADR-0015의
   <strong>cursor 기반 delta·폴링 1~5분·at-least-once/멱등 upsert·gap 감지(목표)</strong> 결정을 이 ADR이 <strong>그대로
@@ -1455,8 +1455,8 @@ sha256=&lt;hex&gt;</code> 헤더를 실으며, <code>BundleSerializer</code>가 
 </ul>
 <h2 id="_4">결과<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>후속 작업 범위(채택 시, 별도 티켓)</strong> — 이 변경은 서버 한 곳이 아니라 이미 구축된 sync 경로 전체에
-  파급된다. 이 ADR은 결정만 기록하고 구현은 후속 티켓이다:</li>
+<li><strong>후속 작업 범위(별도 티켓 — 구현 에픽 ALPHA-582)</strong> — 이 변경은 서버 한 곳이 아니라 이미 구축된
+  sync 경로 전체에 파급된다. 이 ADR은 결정만 기록하고 구현은 후속 티켓(T1~T4)이다:</li>
 <li>① Cloud <code>SyncBundleController</code>(byte[]→봉투 반환)·<code>BundleSerializer</code>(SHA-256 경로 제거). <strong>주의</strong>:
     <code>BundleSerializer</code>가 유일하게 설정하는 <code>PropertyNamingStrategies.SNAKE_CASE</code>도 함께 사라진다 —
     <code>EventBundle</code>에 필드 애너테이션이 없고 전역 Jackson naming 설정도 없어, Spring 기본 직렬화로 바꾸면
@@ -1489,8 +1489,9 @@ sha256=&lt;hex&gt;</code> 헤더를 실으며, <code>BundleSerializer</code>가 
     봉투로 전환 → 기존 <code>screened_at IS NULL</code> direct-root 저장분이 소진된 뒤 구 형식 지원 제거. 순서를
     어기면 Cloud 선전환 시 구 <code>BundleRelayService</code>가 헤더 결측을 거부하거나 구 파서가 <code>result</code> 래핑을
     못 읽고, 미전환 저장 행 하나가 <code>ScreeningPoller</code>(첫 실패서 순서보존 중단) 전체를 막는다.</li>
-<li>승인 시 갱신 대상: docs/contracts/sync-protocol.md(무결성·응답 포맷 절), event-bundle-schema.md
-  (체크섬 절), 에픽 ALPHA-420 DoD의 "번들 체크섬(SHA-256) 무결성 검증" 항목을 목표 계약으로 이동.</li>
+<li>갱신 대상(채택에 따라 — 구현 에픽 ALPHA-582): docs/contracts/sync-protocol.md(무결성·응답 포맷 절)·
+  event-bundle-schema.md(체크섬 절)는 T2에서, 에픽 ALPHA-420 DoD의 "번들 체크섬(SHA-256) 무결성 검증"
+  항목은 목표 계약으로 이동(T0에서 반영).</li>
 <li><strong>잔여 리스크(수용, 재평가)</strong>: 체크섬은 <strong><code>sync-agent</code> 수신 시점(<code>BundleRelayService</code>)에 1회만</strong> 검증되고
   이후 재검증은 없다(intake·screening은 저장된 body를 그대로 파싱). 따라서 체크섬이 실제로 지키는 구간은
   <strong>와이어(클라우드 직렬화→agent 수신)</strong>뿐이고, 그중 무방비 구간은 <strong>ECS→ALB 평문 홉 하나</strong>다(나머지
@@ -1510,12 +1511,12 @@ sha256=&lt;hex&gt;</code> 헤더를 실으며, <code>BundleSerializer</code>가 
     대상이 바로 그것이다.</li>
 <li>요컨대 체크섬 제거로 늘어나는 노출은 "평문 한 홉의 저확률 오염"으로 좁게 한정되며, 위험의 본체
     (종단 간)는 체크섬 유무와 무관하게 서명 도입 전까지 남는다.</li>
-<li><strong>[[0015-sync-protocol-mvp]] 상태 전환</strong>: 승인 시 README 규약 그대로 ADR-0015 상태를 <strong><code>대체됨(→
-  ADR-0040)</code>으로 표시</strong>한다(승인된 결정이 바뀔 때의 표준 처리). 위 "승계"에서 ADR-0015의 유효 결정
+<li><strong>[[0015-sync-protocol-mvp]] 상태 전환</strong>: README 규약대로 ADR-0015 상태를 <strong><code>대체됨(→
+  ADR-0040)</code>으로 표시</strong>한다(본 채택에서 반영 — 승인된 결정이 바뀔 때의 표준 처리). 위 "승계"에서 ADR-0015의 유효 결정
   (cursor·폴링·at-least-once/멱등·gap)을 이 ADR이 그대로 재수록하므로, 상태 열의 <code>→</code> 포인터를 따르면
   현행 sync 프로토콜 MVP 결정 <strong>전부를 ADR-0040 하나에서</strong> 확인한다. 상태 열만 보는 독자가 체크섬을
   여전히 MVP 요구로 오해할 여지가 없다(대체됨이 승계본을 가리키므로 살아 있는 결정도 유실되지 않는다).</li>
-<li><strong>제안됨 상태</strong> — 채택 판단은 오너의 몫이다. 채택되면 200 성공 경로가 프로젝트 나머지 API와 균질한
+<li><strong>채택 결과</strong> — 200 성공 경로가 프로젝트 나머지 API와 균질한
   봉투(<code>ApiResponse</code>)가 되어 체크섬 헤더·<code>byte[]</code> 특례가 사라진다. 다만 <strong>204(신규 없음) 계약은 유지</strong>
   되므로 소비자는 여전히 상태 코드로 분기한다(200이면 봉투 파싱, 204면 스킵) — 봉투 일관성이 개선될
   뿐 상태 코드 선분기를 없애지는 않는다.</li>
