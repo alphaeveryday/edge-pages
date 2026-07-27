@@ -1540,7 +1540,7 @@ Reviewer 전용</strong>이며 Admin 도 우회할 수 없다. "검수 없이 �
 </tr>
 <tr>
 <td>Compliance Policy</td>
-<td>정책 조회(금칙어·처리 기준·면책 문구)</td>
+<td>정책 조회(금칙어·처리 기준·면책 문구·버전 이력)</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
@@ -1700,6 +1700,16 @@ API(tenant-console-api)가 세션의 역할 클레임으로 아래 표를 강제
 <td>역할 부여·변경</td>
 <td>TA — 자기 자신 대상은 서비스가 403(직무 분리)</td>
 </tr>
+<tr>
+<td><code>GET /api/v1/screening/words</code> · <code>.../criteria</code> · <code>.../disclaimer</code> · <code>.../versions</code></td>
+<td>정책 조회(금칙어·처리 기준·면책 문구·버전 이력)</td>
+<td>TA·CR·OP·RO</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/screening/words</code> · <code>POST .../words/{id}/toggle</code> · <code>PATCH .../criteria</code> · <code>PATCH .../disclaimer</code></td>
+<td>정책 변경(= 새 버전 발행, ALPHA-438)</td>
+<td>CR</td>
+</tr>
 </tbody>
 </table>
 <h3 id="mock-alpha-513">콘솔 mock 표면 (ALPHA-513 — 한시 예외)<a class="headerlink" href="#mock-alpha-513" title="Permanent link">&para;</a></h3>
@@ -1742,16 +1752,6 @@ API(tenant-console-api)가 세션의 역할 클레임으로 아래 표를 강제
 <tr>
 <td><code>POST /api/v1/explanations/{id}/approve</code> · <code>.../reject</code> · <code>PATCH .../draft</code></td>
 <td>검수 액션 (CR)</td>
-<td>인증된 전 역할</td>
-</tr>
-<tr>
-<td><code>GET /api/v1/screening/words</code> · <code>.../criteria</code> · <code>.../disclaimer</code></td>
-<td>정책 조회</td>
-<td>인증된 전 역할</td>
-</tr>
-<tr>
-<td><code>POST /api/v1/screening/words</code> · <code>POST .../words/{id}/toggle</code> · <code>PATCH .../criteria</code> · <code>PATCH .../disclaimer</code></td>
-<td>정책 변경 (CR)</td>
 <td>인증된 전 역할</td>
 </tr>
 <tr>
