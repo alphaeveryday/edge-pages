@@ -1661,6 +1661,11 @@ API(tenant-console-api)가 세션의 역할 클레임으로 아래 표를 강제
 <td>TA·CR·OP·RO</td>
 </tr>
 <tr>
+<td><code>GET /api/v1/review/items/{id}</code></td>
+<td>검수 상세(근거·사유·검사 결과·상태 이력 — 감사 열람, ALPHA-436)</td>
+<td>TA·CR·OP·RO</td>
+</tr>
+<tr>
 <td><code>POST /api/v1/review/items/{id}/approve</code></td>
 <td>검수 액션 — 승인(선택 의견)</td>
 <td>CR</td>
