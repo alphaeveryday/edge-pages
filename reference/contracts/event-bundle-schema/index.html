@@ -1656,7 +1656,7 @@
 </tr>
 <tr>
 <td><code>explanation_run_event_evidence</code></td>
-<td>번들 <code>evidences</code>의 lineage — 어느 evidence 가 어느 <code>explanation_run</code> 에 속하는지 아는 유일 경로. "내부 구현·자유 변경" 아님, 양자 합의 대상 (ALPHA-363)</td>
+<td>번들 <code>evidences</code>의 lineage — 어느 evidence 가 어느 <code>explanation_run</code> 에 속하는지 아는 유일 경로. "내부 구현·자유 변경" 아님, 양자 합의 대상 (ALPHA-363). writer=analysis-engine, <code>stage_code</code> 는 현재 <code>PROMPT</code> 한 값뿐이다 — 설명 생성 프롬프트에 실은 사건의 근거라는 뜻이고, 엔진에 후보 재심사 단계가 없어 단계 축이 아직 한 겹이다 (ALPHA-603)</td>
 <td><code>(explanation_run_id, evidence_id, stage_code)</code></td>
 </tr>
 <tr>
