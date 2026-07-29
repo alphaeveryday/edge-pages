@@ -1715,6 +1715,21 @@ API(tenant-console-api)가 세션의 역할 클레임으로 아래 표를 강제
 <td>정책 변경(= 새 버전 발행, ALPHA-438)</td>
 <td>CR</td>
 </tr>
+<tr>
+<td><code>GET /api/v1/scope/markets</code> · <code>GET /api/v1/scope/stocks</code></td>
+<td>제공 범위 조회</td>
+<td>TA·CR·OP·RO</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/scope/markets/{market}/toggle</code></td>
+<td>커버리지 변경(시장 토글, ALPHA-606)</td>
+<td>TA</td>
+</tr>
+<tr>
+<td><code>POST /api/v1/scope/stocks/{code}/toggle</code></td>
+<td>이해상충 제외 변경(종목 토글, ALPHA-606)</td>
+<td>CR</td>
+</tr>
 </tbody>
 </table>
 <h3 id="mock-alpha-513">콘솔 mock 표면 (ALPHA-513 — 한시 예외)<a class="headerlink" href="#mock-alpha-513" title="Permanent link">&para;</a></h3>
@@ -1757,21 +1772,6 @@ API(tenant-console-api)가 세션의 역할 클레임으로 아래 표를 강제
 <tr>
 <td><code>POST /api/v1/explanations/{id}/approve</code> · <code>.../reject</code> · <code>PATCH .../draft</code></td>
 <td>검수 액션 (CR)</td>
-<td>인증된 전 역할</td>
-</tr>
-<tr>
-<td><code>GET /api/v1/scope/markets</code> · <code>GET /api/v1/scope/stocks</code></td>
-<td>제공 범위 조회</td>
-<td>인증된 전 역할</td>
-</tr>
-<tr>
-<td><code>POST /api/v1/scope/markets/{market}/toggle</code></td>
-<td>커버리지 변경 (TA)</td>
-<td>인증된 전 역할</td>
-</tr>
-<tr>
-<td><code>POST /api/v1/scope/stocks/{code}/toggle</code></td>
-<td>이해상충 제외 변경 (CR)</td>
 <td>인증된 전 역할</td>
 </tr>
 <tr>
