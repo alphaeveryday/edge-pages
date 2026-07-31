@@ -1,0 +1,1778 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Edge 시스템 아키텍처 문서 포털 — 설계 문서·산출물·발전 과정">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>ADR-0043: Dataset Contract와 ETF freshness 상태 축 - Edge Architecture Portal</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adr-0043-dataset-contract-etf-freshness" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Edge Architecture Portal
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ADR-0043: Dataset Contract와 ETF freshness 상태 축
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="다크 모드로 전환"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="다크 모드로 전환" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="라이트 모드로 전환"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="라이트 모드로 전환" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../evolution/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Evolution
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../artifacts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Artifacts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../retrospective/" class="md-tabs__link">
+          
+  
+  
+  Retrospective
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../context/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Edge Architecture Portal
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../evolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../artifacts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Artifacts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Retrospective
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Retrospective
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../retrospective/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../retrospective/sprint-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../retrospective/sprint-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../retrospective/sprint-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../retrospective/sprint-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../retrospective/sprint-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../retrospective/sprint-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprint 6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../scope/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scope
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../writing-rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contracts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contracts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contracts/sync-protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contracts/event-bundle-schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Bundle Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contracts/sync-auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync Auth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contracts/publication-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publication API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Domain
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Domain
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../domain/state-machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    State Machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../domain/data-residency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Residency
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../domain/exposure-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exposure Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Console IA
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Console IA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../console-ia/super-admin-console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Super Admin Console
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../console-ia/tenant-console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tenant Console
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        맥락
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결정
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="결정">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        계약의 위치와 식별
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        시간 값의 의미와 타입
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#freshness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        freshness 판정
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실행, 재시도와 향후 발행
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        배포 단위와 순서
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        대안
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결과
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="adr-0043-dataset-contract-etf-freshness">ADR-0043: Dataset Contract와 ETF freshness 상태 축<a class="headerlink" href="#adr-0043-dataset-contract-etf-freshness" title="Permanent link">&para;</a></h1>
+<ul>
+<li>상태: 승인됨</li>
+<li>날짜: 2026-07-31</li>
+</ul>
+<h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>ETF 수집 완전성은 <code>ops_expected_task</code>에 기대·수집·누락 수를 남기지만, 같은 수의 데이터가
+<strong>요구한 기준일의 데이터인지</strong>는 판정하지 않는다. 따라서 완전성은 <code>VALID</code>여도 직전 거래일
+스냅샷을 다시 받은 <code>STALE</code>일 수 있다. 반대로 일부 ETF가 누락된 데이터도 수신한 행의 기준일은
+현재여서 <code>INCOMPLETE</code>이면서 <code>FRESH</code>일 수 있다.</p>
+<p>현재 <code>CatalogEntry</code>는 실행 작업의 정체성, SFN 상태, 의존, 실행 제한과 로그 위치를 함께 가진다.
+여기에 데이터셋 cadence, 기준일 규칙, 허용 지연, 담당자와 향후 발행 정책까지 직접 추가하면 같은
+데이터셋을 생산·가공하는 작업마다 계약이 복제된다. 또한 과거 원장을 현재 카탈로그 값으로 다시
+판정하면 계약 변경 전 결과의 의미가 바뀐다.</p>
+<p>첫 freshness 수직 슬라이스는 장 마감 후 수집하는
+<code>ETF_HOLDINGS_COLLECTION_KRX</code>의 <code>etf_holdings</code> EOD 스냅샷이다. 이 수집기는 거래일에는 당일,
+비거래일에는 <code>OPS_KR_HOLIDAYS</code>를 이용한 직전 거래일을 <code>trdDd</code>로 요청한다. 현재 raw
+<code>trd_dd</code>는 KRX 응답 필드가 아니라 수집기가 그 요청값을 행에 덧붙인 provenance이고, canonical
+<code>as_of_date</code>도 이를 변환한 값이다. 둘은 요청한 날짜를 증명하지만 응답 내용의 실제 기준일을
+독립적으로 증명하지 않는다.</p>
+<p><a href="../0030-raw-phase-partial-failure/">ADR-0030</a>은 일부 raw 실패나 부분 입력이 뒤의 정제·feature·분석
+실행을 막지 않는다고 정했다. freshness는 데이터 상태와 외부 발행 판단을 위한 별도 사실이며,
+ADR-0030의 실행 원칙을 바꾸면 안 된다.</p>
+<h2 id="_2">결정<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">계약의 위치와 식별<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>데이터셋 운영 계약은 <code>CatalogEntry</code>의 필드 묶음이 아니라 data-pipeline <code>ops</code> 도메인의
+  <strong>별도 typed registry</strong>로 둔다. 새 서비스나 자유 형식 함수 레지스트리는 만들지 않는다.</li>
+<li>계약은 안정적인 <code>contract_key</code>와 명시적인 버전을 가지며, 데이터셋 전달 경계 하나를 식별한다.
+  <code>CatalogEntry</code>는 해당 <code>contract_key</code>만 참조한다. 실행 정체성·SFN 배선·의존은 Catalog,
+  cadence·기준일 규칙·허용 lag·필수 여부·재시도 소유자·운영 담당과 runbook은 Contract가
+  소유한다.</li>
+<li>기존 <code>CatalogEntry.required</code>는 additive 전환 동안 호환 필드로 유지하되 Contract의 값을
+  투영하며, 두 값이 다르면 테스트와 Planner가 fail-loud한다. 독립적으로 수정하는 두 번째
+  SSOT로 두지 않는다.</li>
+<li>Planner가 기대 작업을 만들 때 적용한 계약 키·버전과 해석된 기대값을 원장에 snapshot한다.
+  Monitor는 과거 작업을 현재 registry 값으로 소급 재판정하지 않는다.</li>
+<li>논리 이름 <code>expected_as_of</code>의 저장 SSOT는 기존
+  <code>ops_expected_task.expected_as_of_date</code>다. 새 expected-as-of 컬럼을 병행 추가하지 않는다.
+  Contract가 연결된 작업부터 Planner가 슬롯 날짜 대신 계약 규칙으로 해석한 날짜를 이 컬럼에
+  기록한다. 기존 행은 당시 기록을 유지하고 소급 수정하지 않는다.</li>
+<li>첫 계약은 <code>ETF_HOLDINGS_COLLECTION_KRX</code> 전달 경계를 대상으로 하며 다음 정책 코드를 가진다.
+  cadence는 <code>MARKET_EVENT</code>, timezone은 <code>Asia/Seoul</code>, expected-as-of 규칙은
+  <code>LATEST_KR_TRADING_DAY</code>, 허용 as-of lag는 0 거래일, retry owner는 <code>SFN</code>이다.</li>
+</ul>
+<h3 id="_4">시간 값의 의미와 타입<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>네 값은 다음 의미로만 사용한다.</p>
+<table>
+<thead>
+<tr>
+<th>값</th>
+<th>의미</th>
+<th>첫 수직 슬라이스 타입</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>expected_as_of</code></td>
+<td>이 실행 슬롯이 받아야 하는 데이터의 업무 기준일. 기존 <code>expected_as_of_date</code>에 저장하며 실행 시각이나 수집 시각이 아니다.</td>
+<td><code>DATE</code></td>
+</tr>
+<tr>
+<td><code>actual_as_of</code></td>
+<td>실제 수신 데이터가 나타내는 업무 기준일. 요청값과 독립된 source evidence로 검증될 때만 저장한다.</td>
+<td><code>DATE</code></td>
+</tr>
+<tr>
+<td><code>collected_at</code></td>
+<td>해당 task 범위의 immutable 수집 산출물과 로그가 저장되어 관측 가능해진 시각. 벤더 기준일이 아니다.</td>
+<td><code>TIMESTAMPTZ</code></td>
+</tr>
+<tr>
+<td><code>observed_at</code></td>
+<td>Monitor가 계약과 증거를 비교해 freshness를 평가한 시각. 재평가하면 바뀔 수 있다.</td>
+<td><code>TIMESTAMPTZ</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>expected_as_of</code>는 실제 시작 시각이나 <code>now()</code>가 아니라 Planner의 <strong>예정 슬롯</strong>을
+  <code>Asia/Seoul</code>로 해석해 계산한다. 이 계약에서는 그 로컬 날짜 이하의 최근 한국 거래일이다.
+  수동·백필 실행도 대상 슬롯/런의 값을 명시적으로 이어받고 현재 날짜로 다시 만들지 않는다.</li>
+<li><code>actual_as_of</code>는 응답 메타데이터처럼 요청값과 독립된 source evidence가 하나의 유효한
+  업무 기준일을 증명할 때만 설정한다. 현재 adapter가 주입한 <code>trd_dd</code>와 여기서 파생한 canonical
+  <code>as_of_date</code>는 <code>requested_as_of</code> provenance이지 이 증거가 아니다. KRX 응답에서 신뢰할
+  실제 기준일을 확보하지 못하면 null로 두며, 요청일이나 파일 파티션 날짜로 추정하지 않는다.</li>
+<li>source evidence가 행 단위라면 수신한 행들이 하나의 기준일에 합의해야 한다. 값이 없거나
+  파싱할 수 없거나 행마다 다르면 날짜를 설정하지 않는다.</li>
+<li>EOD 기준일에 임의 시각을 붙여 <code>TIMESTAMPTZ</code>로 만들지 않는다. 장중 데이터셋은 후속 계약에서
+  timestamp grain과 cutoff 규칙을 별도로 정의해야 하며, 이 ADR의 <code>DATE</code> 컬럼에 넣지 않는다.</li>
+<li><code>collected_at</code>과 <code>observed_at</code>은 UTC <code>TIMESTAMPTZ</code>로 저장하고 표시에만 계약 timezone을 쓴다.
+  기존 행의 값이 없으면 null로 두며 계획 시각, attempt 종료 시각 또는 <code>0</code>으로 대체하지 않는다.</li>
+</ul>
+<p>예를 들어 2026-07-31(금) 슬롯은 <code>expected_as_of=2026-07-31</code>이다. 2026-08-01(토)에 같은 레인이
+실행되면 기대값과 KRX 요청값은 모두 최근 거래일인 2026-07-31이다. 그러나 adapter가 행에 붙인
+<code>trd_dd=20260731</code>만 있고 응답 자체의 기준일 증거가 없다면 <code>actual_as_of</code>는 null이고 freshness는
+<code>UNKNOWN</code>이다. 독립 증거가 2026-07-31을 확인해야 <code>FRESH</code>가 된다. 산출물이
+<code>2026-08-01T07:10:00Z</code>에 저장되고 Monitor가 <code>07:12:00Z</code>에 판정했다면 그 두 시각이 각각
+<code>collected_at</code>, <code>observed_at</code>이며 어느 것도 실제 기준일 증거를 대신하지 않는다.</p>
+<h3 id="freshness">freshness 판정<a class="headerlink" href="#freshness" title="Permanent link">&para;</a></h3>
+<p><code>freshness_status</code>는 <code>UNKNOWN</code>, <code>FRESH</code>, <code>STALE</code>만 가지며 <code>data_status</code>와 독립적으로 저장한다.
+판정은 Contract와 원장 증거를 읽는 결정론적 규칙이 수행하고 UI나 LLM은 재계산하지 않는다.
+계약이 연결된 <code>DUE</code> 작업은 <code>UNKNOWN</code>에서 시작한다. 계약이 아직 연결되지 않았거나
+<code>SKIPPED</code>여서 freshness 축이 적용되지 않는 작업의 저장값은 null이며, null은 <code>UNKNOWN</code>이나
+<code>FRESH</code>의 다른 표기가 아니라 <code>NOT_APPLICABLE</code> 의미다.</p>
+<p>첫 ETF holdings 계약의 판정표는 다음과 같다.</p>
+<table>
+<thead>
+<tr>
+<th>조건</th>
+<th><code>freshness_status</code></th>
+<th>reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>평가 전이거나 기대/실제 기준일 증거가 없거나 요청값과 독립적으로 검증되지 않음</td>
+<td><code>UNKNOWN</code></td>
+<td><code>EVIDENCE_MISSING</code> 또는 <code>ACTUAL_AS_OF_UNVERIFIED</code></td>
+</tr>
+<tr>
+<td>기준일 evidence 형식이 잘못됨</td>
+<td><code>UNKNOWN</code></td>
+<td><code>AS_OF_INVALID</code></td>
+</tr>
+<tr>
+<td>수신 행에 둘 이상의 기준일이 섞임</td>
+<td><code>UNKNOWN</code></td>
+<td><code>ACTUAL_AS_OF_MIXED</code></td>
+</tr>
+<tr>
+<td><code>actual_as_of</code>가 <code>expected_as_of</code>보다 미래임</td>
+<td><code>UNKNOWN</code></td>
+<td><code>ACTUAL_AS_OF_AFTER_EXPECTED</code></td>
+</tr>
+<tr>
+<td>두 기준일이 같음(허용 lag 0 거래일 충족)</td>
+<td><code>FRESH</code></td>
+<td><code>AS_OF_MATCH</code></td>
+</tr>
+<tr>
+<td><code>actual_as_of</code>가 <code>expected_as_of</code>보다 이전임</td>
+<td><code>STALE</code></td>
+<td><code>ACTUAL_AS_OF_BEFORE_EXPECTED</code></td>
+</tr>
+</tbody>
+</table>
+<p>두 상태 축은 다음처럼 조합되며 어느 한쪽이 다른 쪽을 덮어쓰지 않는다.</p>
+<table>
+<thead>
+<tr>
+<th><code>data_status</code></th>
+<th><code>freshness_status</code></th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VALID</code></td>
+<td><code>FRESH</code></td>
+<td>기대한 수와 기준일을 모두 충족</td>
+</tr>
+<tr>
+<td><code>VALID</code></td>
+<td><code>STALE</code></td>
+<td>수는 완전하지만 오래된 스냅샷</td>
+</tr>
+<tr>
+<td><code>INCOMPLETE</code></td>
+<td><code>FRESH</code></td>
+<td>일부 대상이 누락됐지만 수신 데이터의 기준일은 현재</td>
+</tr>
+<tr>
+<td><code>INCOMPLETE</code></td>
+<td><code>STALE</code></td>
+<td>일부 대상이 누락됐고 수신 데이터도 오래됨</td>
+</tr>
+<tr>
+<td>모든 <code>data_status</code></td>
+<td><code>UNKNOWN</code></td>
+<td>completeness 사실은 보존하고 freshness만 미확정</td>
+</tr>
+</tbody>
+</table>
+<p><code>VALID_EMPTY</code>와 <code>INVALID</code>도 같은 독립 규칙을 적용한다. freshness 증거가 있으면 각각
+<code>FRESH</code>/<code>STALE</code>과 조합될 수 있고, 없으면 <code>UNKNOWN</code>이다.</p>
+<p>도착이 deadline보다 늦어도 기준일이 맞으면 freshness는 <code>FRESH</code>다. 지각 실행은 기존
+plan/outcome/issue 축에서 드러내며 데이터의 나이와 섞지 않는다. 반대로 실행이 성공하고
+완전성이 <code>VALID</code>여도 기준일이 오래됐으면 <code>STALE</code>다. freshness가 <code>UNKNOWN</code>이어도 기존
+<code>data_status</code>를 <code>UNKNOWN</code>, <code>VALID</code> 또는 <code>INCOMPLETE</code>로 덮어쓰지 않는다.</p>
+<h3 id="_5">실행, 재시도와 향후 발행<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>SFN이 bounded 실행 재시도의 단일 소유자다. Reconciler/Dataset Monitor는 관측·판정·이슈
+  전이·evidence 저장만 하고 ECS task나 SFN 실행을 시작하지 않는다.</li>
+<li><code>freshness_status</code>는 정제·feature·분석 실행 게이트가 아니다. <code>STALE</code> 또는 <code>UNKNOWN</code>이어도
+  ADR-0030에 따라 실행은 계속되고 런의 실행 결과와 freshness가 각각 남는다.</li>
+<li>외부 발행은 후속 Publish Gate의 <code>publication_decision</code> 축에서만 제어한다. Gate가 도입되기
+  전에는 현재 발행 동작을 이 ADR로 바꾸지 않는다.</li>
+<li>향후 Gate에서 필수 데이터셋의 freshness가 <code>UNKNOWN</code>이면 기본 결정은 <code>PENDING</code>이다.
+  조용히 <code>ALLOW</code>하거나 <code>FRESH</code>로 간주하지 않는다. <code>STALE</code>의 <code>REVIEW</code>/<code>BLOCK</code> 정책과 영향
+  범위는 Impact Resolver·Publish Gate 티켓에서 계약별로 확정한다.</li>
+</ul>
+<h3 id="_6">배포 단위와 순서<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>이 ADR 이후 구현은 한 PR에 합치지 않고 다음 순서를 지킨다.</p>
+<ol>
+<li>KRX 응답에서 요청값과 독립된 <code>actual_as_of</code> evidence를 확보할 수 있는지 검증</li>
+<li>additive migration과 ETF freshness evidence writer</li>
+<li>Reconciler의 <code>STALE</code> 판정과 evidence/상태 전이</li>
+<li>운영 조회 API</li>
+<li>UI 표시</li>
+<li>Impact Resolver와 Publish Gate</li>
+</ol>
+<p>독립 evidence를 확보하지 못하면 writer는 <code>actual_as_of=null</code>,
+<code>freshness_status=UNKNOWN</code>, reason=<code>ACTUAL_AS_OF_UNVERIFIED</code>를 저장하며 <code>FRESH</code>/<code>STALE</code>를
+만들지 않는다. writer가 먼저 nullable 필드를 채우고 observe-only로 검증한 뒤 reader, UI
+순으로 배포한다. 이 ADR에는 스키마, 파이프라인, API, UI 변경을 포함하지 않는다.</p>
+<h2 id="_7">대안<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p><strong>대안 1 — 운영 계약을 모두 <code>CatalogEntry</code>에 추가한다.</strong> 작업 조회는 단순하지만 데이터셋
+전달 계약이 실행 작업 수만큼 복제되고, 담당·runbook·발행 정책까지 실행 카탈로그에 쌓인다.
+Catalog는 <code>contract_key</code>만 참조하고 계약의 버전과 해석 결과를 원장에 남기는 편이 책임과
+과거 판정의 재현성을 지킨다.</p>
+<p><strong>대안 2 — 모든 as-of를 <code>TIMESTAMPTZ</code>로 통일한다.</strong> ETF holdings의 업무 기준은 날짜이며
+KRX가 기준 시각을 제공하지 않는다. 자정이나 장 마감 시각을 임의로 붙이면 제공되지 않은
+정밀도를 만들므로 EOD는 <code>DATE</code>, 실제 사건 시각은 <code>TIMESTAMPTZ</code>로 분리한다.</p>
+<p><strong>대안 3 — completeness와 freshness를 하나의 상태로 합친다.</strong> <code>VALID_STALE</code>,
+<code>INCOMPLETE_FRESH</code> 같은 조합 상태가 늘고 한 축의 변화가 다른 사실을 덮는다. 두 축을 독립
+보존하고 소비자가 목적에 맞게 함께 읽도록 한다.</p>
+<p><strong>대안 4 — Reconciler가 stale 데이터를 다시 수집한다.</strong> SFN retry와 경합해 중복 실행과
+서로 다른 재시도 이력이 생긴다. Reconciler는 사실 판정과 에스컬레이션만 맡긴다.</p>
+<p><strong>대안 5 — freshness <code>UNKNOWN</code>을 즉시 발행 <code>ALLOW</code> 또는 <code>BLOCK</code>으로 바꾼다.</strong> <code>ALLOW</code>는
+근거 없는 정상화이고 <code>BLOCK</code>은 ADR-0030의 부분 입력 실행과 아직 없는 영향 계산을 사실상
+발행 단계에서 전역 차단으로 바꾼다. 불확실성을 보존하는 <code>PENDING</code>이 기본값이다.</p>
+<h2 id="_8">결과<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li>실행 성공, 완전성, freshness와 향후 발행 결정을 각각 감사할 수 있다.</li>
+<li>비거래일에는 슬롯의 로컬 달력 날짜와 계약 기준일이 다르다. Planner는 둘을 같게 만들지 않고
+  <code>LATEST_KR_TRADING_DAY</code>로 계산한 계약 기준일만 기존 <code>expected_as_of_date</code>에 기록하며,
+  병행 expected 컬럼을 만들지 않는다.</li>
+<li>요청 기준일을 실제 기준일로 재사용하지 않으므로 오래된 응답에 거짓 <code>FRESH</code>를 주지 않는다.
+  검증 가능한 KRX evidence가 없을 때 <code>UNKNOWN</code>이 늘어나는 것은 의도한 fail-loud 결과다.</li>
+<li>계약 변경 뒤에도 원장에 snapshot된 버전과 기대값으로 과거 판정을 설명할 수 있다.</li>
+<li>typed registry의 버전 관리와 Catalog 참조 무결성을 검증하는 테스트가 후속 구현의 의무가 된다.</li>
+<li>첫 범위는 KRX ETF holdings EOD뿐이다. NAV·ETF profile·장중 데이터, 단계별 lineage,
+  Impact Resolver, Publish Gate, API와 UI는 각각 후속 Jira/PR로 남는다.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
