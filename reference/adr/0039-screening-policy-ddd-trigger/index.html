@@ -1435,7 +1435,7 @@
 <li><strong>스키마 SSOT 는 Flyway 다(ADR-0005·0038).</strong> 앱은 <code>ddl-auto=validate</code> 로 스키마를 읽기 전용으로 따르고, 상태 전이·게시 grain 선점은 native SQL 로 쓴다. 애그리거트가 자기 영속성을 소유하는 클래식 DDD 는 이 경계와 정면충돌한다.</li>
 <li><strong>얇은 레이어드가 관례다.</strong> 온프렘 모듈은 controller/service/repository 를 형식만 유지한 최소 두께이며, 오버엔지니어링을 명시적으로 배제해 왔다.</li>
 </ul>
-<p>동시에 screening 은 이 레포에서 <strong>도메인 규칙이 실제로 쌓일 유일한 모듈</strong>이다. 현재는 walking skeleton 국면이라 판정 로직이 delivery_type 3분기(NEW/CORRECTION/INVALIDATION — ADR-0014·0015) <strong>뿐</strong>이고, 이는 도메인 규칙이 아니라 전달 프로토콜 분기다. <code>BundleScreener</code> 는 이 분기 + JSON 계약 파싱 + repository 호출이 한 클래스에 섞여 있지만, 로직 총량이 얇아(≈150줄) 지금은 트랜잭션 스크립트가 정직하다.</p>
+<p>동시에 screening 은 이 레포에서 <strong>도메인 규칙이 실제로 쌓일 유일한 모듈</strong>이다. 현재는 walking skeleton 국면이라 판정 로직이 delivery_type 분기(기록 당시 NEW/CORRECTION/INVALIDATION 3분기 — CORRECTION 은 이후 <a href="../0044-correction-abolition/">ADR-0044</a>로 폐지돼 현행은 2분기) <strong>뿐</strong>이고, 이는 도메인 규칙이 아니라 전달 프로토콜 분기다. <code>BundleScreener</code> 는 이 분기 + JSON 계약 파싱 + repository 호출이 한 클래스에 섞여 있지만, 로직 총량이 얇아(≈150줄) 지금은 트랜잭션 스크립트가 정직하다.</p>
 <p>문제는 "언제 이 정직함이 깨지는가"를 취향이 아니라 관측 가능한 기준으로 고정하는 것이다. 미리 지으면(선제적 DDD) 정작 규칙이 도착했을 때 예측한 경계가 틀려 두 번 일하고, 너무 늦으면 규칙이 <code>if</code> 로 흩어져 추적 불능이 된다.</p>
 <h2 id="_2">결정<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p><strong>Screening 판정의 DDD 전환은 달력이 아니라 사건으로 방아쇠를 당긴다.</strong></p>
@@ -1453,7 +1453,7 @@
 <p><code>BundleScreener</code> 는 parse → decide → apply 오케스트레이터로 얇아진다.</p>
 </li>
 <li>
-<p><strong>불변식은 SQL 에 남긴다(전환해도 옮기지 않는다).</strong> terminal 가드(<code>status NOT IN ('CORRECTED','INVALIDATED')</code>)와 게시 grain 유일성(<code>NOT EXISTS ... status='PUBLISHED'</code>)은 동시 writer(screening + tenant-console) 환경에서 DB 가 원자적으로 강제해야 정확하다. 도메인 코드는 <em>의도·결정</em>을 표현하고, SQL 은 <em>불변식</em>을 강제한다 — 같은 가드를 도메인에 복제하면 진실의 원천이 둘이 되어 스키마 SSOT 와 싸운다.</p>
+<p><strong>불변식은 SQL 에 남긴다(전환해도 옮기지 않는다).</strong> terminal 가드(기록 당시 <code>status NOT IN ('CORRECTED','INVALIDATED')</code> — CORRECTED 폐지(ADR-0044) 후 현행은 <code>status &lt;&gt; 'INVALIDATED'</code>)와 게시 grain 유일성(<code>NOT EXISTS ... status='PUBLISHED'</code>)은 동시 writer(screening + tenant-console) 환경에서 DB 가 원자적으로 강제해야 정확하다. 도메인 코드는 <em>의도·결정</em>을 표현하고, SQL 은 <em>불변식</em>을 강제한다 — 같은 가드를 도메인에 복제하면 진실의 원천이 둘이 되어 스키마 SSOT 와 싸운다.</p>
 </li>
 <li>
 <p><strong>방아쇠 전에는 위생만 유지한다.</strong> 새 delivery_type 분기나 <code>if</code> 하나가 붙어도 <code>BundleScreener</code> 안에 둔다. 단 새 로직을 넣을 때 "무엇을 할지 정하는 줄(결정)"과 "실제로 쓰는 줄(I/O)"이 뒤엉키지 않게만 한다 — 이는 DDD 가 아니라 위생이며, 방아쇠가 왔을 때 <code>policy</code> 추출을 리라이트가 아닌 이동으로 만든다.</p>

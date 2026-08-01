@@ -1543,14 +1543,6 @@ Reviewer 전용</strong>이며 Admin 도 우회할 수 없다. "검수 없이 �
 <td style="text-align: center;">–</td>
 </tr>
 <tr>
-<td></td>
-<td>정정 등록</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">✓</td>
-<td style="text-align: center;">–</td>
-<td style="text-align: center;">–</td>
-</tr>
-<tr>
 <td>Review Queue</td>
 <td>대기 목록·상세 조회</td>
 <td style="text-align: center;">✓</td>
@@ -1638,7 +1630,7 @@ Reviewer 전용</strong>이며 Admin 도 우회할 수 없다. "검수 없이 �
   컴플라이언스 통제(CR, <a href="../../adr/0023-customer-validation/">../adr/0023</a>)다.
   경계는 <code>serving_scope.scope_type</code> 과 1:1 이다(MARKET·CHANNEL = TA,
   INSTRUMENT·SECTOR = CR) — TA 가 CR 의 이해상충 제외를 되돌릴 수 없다.</li>
-<li>최종 문구 수정·정정 등록이 CR 전용인 이유: 노출 문구에 관한 판단은 검수
+<li>최종 문구 수정이 CR 전용인 이유: 노출 문구에 관한 판단은 검수
   경로이며(state-machine.md), Operator 의 쓰기는 노출 축소 방향으로 한정된다.
   Cloud Sync 관리(인증서 교체·재연결)는 노출 축소가 아닌 시스템 관리라 TA 전용이다.</li>
 <li>역할 부여의 직무 분리 보강: TA 가 스스로에게 CR 을 부여해 검수·정책 권한을
