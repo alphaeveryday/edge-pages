@@ -1415,19 +1415,23 @@
 
 <h1 id="adr-0045-day-grain-3">ADR-0045: 실시간 스냅샷 게시 전환 — day-grain 게이트 폐지, 승계와 3축 무효화<a class="headerlink" href="#adr-0045-day-grain-3" title="Permanent link">&para;</a></h1>
 <ul>
-<li>상태: 제안됨</li>
+<li>상태: 승인됨 (2026-08-04 — 제안 2026-08-01)</li>
 <li>날짜: 2026-08-01</li>
 <li>관련: <a href="../0044-correction-abolition/">ADR-0044</a>가 발번 정책 소관으로 이연한 결정을 채운다.
   <a href="../0043-dataset-contract-freshness/">ADR-0043</a>이 후속 계약으로 미룬 장중 timestamp grain과 연결된다.</li>
+<li>대체: <a href="../0044-correction-abolition/">ADR-0044</a> 중 "Cloud 운영자 정정 오버레이 유지" 결정
+  부분 — 콘솔 통제는 무효화 단독으로 교체됐다(ALPHA-737, 사용자 확정 2026-08-03). 감사
+  원장(admin_activity_log)·과거 기록은 존치.</li>
 </ul>
 <h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>제품 목표는 하루 1회 제공이 아니라 <strong>최대한 실시간에 가까운 설명 제공</strong>이다(사용자 확정
 2026-08-01). 이 목표 아래에서 설명 하나의 정체는 "그날의 결론"이 아니라 <strong><code>explanation_as_of</code>
 시점의 스냅샷</strong>이고, 장중에 새 스냅샷이 이전 스냅샷 위에 연속으로 쌓인다.</p>
-<p>현행 구현은 이와 충돌한다. analysis-engine 발번 게이트는 같은 (종목, 거래일)에 PUBLISHED가
-이미 있으면 새 결과를 DRAFT로 보류한다(day-grain 게이트 — <code>eventstore.py</code>의 <code>EXISTS
-PUBLISHED</code> CASE 분기). 그날 첫 결과만 나가고 재실행분은 묶이는 이 구조는 하루-1회 전제의
-산물이다. <a href="../0044-correction-abolition/">ADR-0044</a>는 CORRECTION을 폐지하면서 "무효화 이후
+<p>현행 구현은 이와 부분 충돌한다. cloud 발번 게이트는 분봉 트리거 도입과 함께 (종목,
+거래일) day-grain 에서 <strong>발화(route)별 첫 게시</strong>로 이행했다(<code>eventstore.py</code>의 <code>EXISTS
+PUBLISHED</code> CASE — route 기준). 새 발화는 각각 게시되지만 <strong>같은 발화의 재실행은 여전히
+DRAFT 로 보류</strong>된다 — cloud 쪽 폐지 대상은 이 재실행 보류다. (종목, 거래일) 봉인은
+온프렘(결과 절)에 남아 있다. <a href="../0044-correction-abolition/">ADR-0044</a>는 CORRECTION을 폐지하면서 "무효화 이후
 같은 종목에 새 설명(NEW)을 발번할 수 있는지는 발번 정책 소관"으로 명시적으로 이연했다 —
 이 ADR이 그 발번 정책을 결정한다.</p>
 <p>전송 채널의 메커니즘(cursor 기반 delta·폴링 주기·<code>limit</code> 파라미터)은 그대로 쓸 수 있다.
@@ -1440,8 +1444,9 @@ day-grain 전제가 남아 있어(결과 절) cloud 게이트와 함께 걷어�
 승계가 끊긴 낡음은 만료 무효화(결정 2-(c))가 상한하며, 오류는 무효화(INVALIDATION)가
 해소한다.</strong></p>
 <ol>
-<li><strong>day-grain 게이트(DRAFT 보류)를 폐지한다.</strong> 엔진 산출물은 보류 없이 즉시 PUBLISHED로
-   게시하고 NEW를 발번한다. 같은 (종목, 거래일)의 게시 횟수 제한은 없다 — 스냅샷은
+<li><strong>DRAFT 보류 게이트를 폐지한다.</strong> 엔진 산출물은 보류 없이 즉시 PUBLISHED로 게시하고
+   NEW를 발번한다 — cloud 는 route 재실행 보류를, 온프렘은 (종목, 거래일) day-grain
+   봉인을 걷어낸다. 같은 (종목, 거래일)의 게시 횟수 제한은 없다 — 스냅샷은
    <code>explanation_as_of</code>로 구분되는 별개 게시다.</li>
 <li><strong>무효화 트리거는 세 축이다.</strong> (a) <strong>as_of 시점 오류</strong> — 그 스냅샷의 기준 시점에서도
    틀렸던 것: ① 전제 데이터 소급 정정(가격·수익률 정정, 인용 뉴스 정정·철회) ② as_of 시점
@@ -1492,7 +1497,7 @@ day-grain 전제가 남아 있어(결과 절) cloud 게이트와 함께 걷어�
 </ul>
 <h2 id="_4">결과<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>ADR-0044와의 관계</strong>: 대체가 아니라 확장이다 — 0044가 이연한 발번 정책을 채운다.
+<li><strong>ADR-0044와의 관계</strong>: 발번 정책 축은 확장(0044가 이연한 결정을 채움), 결정 3의 "정정 오버레이 유지"만 부분 대체다(헤더 대체 표기·ALPHA-737).
   0044의 "소멸성 콘텐츠라 재게시 무익" 전제는 부분 재해석된다: 정정 재게시는 여전히
   무익하므로 CORRECTION 폐지는 유지되고, 장중 스냅샷 승계는 정정이 아니라 새 게시이므로
   유익하다.</li>
@@ -1515,8 +1520,8 @@ day-grain 전제가 남아 있어(결과 절) cloud 게이트와 함께 걷어�
 <li><strong>후속 작업</strong>: ① INVALIDATION 발번(ALPHA-440 — 선행 조건) ② 온프렘 다스냅샷 수용
   (<code>uq_publication_published_grain</code> 확장·두 publish() 정리 — screening-worker <code>NOT
   EXISTS</code> 가드 제거와 tenant-console-api <code>ON CONFLICT</code> arbiter 갱신·표시 정렬 as_of
-  전환·<code>explanation_as_of</code> 응답 노출 — cloud 게이트 폐지에 선행) ③ <code>eventstore.py</code> day-grain
-  게이트 제거와 <code>run_reason "DAILY"</code> 재검토 — 결정 5의 선행 3요소(①·②·⑦의 v1) 완료
+  전환·<code>explanation_as_of</code> 응답 노출 — cloud 게이트 폐지에 선행) ③ <code>eventstore.py</code> route 재실행
+  DRAFT 보류 게이트 제거와 <code>run_reason "DAILY"</code> 재검토 — 결정 5의 선행 3요소(①·②·⑦의 v1) 완료
   후에만 ④
   <a href="../../contracts/event-bundle-schema/">event-bundle-schema.md</a>·
   <a href="../../domain/state-machine/">state-machine.md</a>의 day-grain 서술 갱신과
@@ -1533,6 +1538,9 @@ day-grain 전제가 남아 있어(결과 절) cloud 게이트와 함께 걷어�
   재유도해 게시 당시 값과 오차 대조 — 정정 "사건 감지"가 아니라 멱등 상태 비교) → <strong>근거
   붕괴(뉴스 정정·철회)는 이연</strong>(전파는 lineage join으로 쉬우나 감지 신호가 파이프라인에
   없고, 실시간 모델에선 다음 스냅샷 승계·v1/v2 가드가 대부분 흡수).</li>
+<li><strong>콘솔 통제 교체(ALPHA-737)</strong>: 무효화가 실 통제(WITHDRAWN + 테넌트 전파)로 구현되면서
+  구 콘솔 오버레이 3종(정정·제외·복원 — 테넌트 미전파 표시 전용)은 은퇴했다. 0044 결정 3의
+  "오버레이 유지"는 이 부분에서 대체된다(헤더 대체 표기).</li>
 <li><strong>트레이드오프</strong>: 운영 재실행·디버깅 런도 즉시 테넌트에 노출된다(스냅샷 승계가 곧 제품
   동작이므로 수용). 무효화 남발 시 노출 공백이 잦아질 수 있어, 검증 트리거 (b)의 판정
   기준(방향 불일치의 폭·지속 시간)은 검증 시스템 설계에서 정량화한다.</li>
