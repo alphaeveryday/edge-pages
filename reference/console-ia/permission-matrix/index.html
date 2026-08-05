@@ -1560,7 +1560,7 @@ Reviewer 전용</strong>이며 Admin 도 우회할 수 없다. "검수 없이 �
 </tr>
 <tr>
 <td>Compliance Policy</td>
-<td>정책 조회(금칙어·처리 기준·면책 문구·버전 이력)</td>
+<td>정책 조회(금칙어·룰 인스턴스·처리 기준·면책 문구·버전 이력)</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">✓</td>
@@ -1568,7 +1568,7 @@ Reviewer 전용</strong>이며 Admin 도 우회할 수 없다. "검수 없이 �
 </tr>
 <tr>
 <td></td>
-<td>정책 변경(금칙어 등록·토글, 처리 기준, 면책 문구 = 새 버전 발행)</td>
+<td>정책 변경(금칙어 등록·토글, 자동 제공 스위치·처리 기준, 면책 문구 = 새 버전 발행)</td>
 <td style="text-align: center;">–</td>
 <td style="text-align: center;">✓</td>
 <td style="text-align: center;">–</td>
@@ -1746,8 +1746,8 @@ API(tenant-console-api)가 세션의 역할 클레임으로 아래 표를 강제
 <td>TA — 자기 자신 대상은 서비스가 403(직무 분리)</td>
 </tr>
 <tr>
-<td><code>GET /api/v1/screening/words</code> · <code>.../criteria</code> · <code>.../disclaimer</code> · <code>.../versions</code></td>
-<td>정책 조회(금칙어·처리 기준·면책 문구·버전 이력)</td>
+<td><code>GET /api/v1/screening/words</code> · <code>.../rules</code> · <code>.../criteria</code> · <code>.../disclaimer</code> · <code>.../versions</code></td>
+<td>정책 조회(금칙어·룰 인스턴스·처리 기준·면책 문구·버전 이력)</td>
 <td>TA·CR·OP·RO</td>
 </tr>
 <tr>
