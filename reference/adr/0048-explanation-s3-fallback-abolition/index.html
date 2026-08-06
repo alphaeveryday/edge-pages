@@ -11,26 +11,24 @@
       
       
       
-        <link rel="prev" href="../console-ia/tenant-console/">
-      
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>ADR - Edge Architecture Portal</title>
+        <title>ADR-0048: 설명 S3 폴백 폐기 — 영속 전제는 LLM 앞에서 검사한다 - Edge Architecture Portal</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,7 +47,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#architecture-decision-records-adr" class="md-skip">
+        <a href="#adr-0048-s3-llm" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -88,7 +86,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+    <a href="../../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ADR
+              ADR-0048: 설명 S3 폴백 폐기 — 영속 전제는 LLM 앞에서 검사한다
             
           </span>
         </div>
@@ -209,7 +207,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -228,7 +226,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../evolution/" class="md-tabs__link">
+      <a href="../../../evolution/" class="md-tabs__link">
         
   
   
@@ -247,7 +245,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../artifacts/" class="md-tabs__link">
+      <a href="../../../artifacts/" class="md-tabs__link">
         
   
   
@@ -268,7 +266,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../retrospective/" class="md-tabs__link">
+        <a href="../../../retrospective/" class="md-tabs__link">
           
   
   
@@ -284,13 +282,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../context/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../context/" class="md-tabs__link">
           
   
   
@@ -324,7 +320,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+    <a href="../../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -342,7 +338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -369,7 +365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../evolution/" class="md-nav__link">
+      <a href="../../../evolution/" class="md-nav__link">
         
   
   
@@ -396,7 +392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../artifacts/" class="md-nav__link">
+      <a href="../../../artifacts/" class="md-nav__link">
         
   
   
@@ -475,7 +471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/" class="md-nav__link">
+      <a href="../../../retrospective/" class="md-nav__link">
         
   
   
@@ -503,7 +499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-1/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-1/" class="md-nav__link">
         
   
   
@@ -531,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-2/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-2/" class="md-nav__link">
         
   
   
@@ -559,7 +555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-3/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-3/" class="md-nav__link">
         
   
   
@@ -587,7 +583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-4/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-4/" class="md-nav__link">
         
   
   
@@ -615,7 +611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-5/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-5/" class="md-nav__link">
         
   
   
@@ -643,7 +639,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-6/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-6/" class="md-nav__link">
         
   
   
@@ -671,7 +667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-7/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-7/" class="md-nav__link">
         
   
   
@@ -703,31 +699,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -745,7 +736,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -763,7 +754,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../context/" class="md-nav__link">
+      <a href="../../context/" class="md-nav__link">
         
   
   
@@ -791,7 +782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scope/" class="md-nav__link">
+      <a href="../../scope/" class="md-nav__link">
         
   
   
@@ -819,7 +810,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../implementation/" class="md-nav__link">
+      <a href="../../implementation/" class="md-nav__link">
         
   
   
@@ -847,7 +838,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../roadmap/" class="md-nav__link">
+      <a href="../../roadmap/" class="md-nav__link">
         
   
   
@@ -875,7 +866,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../writing-rules/" class="md-nav__link">
+      <a href="../../writing-rules/" class="md-nav__link">
         
   
   
@@ -909,20 +900,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
         
           
-          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
             
   
   
@@ -958,7 +946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/sync-protocol/" class="md-nav__link">
+      <a href="../../contracts/sync-protocol/" class="md-nav__link">
         
   
   
@@ -986,7 +974,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/event-bundle-schema/" class="md-nav__link">
+      <a href="../../contracts/event-bundle-schema/" class="md-nav__link">
         
   
   
@@ -1014,7 +1002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/sync-auth/" class="md-nav__link">
+      <a href="../../contracts/sync-auth/" class="md-nav__link">
         
   
   
@@ -1042,7 +1030,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/publication-api/" class="md-nav__link">
+      <a href="../../contracts/publication-api/" class="md-nav__link">
         
   
   
@@ -1084,20 +1072,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
         
           
-          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
             
   
   
@@ -1133,7 +1118,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/state-machine/" class="md-nav__link">
+      <a href="../../domain/state-machine/" class="md-nav__link">
         
   
   
@@ -1161,7 +1146,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/data-residency/" class="md-nav__link">
+      <a href="../../domain/data-residency/" class="md-nav__link">
         
   
   
@@ -1189,7 +1174,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/exposure-log/" class="md-nav__link">
+      <a href="../../domain/exposure-log/" class="md-nav__link">
         
   
   
@@ -1231,20 +1216,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
         
           
-          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
             
   
   
@@ -1280,7 +1262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/super-admin-console/" class="md-nav__link">
+      <a href="../../console-ia/super-admin-console/" class="md-nav__link">
         
   
   
@@ -1308,7 +1290,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/tenant-console/" class="md-nav__link">
+      <a href="../../console-ia/tenant-console/" class="md-nav__link">
         
   
   
@@ -1341,19 +1323,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -1369,7 +1342,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1402,6 +1374,86 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        맥락
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="맥락">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        이 폴백은 죽은 코드가 아니었다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        그 모드의 산출물은 아무도 안 본다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        대안
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결과
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1417,264 +1469,65 @@
 
 
 
-<h1 id="architecture-decision-records-adr">Architecture Decision Records (ADR)<a class="headerlink" href="#architecture-decision-records-adr" title="Permanent link">&para;</a></h1>
-<p>중요한 설계·운영 결정을 한 형식으로 기록한다. 회의록이나 PRD가 아니라, <strong>결정과 그 이유</strong>만 증류한다.</p>
+<h1 id="adr-0048-s3-llm">ADR-0048: 설명 S3 폴백 폐기 — 영속 전제는 LLM 앞에서 검사한다<a class="headerlink" href="#adr-0048-s3-llm" title="Permanent link">&para;</a></h1>
 <ul>
-<li>형식은 <a href="0000-template/">0000-template.md</a> 하나로 고정한다 — 맥락 · 결정 · 대안 · 결과.</li>
-<li>한 번 승인된 ADR은 수정하지 않는다. 결정이 바뀌면 <strong>새 ADR을 추가하고</strong> 옛 ADR의 상태를 <code>대체됨(→ ADR-XXXX)</code>으로 표시한다.</li>
-<li>번호는 순차 증가. 파일명은 <code>NNNN-kebab-제목.md</code>.</li>
+<li>상태: 승인됨</li>
+<li>날짜: 2026-08-06</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>ADR</th>
-<th>제목</th>
-<th>상태</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="0001-monorepo-structure/">0001</a></td>
-<td>모노레포·폴리글랏 워크스페이스 구조</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0002-agent-instructions-ssot/">0002</a></td>
-<td>에이전트 지침은 AGENTS.md 단일 출처</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0003-branch-strategy/">0003</a></td>
-<td>브랜치 전략 — dev 경유 엄격한 사다리</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0004-squash-only-merge/">0004</a></td>
-<td>Squash 전용 머지</td>
-<td>대체됨 (→ <a href="0007-merge-strategy/">0007</a>)</td>
-</tr>
-<tr>
-<td><a href="0005-db-as-contract/">0005</a></td>
-<td>DB를 단일 계약으로 · 확장-수축 마이그레이션</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0006-gateway-single-edge/">0006</a></td>
-<td>gateway 단일 엣지 · 라우트별 신뢰 필터</td>
-<td>대체됨 (→ <a href="0010-hybrid-onprem-pivot/">0010</a>)</td>
-</tr>
-<tr>
-<td><a href="0007-merge-strategy/">0007</a></td>
-<td>머지 전략 — 경계별(feature→dev Squash, dev→main Merge commit)</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0008-super-admin-console/">0008</a></td>
-<td>super-admin 콘솔 — cross-tenant 운영자 표면</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0009-aws-deployment-topology/">0009</a></td>
-<td>AWS 배포 토폴로지 — Terraform IaC · 단계 스택</td>
-<td>제안됨</td>
-</tr>
-<tr>
-<td><a href="0010-hybrid-onprem-pivot/">0010</a></td>
-<td>하이브리드 On-Premise 피벗 — 고객 접점·컴플라이언스의 증권사 이전</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0011-rls-to-physical-isolation/">0011</a></td>
-<td>RLS 멀티테넌시에서 테넌트별 물리 격리로 전환</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0012-sync-cert-bootstrap/">0012</a></td>
-<td>Sync 인증서 부트스트랩 — CSR 방식, 개인키 비반출</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0013-exposure-log-recording/">0013</a></td>
-<td>Exposure Log 기록 — 조회 시점 자동 기록, 고객 해시는 증권사 생성</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0014-correction-repreview/">0014</a></td>
-<td>정정 이벤트 처리 — 무조건 재검수</td>
-<td>대체됨(0041)</td>
-</tr>
-<tr>
-<td><a href="0015-sync-protocol-mvp/">0015</a></td>
-<td>Sync 프로토콜 — cursor 기반 delta, MVP 스펙과 목표 계약 분리</td>
-<td>대체됨 (→ <a href="0040-sync-integrity-mvp-to-signing/">0040</a>)</td>
-</tr>
-<tr>
-<td><a href="0016-single-repo-two-artifacts/">0016</a></td>
-<td>코드베이스 — 단일 레포, 배포 아티팩트 2종</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0017-demo-topology-compose/">0017</a></td>
-<td>데모/개발 토폴로지 — 별도 EC2 + Docker Compose 가상 온프렘</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0018-rule-deployment-path/">0018</a></td>
-<td>Compliance Rule 배포 경로 — Rule Type은 릴리스, Sync 채널은 데이터 전용</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0019-team-ownership-interface/">0019</a></td>
-<td>팀 오너십 — Sync 프로토콜 양단 단일 오너, 인터페이스 계약 고정</td>
-<td>대체됨 (→ <a href="0026-ownership-boundary-db/">0026</a>)</td>
-</tr>
-<tr>
-<td><a href="0020-verification-realign/">0020</a></td>
-<td>검증 반영 — 규제 서사 재정렬 및 설계 정합 일괄 정정</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0021-design-reinforcement/">0021</a></td>
-<td>설계 보강 — DMZ 배치·cursor 발번 시점·정정 리비전 모델 확정</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0022-verification-round2/">0022</a></td>
-<td>검증·보강 2차 — 규제 사실관계 외부 검증 및 배치·온보딩 옵션 보강</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0023-customer-validation/">0023</a></td>
-<td>고객 검증 반영 — 증권사 현업 리뷰 확보·이해상충은 노출 범위 제외로 통제</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0024-scope-domestic-etf/">0024</a></td>
-<td>MVP 상품 범위 — 국내 ETF, 스키마는 미국 확장성 선반영</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0025-onprem-auth-hybrid/">0025</a></td>
-<td>온프렘 콘솔 인증 — SSO/AD 지향 + 데모 자체 계정 하이브리드</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0026-ownership-boundary-db/">0026</a></td>
-<td>팀 오너십 경계 정정 — 진기는 DB 적재까지, 인터페이스는 DB 스키마</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0027-entity-id-scheme/">0027</a></td>
-<td>도메인 ID 체계 — 불투명 서로게이트(ULID), 외부 식별자는 속성</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0028-unified-pipeline-sfn/">0028</a></td>
-<td>파이프라인 SFN 통합 — 4페이즈(raw→정제→feature→분석)와 feature/분석 경계</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0029-apps-plane-grouping/">0029</a></td>
-<td>apps 플레인 그룹핑 · schema 마이그레이션 세트 대칭 명명</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0030-raw-phase-partial-failure/">0030</a></td>
-<td>raw 페이즈는 부분 실패를 격리한다 — 전량 성공 게이트 제거</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0031-serving-to-publication/">0031</a></td>
-<td>serving-api를 Publication 도메인으로 리네이밍</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0032-retire-gateway/">0032</a></td>
-<td>gateway 은퇴 — 클라우드 엣지를 ALB 직결로</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0033-demo-onprem-stack/">0033</a></td>
-<td>데모 온프렘 terraform 스택 분리 — 실 클라우드와 state 격리</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0034-host-per-edge-alb/">0034</a></td>
-<td>공개 엣지 호스트 단위 분리 — 서비스당 ALB 1개, 경로 라우팅 없음</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0035-widget-ui-build-artifact/">0035</a></td>
-<td>위젯 UI를 빌드 산출물로 납품 — 실행 서버 없음</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0036-sync-agent-intake-topology/">0036</a></td>
-<td>Sync 온프렘 토폴로지 — Sync Agent(DMZ)+Intake(내부망) 2모듈 표준</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0037-compliance-engine-to-screening-worker/">0037</a></td>
-<td>점검 실행 모듈 명칭 — Compliance Engine → Screening Worker</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0038-jpa-onprem-read-standard/">0038</a></td>
-<td>온프렘 조회 표준으로 JPA 도입 — 스키마는 Flyway SSOT, 앱은 validate-only</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0039-screening-policy-ddd-trigger/">0039</a></td>
-<td>Screening 판정의 DDD 전환은 사건 기반 — 첫 테넌트 기준 연결이 방아쇠</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0040-sync-integrity-mvp-to-signing/">0040</a></td>
-<td>Sync 번들 무결성 — 체크섬·byte[] 응답을 MVP에서 목표 계약(서명)으로 이관</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0041-correction-same-screening/">0041</a></td>
-<td>정정 리비전도 신규와 동일한 정책 평가 — 0014 대체</td>
-<td>대체됨(0044)</td>
-</tr>
-<tr>
-<td><a href="0042-sync-pull-uniform-response/">0042</a></td>
-<td>sync Pull 응답을 공통 응답 포맷으로 통일 — 신규 없음 204 폐지</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0043-dataset-contract-freshness/">0043</a></td>
-<td>Dataset Contract와 ETF freshness 상태 축</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0044-correction-abolition/">0044</a></td>
-<td>정정(CORRECTION) 전달 폐지 — 무효화(INVALIDATION) 단독</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0045-realtime-snapshot-publication/">0045</a></td>
-<td>실시간 스냅샷 게시 전환 — day-grain 게이트 폐지, 승계와 3축 무효화</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0046-confidence-gate-risk-grade-abolition/">0046</a></td>
-<td>위험등급 융합 산정 폐기 — 확신도 AND 게이트 전환, max_risk 은퇴</td>
-<td>승인됨 (결정 5 후단 대체 → <a href="0047-banned-word-risk-retirement/">0047</a>)</td>
-</tr>
-<tr>
-<td><a href="0047-banned-word-risk-retirement/">0047</a></td>
-<td>금칙어 심각도 은퇴 — 결과를 정하는 축은 처리 방식뿐</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0048-explanation-s3-fallback-abolition/">0048</a></td>
-<td>설명 S3 폴백 폐기 — 영속 전제는 LLM 앞에서 검사, bundle 주입 필수화</td>
-<td>승인됨</td>
-</tr>
-</tbody>
-</table>
+<h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><code>analysis-engine</code> 은 설명을 영속할 때 FK 전제 세 가지를 요구한다 — <code>etf_profile</code> 존재 · <code>explanation_route</code> id ·
+PUBLISHED <code>release_bundle</code>. 그 전제가 없으면 임의 FK 값을 만들지 않고 <strong>설명을 S3 에 쓰고 성공을 반환</strong>했다.
+그 갈래는 <code>explanation_run</code> 행을 만들지 않는다.</p>
+<p>문제는 분봉 소비자의 멱등 권위가 <code>explanation_run</code> 존재 하나뿐이라는 점이다(<code>has_run_for_route</code>, ALPHA-719).
+폴백으로 끝난 런은 SQS 메시지를 지우지만 완료 표식을 안 남기므로, 가시성(900초)을 넘겨 재배달된 메시지가
+다시 오면 프리플라이트가 <strong>여전히 false</strong> 라 같은 트리거에 LLM 파이프라인이 통째로 재실행된다.
+route advisory lock(ALPHA-779)은 동시 처리 창만 닫는다 — 재배달 창은 run 행이 닫는데 이 갈래엔 그 행이 없다.</p>
+<h3 id="_2">이 폴백은 죽은 코드가 아니었다<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>착수 시점 판단은 "CloudWatch 30일 실측 0건이니 이론적 결함"이었다(<code>persisted:"rds"</code> 634 / <code>"s3"</code> 0).
+그 해석이 틀렸다. <code>explanation_prerequisites</code> 는 <code>bundle</code> 을 <code>ALPHAMALE_RELEASE_BUNDLE_VERSION</code> 에서 그대로
+읽으므로 그 env 를 안 주면 <strong>항상</strong> 폴백이고, terraform 모듈 기본값은 <code>null</code>(=폴백 켜짐)이었다.
+<code>envs/dev/main.tf</code> 주석이 그것을 명시하고 있었다 — <em>"미주입=의도적 S3 폴백"</em>.</p>
+<p>즉 0건은 "갈래가 죽었다"가 아니라 "dev 가 bundle 을 주고 있다"의 결과였고, 폴백은 <strong>env 하나로 켜는
+설계된 운영 모드</strong>였다. 이 계약이 terraform 주석에만 있고 ADR 이 없어 처음 조사에서 드러나지 않았다.</p>
+<h3 id="_3">그 모드의 산출물은 아무도 안 본다<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>폴백이 쓰는 S3 객체(<code>{result prefix}/etf=…/trade_date=…/{request_id}.json</code>)를 읽는 소비자는 저장소 전체에
+<strong>0건</strong>이다 — 콘솔·super-admin·publication·온프렘 어디에도 없다. 즉 켜면 "설명은 만들어지지만 원장·화면
+어디에도 안 나타나는" 상태가 된다. <code>release_bundle</code> 버저닝이 잠정이던 시절(ALPHA-406)의 임시 우회다.</p>
+<h2 id="_4">결정<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p><strong>S3 폴백을 폐기하고, 영속 전제 검사를 LLM 호출 앞으로 옮긴다.</strong></p>
+<ul>
+<li><code>pipeline._persist_explanation</code> 의 폴백 분기와 <code>archive.write_explanation_to_s3</code> · <code>_FALLBACK_EVENT_FIELDS</code> ·
+  <code>explanation_result.skipped</code> 로그 이벤트를 삭제한다.</li>
+<li>전제 검사를 <code>persist_observation_route</code> 직후(LLM 앞)에 두고 결손이면 <code>PipelineError</code> 로 런을 세운다.
+  전제 셋은 모두 그 시점에 확정된다 — <code>profile</code>·<code>bundle</code> 은 이 런이 만드는 게 아닌 사전 상태이고,
+  <code>route</code> 는 바로 위가 커밋한다. "이미 태웠으니 결과를 버리기 아깝다"는 폴백의 존재 이유가 성립하지 않는다.</li>
+<li><code>analysis_release_bundle_version</code> 을 <code>nullable = false</code> + 빈 문자열 <code>validation</code> 필수 변수로 만든다.
+  기본값 제거는 누락을, validation 은 빈 값을 막는다 — 서로 대신하지 못한다. 런타임 exit 1 보다
+  plan 단계에서 막는 편이 싸다.</li>
+</ul>
+<h2 id="_5">대안<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><strong>폴백을 유지하고 재배달 중복만 막는다.</strong> 폴백 성공 시에도 route 기준 완료 표식을 남기는 방법.
+<code>explanation_run</code> 은 <code>release_bundle</code> FK 를 요구하므로 그 표를 못 쓰고 별도 마커 표 + 마이그레이션이 필요하다.
+아무도 읽지 않는 산출물을 살리기 위해 원장에 표를 하나 더 만드는 교환이라 택하지 않았다.</p>
+<p><strong>폴백 모드를 명시적 스위치로 승격한다.</strong> <code>EXPLANATION_FALLBACK_MODE</code> 류 플래그로 의도를 드러내는 방법.
+운영 모드로서의 값이 소비자 0건이라 확인되지 않아, 스위치를 정교하게 만드는 대신 축을 없애는 편이 싸다.</p>
+<h2 id="_6">결과<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ul>
+<li>얻는 것: 재배달 LLM 중복 과금 경로가 소멸한다(표식 없는 완료가 안 생긴다). 전제 결손일 때 LLM 을 태우고
+  나서 버리는 낭비가 없어진다. 결손이 S3 에 조용히 쌓이는 대신 DLQ·비0 종료로 드러난다(Rule 12).</li>
+<li><strong>EOD 레인의 폭발 반경이 바뀐다.</strong> 세 전제 중 결손이 실제로 갈리는 건 <code>profile</code> 뿐이고(종목별), 그것은
+  사람이 채우는 마스터라 자기치유가 없다. 신규 ETF 를 유니버스에 넣고 <code>etf_profile</code> 을 안 채우면 그 한
+  종목의 비0 종료가 전량성공 게이트(<a href="../0028-unified-pipeline-sfn/">ADR-0028</a>)를 통해 <strong>유니버스 일일 런
+  전체</strong>를 실패시키고, 채울 때까지 매일 빨갛다. 이 대가를 의식적으로 받는다 — 설명이 없는 ETF 가 조용히
+  초록에 묻히면 아무도 안 채운다. 같은 종류의 선례가 같은 파일에 이미 있다(<code>resolve_etf_instrument</code> 결손,
+  ALPHA-467). <code>holdings</code> 빈은 선례가 아니다 — 그건 매일 적재되는 데이터라 다음날 자연 복구된다.</li>
+<li>잃는 것: bundle 버저닝이 미비한 신규 환경을 "설명은 돌되 원장에는 안 넣는" 모드로 띄우는 경로. 그런 환경이
+  생기면 <code>release_bundle</code> 시딩이 선행 조건이 된다.</li>
+<li>런 아카이브 계약: 전제 결손 런은 아카이브도 안 남는다(raise 가 <code>write_run_archive</code> 앞이다). 기존 raise
+  경로(<code>resolve_etf_instrument</code>·holdings 빈·수익률 미착지)도 이미 그러하므로, "매 런 1건" 이라던 README
+  문구를 "완주한 런마다" 로 정정했다.</li>
+<li>구현: <a href="https://alphaeveryday.atlassian.net/browse/ALPHA-797">ALPHA-797</a>.</li>
+</ul>
 
 
 
@@ -1724,10 +1577,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
