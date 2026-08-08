@@ -11,26 +11,24 @@
       
       
       
-        <link rel="prev" href="../console-ia/tenant-console/">
-      
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>ADR - Edge Architecture Portal</title>
+        <title>ADR-0049: 스크리닝 LLM 트리아지 층 — 게시 후 감사·검수 확정 회수 - Edge Architecture Portal</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,7 +47,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#architecture-decision-records-adr" class="md-skip">
+        <a href="#adr-0049-llm" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -88,7 +86,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+    <a href="../../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ADR
+              ADR-0049: 스크리닝 LLM 트리아지 층 — 게시 후 감사·검수 확정 회수
             
           </span>
         </div>
@@ -209,7 +207,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -228,7 +226,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../evolution/" class="md-tabs__link">
+      <a href="../../../evolution/" class="md-tabs__link">
         
   
   
@@ -247,7 +245,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../artifacts/" class="md-tabs__link">
+      <a href="../../../artifacts/" class="md-tabs__link">
         
   
   
@@ -268,7 +266,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../retrospective/" class="md-tabs__link">
+        <a href="../../../retrospective/" class="md-tabs__link">
           
   
   
@@ -284,13 +282,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../context/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../context/" class="md-tabs__link">
           
   
   
@@ -324,7 +320,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+    <a href="../../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -342,7 +338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -369,7 +365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../evolution/" class="md-nav__link">
+      <a href="../../../evolution/" class="md-nav__link">
         
   
   
@@ -396,7 +392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../artifacts/" class="md-nav__link">
+      <a href="../../../artifacts/" class="md-nav__link">
         
   
   
@@ -475,7 +471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/" class="md-nav__link">
+      <a href="../../../retrospective/" class="md-nav__link">
         
   
   
@@ -503,7 +499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-1/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-1/" class="md-nav__link">
         
   
   
@@ -531,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-2/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-2/" class="md-nav__link">
         
   
   
@@ -559,7 +555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-3/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-3/" class="md-nav__link">
         
   
   
@@ -587,7 +583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-4/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-4/" class="md-nav__link">
         
   
   
@@ -615,7 +611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-5/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-5/" class="md-nav__link">
         
   
   
@@ -643,7 +639,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-6/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-6/" class="md-nav__link">
         
   
   
@@ -671,7 +667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-7/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-7/" class="md-nav__link">
         
   
   
@@ -703,31 +699,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -745,7 +736,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -763,7 +754,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../context/" class="md-nav__link">
+      <a href="../../context/" class="md-nav__link">
         
   
   
@@ -791,7 +782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scope/" class="md-nav__link">
+      <a href="../../scope/" class="md-nav__link">
         
   
   
@@ -819,7 +810,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../implementation/" class="md-nav__link">
+      <a href="../../implementation/" class="md-nav__link">
         
   
   
@@ -847,7 +838,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../roadmap/" class="md-nav__link">
+      <a href="../../roadmap/" class="md-nav__link">
         
   
   
@@ -875,7 +866,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../writing-rules/" class="md-nav__link">
+      <a href="../../writing-rules/" class="md-nav__link">
         
   
   
@@ -909,20 +900,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
         
           
-          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
             
   
   
@@ -958,7 +946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/sync-protocol/" class="md-nav__link">
+      <a href="../../contracts/sync-protocol/" class="md-nav__link">
         
   
   
@@ -986,7 +974,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/event-bundle-schema/" class="md-nav__link">
+      <a href="../../contracts/event-bundle-schema/" class="md-nav__link">
         
   
   
@@ -1014,7 +1002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/sync-auth/" class="md-nav__link">
+      <a href="../../contracts/sync-auth/" class="md-nav__link">
         
   
   
@@ -1042,7 +1030,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/publication-api/" class="md-nav__link">
+      <a href="../../contracts/publication-api/" class="md-nav__link">
         
   
   
@@ -1084,20 +1072,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
         
           
-          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
             
   
   
@@ -1133,7 +1118,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/state-machine/" class="md-nav__link">
+      <a href="../../domain/state-machine/" class="md-nav__link">
         
   
   
@@ -1161,7 +1146,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/data-residency/" class="md-nav__link">
+      <a href="../../domain/data-residency/" class="md-nav__link">
         
   
   
@@ -1189,7 +1174,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/exposure-log/" class="md-nav__link">
+      <a href="../../domain/exposure-log/" class="md-nav__link">
         
   
   
@@ -1231,20 +1216,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
         
           
-          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
             
   
   
@@ -1280,7 +1262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/super-admin-console/" class="md-nav__link">
+      <a href="../../console-ia/super-admin-console/" class="md-nav__link">
         
   
   
@@ -1308,7 +1290,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/tenant-console/" class="md-nav__link">
+      <a href="../../console-ia/tenant-console/" class="md-nav__link">
         
   
   
@@ -1341,19 +1323,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -1369,7 +1342,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1402,6 +1374,58 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        맥락
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        대안
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결과
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1417,269 +1441,124 @@
 
 
 
-<h1 id="architecture-decision-records-adr">Architecture Decision Records (ADR)<a class="headerlink" href="#architecture-decision-records-adr" title="Permanent link">&para;</a></h1>
-<p>중요한 설계·운영 결정을 한 형식으로 기록한다. 회의록이나 PRD가 아니라, <strong>결정과 그 이유</strong>만 증류한다.</p>
+<h1 id="adr-0049-llm">ADR-0049: 스크리닝 LLM 트리아지 층 — 게시 후 감사·검수 확정 회수<a class="headerlink" href="#adr-0049-llm" title="Permanent link">&para;</a></h1>
 <ul>
-<li>형식은 <a href="0000-template/">0000-template.md</a> 하나로 고정한다 — 맥락 · 결정 · 대안 · 결과.</li>
-<li>한 번 승인된 ADR은 수정하지 않는다. 결정이 바뀌면 <strong>새 ADR을 추가하고</strong> 옛 ADR의 상태를 <code>대체됨(→ ADR-XXXX)</code>으로 표시한다.</li>
-<li>번호는 순차 증가. 파일명은 <code>NNNN-kebab-제목.md</code>.</li>
+<li>상태: 제안됨</li>
+<li>날짜: 2026-08-08</li>
+<li>관련: ALPHA-870 · ADR-0010(하이브리드 온프렘) · ADR-0018(룰 로직=코드) · ADR-0044(INVALIDATION 단독) · ADR-0045(실시간 스냅샷 게시) · ADR-0046(확신도 AND 게이트) · 논의 기록(노션 "아이디어 — 증권사 클라우드 배포 × LLM 스크리닝", 2026-08-08)</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>ADR</th>
-<th>제목</th>
-<th>상태</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="0001-monorepo-structure/">0001</a></td>
-<td>모노레포·폴리글랏 워크스페이스 구조</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0002-agent-instructions-ssot/">0002</a></td>
-<td>에이전트 지침은 AGENTS.md 단일 출처</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0003-branch-strategy/">0003</a></td>
-<td>브랜치 전략 — dev 경유 엄격한 사다리</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0004-squash-only-merge/">0004</a></td>
-<td>Squash 전용 머지</td>
-<td>대체됨 (→ <a href="0007-merge-strategy/">0007</a>)</td>
-</tr>
-<tr>
-<td><a href="0005-db-as-contract/">0005</a></td>
-<td>DB를 단일 계약으로 · 확장-수축 마이그레이션</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0006-gateway-single-edge/">0006</a></td>
-<td>gateway 단일 엣지 · 라우트별 신뢰 필터</td>
-<td>대체됨 (→ <a href="0010-hybrid-onprem-pivot/">0010</a>)</td>
-</tr>
-<tr>
-<td><a href="0007-merge-strategy/">0007</a></td>
-<td>머지 전략 — 경계별(feature→dev Squash, dev→main Merge commit)</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0008-super-admin-console/">0008</a></td>
-<td>super-admin 콘솔 — cross-tenant 운영자 표면</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0009-aws-deployment-topology/">0009</a></td>
-<td>AWS 배포 토폴로지 — Terraform IaC · 단계 스택</td>
-<td>제안됨</td>
-</tr>
-<tr>
-<td><a href="0010-hybrid-onprem-pivot/">0010</a></td>
-<td>하이브리드 On-Premise 피벗 — 고객 접점·컴플라이언스의 증권사 이전</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0011-rls-to-physical-isolation/">0011</a></td>
-<td>RLS 멀티테넌시에서 테넌트별 물리 격리로 전환</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0012-sync-cert-bootstrap/">0012</a></td>
-<td>Sync 인증서 부트스트랩 — CSR 방식, 개인키 비반출</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0013-exposure-log-recording/">0013</a></td>
-<td>Exposure Log 기록 — 조회 시점 자동 기록, 고객 해시는 증권사 생성</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0014-correction-repreview/">0014</a></td>
-<td>정정 이벤트 처리 — 무조건 재검수</td>
-<td>대체됨(0041)</td>
-</tr>
-<tr>
-<td><a href="0015-sync-protocol-mvp/">0015</a></td>
-<td>Sync 프로토콜 — cursor 기반 delta, MVP 스펙과 목표 계약 분리</td>
-<td>대체됨 (→ <a href="0040-sync-integrity-mvp-to-signing/">0040</a>)</td>
-</tr>
-<tr>
-<td><a href="0016-single-repo-two-artifacts/">0016</a></td>
-<td>코드베이스 — 단일 레포, 배포 아티팩트 2종</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0017-demo-topology-compose/">0017</a></td>
-<td>데모/개발 토폴로지 — 별도 EC2 + Docker Compose 가상 온프렘</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0018-rule-deployment-path/">0018</a></td>
-<td>Compliance Rule 배포 경로 — Rule Type은 릴리스, Sync 채널은 데이터 전용</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0019-team-ownership-interface/">0019</a></td>
-<td>팀 오너십 — Sync 프로토콜 양단 단일 오너, 인터페이스 계약 고정</td>
-<td>대체됨 (→ <a href="0026-ownership-boundary-db/">0026</a>)</td>
-</tr>
-<tr>
-<td><a href="0020-verification-realign/">0020</a></td>
-<td>검증 반영 — 규제 서사 재정렬 및 설계 정합 일괄 정정</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0021-design-reinforcement/">0021</a></td>
-<td>설계 보강 — DMZ 배치·cursor 발번 시점·정정 리비전 모델 확정</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0022-verification-round2/">0022</a></td>
-<td>검증·보강 2차 — 규제 사실관계 외부 검증 및 배치·온보딩 옵션 보강</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0023-customer-validation/">0023</a></td>
-<td>고객 검증 반영 — 증권사 현업 리뷰 확보·이해상충은 노출 범위 제외로 통제</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0024-scope-domestic-etf/">0024</a></td>
-<td>MVP 상품 범위 — 국내 ETF, 스키마는 미국 확장성 선반영</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0025-onprem-auth-hybrid/">0025</a></td>
-<td>온프렘 콘솔 인증 — SSO/AD 지향 + 데모 자체 계정 하이브리드</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0026-ownership-boundary-db/">0026</a></td>
-<td>팀 오너십 경계 정정 — 진기는 DB 적재까지, 인터페이스는 DB 스키마</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0027-entity-id-scheme/">0027</a></td>
-<td>도메인 ID 체계 — 불투명 서로게이트(ULID), 외부 식별자는 속성</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0028-unified-pipeline-sfn/">0028</a></td>
-<td>파이프라인 SFN 통합 — feature/분석 경계 (분석은 ALPHA-806 에서 예고대로 큐 소비자로 분리 → SFN 은 3페이즈)</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0029-apps-plane-grouping/">0029</a></td>
-<td>apps 플레인 그룹핑 · schema 마이그레이션 세트 대칭 명명</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0030-raw-phase-partial-failure/">0030</a></td>
-<td>raw 페이즈는 부분 실패를 격리한다 — 전량 성공 게이트 제거</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0031-serving-to-publication/">0031</a></td>
-<td>serving-api를 Publication 도메인으로 리네이밍</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0032-retire-gateway/">0032</a></td>
-<td>gateway 은퇴 — 클라우드 엣지를 ALB 직결로</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0033-demo-onprem-stack/">0033</a></td>
-<td>데모 온프렘 terraform 스택 분리 — 실 클라우드와 state 격리</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0034-host-per-edge-alb/">0034</a></td>
-<td>공개 엣지 호스트 단위 분리 — 서비스당 ALB 1개, 경로 라우팅 없음</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0035-widget-ui-build-artifact/">0035</a></td>
-<td>위젯 UI를 빌드 산출물로 납품 — 실행 서버 없음</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0036-sync-agent-intake-topology/">0036</a></td>
-<td>Sync 온프렘 토폴로지 — Sync Agent(DMZ)+Intake(내부망) 2모듈 표준</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0037-compliance-engine-to-screening-worker/">0037</a></td>
-<td>점검 실행 모듈 명칭 — Compliance Engine → Screening Worker</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0038-jpa-onprem-read-standard/">0038</a></td>
-<td>온프렘 조회 표준으로 JPA 도입 — 스키마는 Flyway SSOT, 앱은 validate-only</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0039-screening-policy-ddd-trigger/">0039</a></td>
-<td>Screening 판정의 DDD 전환은 사건 기반 — 첫 테넌트 기준 연결이 방아쇠</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0040-sync-integrity-mvp-to-signing/">0040</a></td>
-<td>Sync 번들 무결성 — 체크섬·byte[] 응답을 MVP에서 목표 계약(서명)으로 이관</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0041-correction-same-screening/">0041</a></td>
-<td>정정 리비전도 신규와 동일한 정책 평가 — 0014 대체</td>
-<td>대체됨(0044)</td>
-</tr>
-<tr>
-<td><a href="0042-sync-pull-uniform-response/">0042</a></td>
-<td>sync Pull 응답을 공통 응답 포맷으로 통일 — 신규 없음 204 폐지</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0043-dataset-contract-freshness/">0043</a></td>
-<td>Dataset Contract와 ETF freshness 상태 축</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0044-correction-abolition/">0044</a></td>
-<td>정정(CORRECTION) 전달 폐지 — 무효화(INVALIDATION) 단독</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0045-realtime-snapshot-publication/">0045</a></td>
-<td>실시간 스냅샷 게시 전환 — day-grain 게이트 폐지, 승계와 3축 무효화</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0046-confidence-gate-risk-grade-abolition/">0046</a></td>
-<td>위험등급 융합 산정 폐기 — 확신도 AND 게이트 전환, max_risk 은퇴</td>
-<td>승인됨 (결정 5 후단 대체 → <a href="0047-banned-word-risk-retirement/">0047</a>)</td>
-</tr>
-<tr>
-<td><a href="0047-banned-word-risk-retirement/">0047</a></td>
-<td>금칙어 심각도 은퇴 — 결과를 정하는 축은 처리 방식뿐</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0048-explanation-s3-fallback-abolition/">0048</a></td>
-<td>설명 S3 폴백 폐기 — 영속 전제는 LLM 앞에서 검사, bundle 주입 필수화</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0049-screening-llm-triage-layer/">0049</a></td>
-<td>스크리닝 LLM 트리아지 층 — 게시 후 감사·검수 확정 회수</td>
-<td>제안됨</td>
-</tr>
-</tbody>
-</table>
+<h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>현행 스크리닝은 결정적 판정만으로 자동 제공을 결정한다 — 금칙어·단정 표현·
+단일 출처 룰, <code>min_source_count</code>·<code>min_confidence</code> 게이트, UNCERTAIN 상시 검수,
+<code>auto_publish_enabled</code> 스위치(ADR-0046, PolicyEvaluator가 SSOT). 이 축이 못 잡는
+위반 유형이 있다: 표현을 바꿔 쓴 투자권유성·단정 문구(부분일치 금칙어는 변주에
+무력하고 오탐도 실측됐다), 그리고 설명문이 evidences 가 지지하는 범위를 넘는
+주장을 하는 근거-주장 불일치다. 의미 기반 판정이 필요하며, 이는 LLM 이 맡을 수
+있는 영역이다.</p>
+<p>전제가 되는 배치 환경 사실 두 가지. ① ADR-0010 의 On-Prem 은 물리 서버가 아니라
+<strong>증권사가 통제하는 실행 환경</strong>(증권사 명의의 전용/금융 클라우드 포함)이다. 증권사
+클라우드 계정에 배치되면 그 계정 안의 매니지드 모델(AWS Bedrock 계열)을
+PrivateLink 로 붙일 수 있어 데이터 반출 논쟁의 폭이 크게 줄어든다 — 다만 처리
+주체·리전·로그 보존·학습 미사용 보장은 자동으로 증명되지 않으며 테넌트 승인
+절차의 대상으로 남는다. "온프렘 = 폐쇄망 = LLM 불가"라는 암묵 전제는 이 배치
+형태에서 성립하지 않는다. ② 스크리닝 입력물은 전부 비개인 콘텐츠(설명문·근거·
+출처)로, 개인신용정보 처리가 없어 규제상 비중요업무 트랙이 유지된다. CSP AI API
+활용은 국내 금융권 생성형 AI 도입의 주류 경로다(2026-08-08 조사, 노션 기록).</p>
+<p>한편 실시간 스냅샷 게시(ADR-0045)로 판정 대상은 장중 스냅샷 단위로 유입되고,
+다스냅샷 공존(as_of grain)에서 검증 대상은 노출 중 head 한정이 아니라 <strong>현재
+PUBLISHED 전체</strong>다(ADR-0045 결정 4). LLM API 지연은 수백 ms~수 초라 건마다 동기
+호출하면 서빙 지연이 되고, 비용은 룰 대비 건당 10~100배다. 콘텐츠 모더레이션
+실무 표준은 저비용 필터를 앞단에 두는 캐스케이드 + 비동기 큐다 — 단 이 제품의
+LLM 판정 대상은 "불확실한 소수"가 아니라 <strong>결정적 판정을 통과해 게시된 전체</strong>다
+(의미 기반 위반은 룰이 불확실 표시조차 못 하므로). 호출량의 실효 상한은 아래
+결정 5의 절감 층과 델타 재사용이 만들고, 그래도 남는 적체는 결정 4의 미감사
+임계 정책이 드러낸다.</p>
+<h2 id="_2">결정<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>스크리닝에 LLM 트리아지 층을 추가한다. 기본 경로에서 LLM 은 게이트가
+   아니라 에스컬레이터다.</strong> LLM 판정은 자동 차단도 자동 통과도 만들지 않는다 —
+   플래그가 서면 해당 게시물을 검수 큐(CR)로 올릴 뿐이다. 자동 제공을 결정하는
+   하드 게이트는 기존 결정적 판정(PolicyEvaluator)이 그대로 맡는다. 최종 판단은
+   검수자(인간)에 남는다. 예외는 결정 2의 게시 전 모드 하나다 — 그 모드를 택한
+   테넌트는 LLM 판정 완료를 게시의 선행 조건으로 승격시키는 것이며(비플래그 →
+   게시, 플래그 → 검수 확정까지 게시 보류), 그 경우에도 차단 확정은 검수자다.</li>
+<li><strong>배치 위치는 게시 후 감사가 기본이다.</strong> 결정적 판정만 게시 전 하드 게이트로
+   두고, LLM 은 게시 직후 비동기로 판정한다. 플래그 시 검수행이 기본이고, 게시물
+   회수는 <strong>검수자 확정의 결과</strong>로만 일어난다 — LLM 플래그가 직접 비노출을
+   만들지 않는다(결정 1의 귀결). 회수의 실체는 온프렘 로컬 상태 전이(게시 철회)
+   다 — ADR-0044 의 INVALIDATION 은 Cloud 가 발번해 온프렘이 소비하는 단방향
+   계약이므로 온프렘이 재사용할 수 없고, 이 ADR 은 그 전달 계약을 건드리지
+   않는다. "짧은 노출"의 수용 여부는 테넌트마다 다르므로 게이트 위치(게시 전/후)
+   는 테넌트 정책 노브로 둔다 — 게시 전을 택한 테넌트는 LLM 판정까지 게시가
+   대기하는 지연을 수용하는 것이다. 게시 후 플래그의 검수행은 현행 검수 전이를
+   재사용하지 않는다 — 현행 REVIEW_REQUIRED 전이는 서빙 술어상 즉시 비노출이라
+   "회수는 검수자 확정의 결과"와 모순되므로, <strong>게시를 유지한 채 검수 큐에 올리는
+   사후 검수 태스크</strong>가 별도로 필요하다(원장 설계는 구현 티켓).</li>
+<li><strong>판정은 감사 계보에 남는다.</strong> LLM 판정마다 모델 ID·모델 버전(핀 고정)·프롬프트
+   버전·판정 출력을 점검 원장(screening_check 계열)에 기록한다. 재현성 없는
+   판정은 감사 재현성이라는 제품 가치(ADR-0010)를 훼손하므로 기록 없는 호출은
+   없다.</li>
+<li><strong>실패 시맨틱은 경로별로 명시한다.</strong> 게시 전 게이트 경로는 fail-closed — LLM
+   호출 실패 시 통과가 아니라 검수 대기다. 게시 후 감사 경로는 서빙을 유지하므로
+   구조적으로 fail-open 이다 — 이를 숨기지 않고, 미감사 구간을 기록해 관측
+   지표로 드러내고 복구 후 소급 판정한다. 미감사 노출 임계는 두 등급이 있고 —
+   관측 임계(초과 시 알람)와 강제 임계(초과 시 게시 전 모드 자동 전환, 이때만
+   노출이 실제로 멈춘다) — 어느 등급까지 채택할지는 테넌트 정책이며 값·기본값은
+   구현 티켓에서 정한다. 강제 임계를 끈 테넌트의 미감사 노출에는 보장된 상한이
+   없다.</li>
+<li><strong>호출량은 구조로 줄인다.</strong> ① 폐기분 스킵 — 판정 큐는 스냅샷 단위로 쌓고,
+   꺼낼 때 <strong>더는 PUBLISHED 가 아닌 스냅샷</strong>(철회·무효화분)만 스킵한다. 종목 키
+   latest-wins 덮어쓰기는 쓰지 않는다 — 다스냅샷 공존(ADR-0045)에서는 이전
+   스냅샷도 여전히 PUBLISHED 라 덮어쓰면 미감사로 남고, 검증 대상은 PUBLISHED
+   전체다(ADR-0045 결정 4). 이 스킵 규칙은 게시 후 감사 경로 항목에만 적용한다
+   — 게시 전 게이트 모드의 큐 항목은 아직 PUBLISHED 가 아닌 게 정상이므로 경로
+   표시로 구분한다. ② 델타 스크리닝 — <strong>동일 모델·프롬프트 버전 안에서</strong> 판정
+   대상 텍스트 해시가 직전 판정과 같으면 verdict 를 재사용하고 재사용 사실을
+   기록한다. 버전이 바뀌면 재사용하지 않는다 — 버전 핀(결정 3)과 교체 절차가
+   실효하려면 캐시 키에 버전이 들어가야 한다. ③ 계층 게이트 — 결정적 판정에서 이미
+   차단/검수행이 확정된 건은 LLM 을 태우지 않는다(판정 조건 집합은 PolicyEvaluator
+   가 SSOT — 이 ADR 의 열거는 예시다). ④ 잔여 호출에만 동시성 상한·토큰 버킷을
+   적용한다.</li>
+<li><strong>새 인프라 컴포넌트를 들이지 않는다.</strong> 판정 큐는 메시지큐 인프라가 아니라
+   Postgres(SKIP LOCKED 소비)로 구현한다. 온프렘 스택의 외부 의존을
+   Postgres 하나로 유지하는 것은 딜리버리 스펙의 협상 표면을 최소로 유지하는
+   제품 결정이다. LLM 엔드포인트는 테넌트 계정 내 매니지드 모델을 기본으로 하고,
+   구체 모델·리전은 테넌트 딜리버리 스펙에서 정한다.</li>
+</ol>
+<h2 id="_3">대안<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>LLM 을 게시 전 하드 게이트로</strong> — 판정 지연이 그대로 서빙 지연이 되어 실시간
+  스냅샷 방향(ADR-0045)과 충돌하고, LLM 장애 시 fail-closed 가 서빙 정지가 된다.
+  비결정적 판정에 자동 차단 권한을 주는 것도 감사 재현성과 "AI 는 보조, 최종은
+  인간" 프레임에 어긋난다. 기본값으로 배제하되, 결정 2 의 테넌트 노브로는 남긴다.</li>
+<li><strong>LLM 플래그가 직접 회수(자동 비노출)</strong> — 오탐이 인간 검수 전에 게시물을
+  제거하고, 회수의 권위가 비결정적 판정으로 넘어가 결정 1과 모순된다. 노출 창을
+  줄이는 이득보다 "최종 판단은 인간" 서사의 훼손이 크다 — 배제. 노출 창은 검수
+  큐 우선순위(LLM 플래그 건 최상위)로 줄인다.</li>
+<li><strong>금칙어·룰 사전 고도화로 대체</strong> — 표현 변주는 열거로 못 쫓는다. 부분일치
+  오탐 실측이 이미 있고, 룰 추가는 오탐·유지비만 키운다.</li>
+<li><strong>벤더 클라우드에서 중앙 LLM 스크리닝</strong> — 게시물·검수 흐름이 벤더 통제
+  환경으로 나가 ADR-0010 이 배제한 방향으로 되돌아간다. 테넌트 환경 안에서
+  판정해야 고객 데이터 비반출·감사 재현성 서사가 유지된다.</li>
+<li><strong>전용 메시지큐(SQS·Kafka) 도입</strong> — 이 volume 에서 Postgres 큐 대비 이점이
+  없고, 온프렘 딜리버리에 승인 대상 컴포넌트 하나를 추가한다. 폐기분 스킵도
+  DB 큐(dequeue 시 게시 상태 조인)가 구현이 단순하다.</li>
+</ul>
+<h2 id="_4">결과<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li>얻는 것: 결정적 판정이 못 잡던 의미 기반 위반의 검출 경로, 테넌트 통제 환경
+  안에서 완결되는 판정("귀사 클라우드 안에서, 귀사 정책으로, 전 과정 감사
+  기록")이라는 제품 서사 강화, 인프라 추가 없는 도입.</li>
+<li>잃는 것/트레이드오프: 게시 후 감사 기본값은 위반 콘텐츠의 노출 창(게시→플래그
+  →검수 확정→회수)을 허용한다 — 이 구간이 새 운영 지표가 되고, 보수 테넌트는
+  게시 전 노브로 흡수한다. 게시 후 경로의 fail-open 은 미감사 구간 관측·임계라는
+  운영 부담을 동반한다. LLM 판정 비용·모델 버전 관리 부담이 생긴다.</li>
+<li>따라오는 의무: 모델·프롬프트 버전 핀 고정과 교체 절차, 미감사 구간의 관측·소급
+  판정과 임계 정책(관측/강제 등급), 게이트 위치 노브의 정책 스키마 편입, 게시 유지형 사후 검수
+  태스크와 온프렘 게시 철회 상태 전이의 원장 설계(ADR-0044 전달 계약과 별개임을
+  유지). 구현은 전부 별도
+  티켓이다 — 이 ADR 은 방향 합의만 기록한다(제안 상태).</li>
+</ul>
 
 
 
@@ -1729,10 +1608,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
