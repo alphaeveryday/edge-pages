@@ -1650,6 +1650,14 @@
 </tr>
 </tbody>
 </table>
+<p><strong>예외 — 소비자도 행도 없는 표</strong>(ALPHA-853). 확장-수축은 <strong>읽는 쪽이 있을 때</strong> 옛 이름과 새 이름을 함께 두어 무중단 전환을 만드는 장치다. 정의만 있고 생산자·소비자·행이 전부 0 인 표에는 지킬 무중단이 없고, 없는 소비자를 위해 두 벌을 유지하면 다음 사람이 어느 쪽이 진짜인지 묻게 된다. 이때만 직접 <code>RENAME</code>·<code>DROP</code> 을 허용한다.</p>
+<p>조건은 <strong>넷 다</strong> 충족해야 하며 근거를 PR 설명에 적는다:</p>
+<ul>
+<li>코드 참조 0 — py·java·kt·sql·ORM 매핑·SQL 문자열 상수를 전수 grep</li>
+<li><strong>문서 참조 0</strong> — 설계 문서가 그 표를 근거로 삼고 있으면 문서를 함께 정리하거나 예외를 포기한다. ALPHA-853 이 실제로 여기서 걸렸다(코드는 0 이었으나 활성 스펙이 그 표를 설계 근거로 인용하고 있었다)</li>
+<li>행 0</li>
+<li><strong>되돌리기 경로를 마이그레이션 주석에 명시</strong> — <code>DROP</code> 은 역이 없다. 원본 DDL 의 파일·줄 번호를 적는다</li>
+</ul>
 <p><strong>PR·배포 매핑</strong>
 - 각 단계는 <strong>별도 PR</strong>이다(확장 / 전환 / 수축). 한 PR에 몰지 않는다.
 - 코드 변경 자체는 PR 단위로 원자적이되, <strong>DB 계약의 단계 전환 사이에는 배포 완료를 기다린다.</strong>
