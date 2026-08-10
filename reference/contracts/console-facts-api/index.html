@@ -1411,10 +1411,27 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="런 축">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        계획 결손 슬롯도 런 축에 실린다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         조회 창
@@ -1426,7 +1443,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         어느 날을 고르나
@@ -1437,7 +1454,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         런이 어느 날에 속하나
@@ -1464,7 +1481,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         부재를 싣는 규약
@@ -1475,7 +1492,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         성능에 대해 지금 하지 않는 것
@@ -1533,7 +1550,7 @@
 <tr>
 <td>계획 결손 슬롯</td>
 <td>런 행이 없는 슬롯을 런 축에 싣는다</td>
-<td>⏭</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>작업 축</td>
@@ -1597,10 +1614,36 @@
 다른 사실이다.</p>
 <p><strong>런이 0건인 날의 <code>runs: []</code> 는 사실이다</strong> — "봤는데 없었다". 아직 안 붙은 축의 키 부재와
 반대다(그건 "아직 안 본다").</p>
-<h2 id="_3">조회 창<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="_3">계획 결손 슬롯도 런 축에 실린다<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>계획은 있었는데 <strong>런 행이 안 생긴</strong> 슬롯(<code>ops_reconciliation_issue</code> <code>PLANNER_MISSING</code>)은
+<strong>런처럼 생긴 행</strong>으로 같은 배열에 들어간다 — 그 슬롯이 사건의 대상이기 때문이다. 런 행이
+없으니 <code>ledgerStatus</code>·<code>ledgerUpdated</code>·<code>deadline</code> 은 <strong>없는 것이 사실</strong>이라 <code>null</code> 이다.</p>
+<div class="highlight"><pre><span></span><code>{
+  &quot;id&quot;: &quot;etf-daily:2026-08-03T15:40&quot;,
+  &quot;lane&quot;: &quot;etf-daily&quot;,            // 슬롯 키에서 읽는다 (이슈 테이블에 레인 컬럼이 없다)
+  &quot;tradingDate&quot;: &quot;2026-08-03&quot;,    // 〃
+  &quot;ledgerStatus&quot;: null,
+  &quot;planned&quot;: true,                // ← 계획 슬롯에만 실린다
+  &quot;noRunRow&quot;: true                // 〃
+}
+</code></pre></div>
+<p>⚠️ <strong><code>planned</code>·<code>noRunRow</code> 는 실재 런에서 키 자체가 없다.</strong> <code>false</code> 로 채우면 "계획된 적 없다"는
+<strong>단정</strong>이 되는데 그걸 답할 계측이 원장에 없다(크론 설정은 DB 밖). 이 응답에서 <code>@JsonInclude</code> 를
+<strong>필드 단위로</strong> 거는 유일한 자리이고, 클래스 단위로 올리면 다른 축의 "집계 없음(null)"까지 같이
+지워진다.</p>
+<p>⚠️ <strong><code>status='OPEN'</code> 만으로는 부족하다 — <code>NOT EXISTS</code> 를 함께 건다.</strong> Reconciler 가 아직 닫지
+못한 이슈와 그 사이 생긴 런이 겹치면 같은 <code>run_key</code> 가 <strong>두 행</strong>으로 나가고, 소비자는 그걸
+식별자 충돌로 읽어 그 축 규칙을 통째로 못 돎 으로 세운다.</p>
+<p>⚠️ <strong>슬롯 키를 못 읽으면 레인·거래일이 <code>null</code> 이고 경고가 남는다.</strong> 잘못 자른 조각을 레인
+이름이라고 우기면 화면이 존재하지 않는 레인을 그린다. 응답에는 "레인 미상"으로만 보이므로
+<strong>그 경고가 Planner 키 형식이 갈렸다는 사실을 남기는 유일한 장치다</strong>(키 형식 SSOT 는
+<code>ops/planner.py</code> 의 <code>slot_run_key</code>).</p>
+<p>두 소스를 합친 뒤 <strong>다시 정렬한다</strong> — 각자 자기 안에서만 정렬돼 있어 이어 붙이면 전체 순서가
+깨진다.</p>
+<h2 id="_4">조회 창<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p><strong>창은 하루다.</strong> <code>date</code> 를 생략하면 서버가 고르고, <strong>무엇을 골랐는지 <code>meta.today</code> 로
 되돌려준다</strong> — 화면이 요청한 날짜를 그대로 그리면 서버가 다른 날을 골랐을 때 거짓말이 된다.</p>
-<h3 id="_4">어느 날을 고르나<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<h3 id="_5">어느 날을 고르나<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <ol>
 <li>런이 있던 마지막 날</li>
 <li><strong>계획만 있고 런 행이 없던</strong> 마지막 날(<code>ops_reconciliation_issue</code> <code>PLANNER_MISSING</code>)</li>
@@ -1608,7 +1651,7 @@
 </ol>
 <p>⚠️ 2번을 빼면 안 된다. 런이 하루도 안 뜬 날이 조회 후보에서 사라지는데, <strong>그날이 바로 콘솔이
 열려야 하는 날</strong>이다.</p>
-<h3 id="_5">런이 어느 날에 속하나<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<h3 id="_6">런이 어느 날에 속하나<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">COALESCE</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">trading_date</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">created_at</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Seoul&#39;</span><span class="p">)::</span><span class="nb">date</span><span class="p">)</span>
 </code></pre></div>
 <p>⚠️ <code>trading_date</code> 로 단순화하지 마라 — 비거래일 런은 그 컬럼이 NULL 이라 통째로 새어 나간다.
@@ -1644,7 +1687,7 @@
 게이트가 사고를 숨기는 방향으로 서면 안 된다.</p>
 <p>원장에서 오는 미래도 같은 이유로 막는다: 미래 거래일 런이나 미래 슬롯 키가 하나라도 있으면
 기본 조회가 오지 않은 날로 뛴다. 그래서 후보 조회에 <strong>상한을 KST 오늘</strong>로 건다.</p>
-<h2 id="_6">부재를 싣는 규약<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h2 id="_7">부재를 싣는 규약<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <p>이 응답의 핵심은 값이 아니라 <strong>부재의 종류</strong>다. 셋을 끝까지 가른다:</p>
 <table>
 <thead>
@@ -1676,7 +1719,7 @@
 <p>⚠️ 클래스 단위 <code>@JsonInclude(NON_NULL)</code> 을 걸지 않는 이유가 이것이다 — 위에 걸면 "집계
 없음(null)"이 조용히 "계측 없음(필드 부재)"으로 바뀌어, 콘솔이 없애려는 칸 혼동을 서버가 다시
 만든다. 필요한 필드에만 붙인다.</p>
-<h2 id="_7">성능에 대해 지금 하지 않는 것<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h2 id="_8">성능에 대해 지금 하지 않는 것<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
 <p>날짜 후보 조회에 <strong>하한(lookback)을 두지 않는다.</strong> 한 번 뒀다가 되돌렸다 — 90일 창은 파이프라인이
 그보다 오래 멈췄다 재개한 날 <strong>원장이 아는 마지막 날을 창 밖으로 밀어낸다</strong> — <code>run_latest</code> 도
 계획 결손일도 안 잡혀 기본 조회가 KST 오늘로 떨어지고, 화면은 사고 난 그날 대신 빈 오늘을 연다.
