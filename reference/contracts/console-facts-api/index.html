@@ -1434,6 +1434,17 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
+        작업 축
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         조회 창
       
     </span>
@@ -1443,7 +1454,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         어느 날을 고르나
@@ -1454,7 +1465,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         런이 어느 날에 속하나
@@ -1481,7 +1492,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         부재를 싣는 규약
@@ -1492,7 +1503,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       
         성능에 대해 지금 하지 않는 것
@@ -1555,7 +1566,7 @@
 <tr>
 <td>작업 축</td>
 <td><code>tasks[]</code></td>
-<td>⏭</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>데이터셋 축</td>
@@ -1640,10 +1651,22 @@
 <code>ops/planner.py</code> 의 <code>slot_run_key</code>).</p>
 <p>두 소스를 합친 뒤 <strong>다시 정렬한다</strong> — 각자 자기 안에서만 정렬돼 있어 이어 붙이면 전체 순서가
 깨진다.</p>
-<h2 id="_4">조회 창<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_4">작업 축<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>그 날의 기대 작업 전건. <code>runId</code> 는 런의 <code>id</code>(=<code>run_key</code>)와 <strong>같은 축</strong>이다 — 내부
+<code>pipeline_run_id</code> 를 쓰면 와이어에서 런 축과 안 이어진다. 창은 런 축과 <strong>같은 식</strong>을 쓴다.</p>
+<p>⚠️ <strong>모르는 값은 <code>null</code> 이다.</strong> <code>records_out</code>·<code>failed_records</code>·<code>completeness_*</code> 는 원장이 안 준
+경우가 있는데, JDBC 의 <code>getLong</code> 은 SQL NULL 을 <strong>0 으로 준다</strong> — 접히면 "0건 처리"와 "신호 없음"이
+화면에서 같은 칸이 된다. <code>attempts</code> 는 <code>count(*)</code> 라 0 이 실측이다.</p>
+<p>⚠️ <strong>정렬은 파이프라인 순서다</strong>(<code>raw</code> → <code>normalize</code> → 그 외). 문자열 순이면 역순이 된다
+(<code>feature</code> &lt; <code>normalize</code> &lt; <code>raw</code>).</p>
+<p>⚠️ <strong>계약·신선도 컬럼(<code>datasetContractKey</code>·<code>expectedAsOf</code>·<code>actualAsOf</code>·<code>collectedAt</code>·
+<code>freshnessStatus</code>·<code>freshnessReason</code>)은 작업 축 와이어에 안 나간다.</strong> 그건 <strong>데이터셋 축을
+파생하는 재료</strong>이지 작업 축의 사실이 아니다(<code>dataset_contract</code> 테이블이 없어 <code>ops_expected_task</code>
+의 컬럼으로 산다). 그대로 흘리면 소비자가 같은 사실을 두 축에서 읽고, 한쪽만 고칠 때 갈린다.</p>
+<h2 id="_5">조회 창<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <p><strong>창은 하루다.</strong> <code>date</code> 를 생략하면 서버가 고르고, <strong>무엇을 골랐는지 <code>meta.today</code> 로
 되돌려준다</strong> — 화면이 요청한 날짜를 그대로 그리면 서버가 다른 날을 골랐을 때 거짓말이 된다.</p>
-<h3 id="_5">어느 날을 고르나<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<h3 id="_6">어느 날을 고르나<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ol>
 <li>런이 있던 마지막 날</li>
 <li><strong>계획만 있고 런 행이 없던</strong> 마지막 날(<code>ops_reconciliation_issue</code> <code>PLANNER_MISSING</code>)</li>
@@ -1651,7 +1674,7 @@
 </ol>
 <p>⚠️ 2번을 빼면 안 된다. 런이 하루도 안 뜬 날이 조회 후보에서 사라지는데, <strong>그날이 바로 콘솔이
 열려야 하는 날</strong>이다.</p>
-<h3 id="_6">런이 어느 날에 속하나<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<h3 id="_7">런이 어느 날에 속하나<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">COALESCE</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">trading_date</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">created_at</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Seoul&#39;</span><span class="p">)::</span><span class="nb">date</span><span class="p">)</span>
 </code></pre></div>
 <p>⚠️ <code>trading_date</code> 로 단순화하지 마라 — 비거래일 런은 그 컬럼이 NULL 이라 통째로 새어 나간다.
@@ -1687,7 +1710,7 @@
 게이트가 사고를 숨기는 방향으로 서면 안 된다.</p>
 <p>원장에서 오는 미래도 같은 이유로 막는다: 미래 거래일 런이나 미래 슬롯 키가 하나라도 있으면
 기본 조회가 오지 않은 날로 뛴다. 그래서 후보 조회에 <strong>상한을 KST 오늘</strong>로 건다.</p>
-<h2 id="_7">부재를 싣는 규약<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h2 id="_8">부재를 싣는 규약<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
 <p>이 응답의 핵심은 값이 아니라 <strong>부재의 종류</strong>다. 셋을 끝까지 가른다:</p>
 <table>
 <thead>
@@ -1719,7 +1742,7 @@
 <p>⚠️ 클래스 단위 <code>@JsonInclude(NON_NULL)</code> 을 걸지 않는 이유가 이것이다 — 위에 걸면 "집계
 없음(null)"이 조용히 "계측 없음(필드 부재)"으로 바뀌어, 콘솔이 없애려는 칸 혼동을 서버가 다시
 만든다. 필요한 필드에만 붙인다.</p>
-<h2 id="_8">성능에 대해 지금 하지 않는 것<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h2 id="_9">성능에 대해 지금 하지 않는 것<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
 <p>날짜 후보 조회에 <strong>하한(lookback)을 두지 않는다.</strong> 한 번 뒀다가 되돌렸다 — 90일 창은 파이프라인이
 그보다 오래 멈췄다 재개한 날 <strong>원장이 아는 마지막 날을 창 밖으로 밀어낸다</strong> — <code>run_latest</code> 도
 계획 결손일도 안 잡혀 기본 조회가 KST 오늘로 떨어지고, 화면은 사고 난 그날 대신 빈 오늘을 연다.
