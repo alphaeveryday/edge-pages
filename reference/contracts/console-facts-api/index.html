@@ -1406,6 +1406,17 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
+        런 축
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         조회 창
       
     </span>
@@ -1415,7 +1426,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         어느 날을 고르나
@@ -1426,7 +1437,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         런이 어느 날에 속하나
@@ -1453,7 +1464,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         부재를 싣는 규약
@@ -1464,7 +1475,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         성능에 대해 지금 하지 않는 것
@@ -1517,7 +1528,7 @@
 <tr>
 <td>런 축</td>
 <td><code>runs[]</code></td>
-<td>⏭</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>계획 결손 슬롯</td>
@@ -1553,6 +1564,16 @@
 필드명은 UI 타입과 같은 camelCase 다.</p>
 <div class="highlight"><pre><span></span><code>{
   &quot;result&quot;: {
+    &quot;runs&quot;: [
+      {
+        &quot;id&quot;: &quot;etf-daily:2026-08-03T15:40&quot;,   // = run_key. 사건 식별자의 대상 축
+        &quot;lane&quot;: &quot;etf-daily&quot;,                  // = pipeline_type
+        &quot;tradingDate&quot;: &quot;2026-08-03&quot;,          // 비거래일 런은 null (키는 있다)
+        &quot;ledgerStatus&quot;: &quot;SUCCEEDED&quot;,          // = orchestration_status, 원장 어휘 그대로
+        &quot;ledgerUpdated&quot;: &quot;2026-08-03T07:20:34Z&quot;,
+        &quot;deadline&quot;: null                      // hard_deadline_at 없으면 null
+      }
+    ],
     &quot;meta&quot;: {
       &quot;db&quot;: &quot;2026-08-03T07:20:34Z&quot;,   // DB 시계 — 화면의 &quot;언제 기준인가&quot;
       &quot;today&quot;: &quot;2026-08-03&quot;           // 실제로 본 날
@@ -1560,10 +1581,26 @@
   }
 }
 </code></pre></div>
-<h2 id="_2">조회 창<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_2">런 축<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>그 날의 런 <strong>전건</strong>이고, 원장 컬럼을 <strong>그대로</strong> 옮긴다 — 여기서 어휘를 다시 정의하지 않는다
+(판정은 클라이언트). <code>id</code> 는 내부 <code>pipeline_run_id</code> 가 아니라 <strong><code>run_key</code></strong> 다: 사건 식별자의
+대상 축이고, 뒤에 붙을 작업 축이 이 값으로 매인다(<code>tasks[].runId</code>).</p>
+<p>⚠️ 서버 SQL 의 조인은 내부 <code>pipeline_run_id</code> 로 한다 — <strong>와이어에서 잇는 축</strong>이 <code>run_key</code> 라는
+뜻이지 SQL 조인 키라는 뜻이 아니다.</p>
+<p>⚠️ <strong>정렬을 고정한다</strong>(<code>run_key</code>, 그다음 내부 id). 안 하면 같은 원장이 조회마다 다른 순서로
+나가고, 소비자가 "첫 런"을 집는 순간 판정이 흔들린다. <code>run_key</code> 는 UNIQUE
+(<code>uq_ops_pipeline_run_key</code> — "이 슬롯은 한 번만 계획된다")라 <strong>그 하나로 전순서가 정해진다</strong>.
+2차 키는 그래서 잉여이고, 여기서 무엇을 지키지는 않는다 — 그 UNIQUE 가 깨지면 원장 <strong>쓰기</strong>
+쪽이 먼저 죽는다(슬롯 멱등 조회가 단일 행을 전제한다).</p>
+<p>⚠️ <strong>값을 못 구한 필드는 키를 두고 <code>null</code></strong> 이다(<code>tradingDate</code>·<code>deadline</code>). 키를 빼면 규칙 층이
+"계측 없음"으로 읽어 그 축 규칙을 통째로 <strong>못 돎</strong> 으로 세운다 — 못 구한 것과 안 재는 것은
+다른 사실이다.</p>
+<p><strong>런이 0건인 날의 <code>runs: []</code> 는 사실이다</strong> — "봤는데 없었다". 아직 안 붙은 축의 키 부재와
+반대다(그건 "아직 안 본다").</p>
+<h2 id="_3">조회 창<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><strong>창은 하루다.</strong> <code>date</code> 를 생략하면 서버가 고르고, <strong>무엇을 골랐는지 <code>meta.today</code> 로
 되돌려준다</strong> — 화면이 요청한 날짜를 그대로 그리면 서버가 다른 날을 골랐을 때 거짓말이 된다.</p>
-<h3 id="_3">어느 날을 고르나<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h3 id="_4">어느 날을 고르나<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <ol>
 <li>런이 있던 마지막 날</li>
 <li><strong>계획만 있고 런 행이 없던</strong> 마지막 날(<code>ops_reconciliation_issue</code> <code>PLANNER_MISSING</code>)</li>
@@ -1571,7 +1608,7 @@
 </ol>
 <p>⚠️ 2번을 빼면 안 된다. 런이 하루도 안 뜬 날이 조회 후보에서 사라지는데, <strong>그날이 바로 콘솔이
 열려야 하는 날</strong>이다.</p>
-<h3 id="_4">런이 어느 날에 속하나<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<h3 id="_5">런이 어느 날에 속하나<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">COALESCE</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">trading_date</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">created_at</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Seoul&#39;</span><span class="p">)::</span><span class="nb">date</span><span class="p">)</span>
 </code></pre></div>
 <p>⚠️ <code>trading_date</code> 로 단순화하지 마라 — 비거래일 런은 그 컬럼이 NULL 이라 통째로 새어 나간다.
@@ -1607,7 +1644,7 @@
 게이트가 사고를 숨기는 방향으로 서면 안 된다.</p>
 <p>원장에서 오는 미래도 같은 이유로 막는다: 미래 거래일 런이나 미래 슬롯 키가 하나라도 있으면
 기본 조회가 오지 않은 날로 뛴다. 그래서 후보 조회에 <strong>상한을 KST 오늘</strong>로 건다.</p>
-<h2 id="_5">부재를 싣는 규약<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h2 id="_6">부재를 싣는 규약<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <p>이 응답의 핵심은 값이 아니라 <strong>부재의 종류</strong>다. 셋을 끝까지 가른다:</p>
 <table>
 <thead>
@@ -1639,7 +1676,7 @@
 <p>⚠️ 클래스 단위 <code>@JsonInclude(NON_NULL)</code> 을 걸지 않는 이유가 이것이다 — 위에 걸면 "집계
 없음(null)"이 조용히 "계측 없음(필드 부재)"으로 바뀌어, 콘솔이 없애려는 칸 혼동을 서버가 다시
 만든다. 필요한 필드에만 붙인다.</p>
-<h2 id="_6">성능에 대해 지금 하지 않는 것<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h2 id="_7">성능에 대해 지금 하지 않는 것<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <p>날짜 후보 조회에 <strong>하한(lookback)을 두지 않는다.</strong> 한 번 뒀다가 되돌렸다 — 90일 창은 파이프라인이
 그보다 오래 멈췄다 재개한 날 <strong>원장이 아는 마지막 날을 창 밖으로 밀어낸다</strong> — <code>run_latest</code> 도
 계획 결손일도 안 잡혀 기본 조회가 KST 오늘로 떨어지고, 화면은 사고 난 그날 대신 빈 오늘을 연다.
