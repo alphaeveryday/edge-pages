@@ -1010,6 +1010,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#kst-alpha-946" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 미완결일 — 조회일이 KST 오늘이면 다섯 전부 기준이 없다 (ALPHA-946)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2299,6 +2310,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#kst-alpha-946" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 미완결일 — 조회일이 KST 오늘이면 다섯 전부 기준이 없다 (ALPHA-946)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2842,8 +2864,10 @@ REJECTED 적재가 생기면 이 수의 뜻이 조용히 바뀐다.</p>
 <p>⚠️ 평일 휴장의 제외는 <strong>날짜 단위</strong>다. 그 신호는 <code>kr_trading_calendar=true</code> 인 <strong>작업</strong>에만
 붙고(가격 레인 셋 + 장중 수급 레인 둘 — 같은 레인 안에서도 작업마다 다르다), 뉴스·공시 레인은
 휴장일에도 돈다 — 런 단위로 상관시키면 그 런이 같은 날짜를 되살린다.</p>
-<p>오늘이 장 안 서는 날이면(주말이든 휴장이든) <strong><code>o.pub</code>·<code>o.trig</code> 만</strong> <code>base</code> 를 안 준다. 그날
-그 둘의 0 은 실측이 맞지만 <strong>비교할 평소가 없는 날</strong>이라, 기준을 주면 소비자가 −100% 로 판정한다.</p>
+<p>조회일이 장 안 서는 날이면(주말이든 휴장이든) <strong><code>o.pub</code>·<code>o.trig</code> 만</strong> <code>base</code> 를 안 준다. 그날
+그 둘의 0 은 실측이 맞지만 <strong>비교할 평소가 없는 날</strong>이라, 기준을 주면 소비자가 −100% 로 판정한다.
+⚠️ 이 갈래는 <strong>다 지난 날에만</strong> 의미가 있다 — 조회일이 KST 오늘이면 그 앞에서 다섯 전부가
+이미 빠진다(아래 「미완결일」).</p>
 <p><code>o.doc</code>·<code>o.asr</code>·<code>o.evt</code> 는 <strong>그날도 기준을 받는다</strong> — 장과 무관하게 도는 산출이라 비교가 성립한다.</p>
 <p>⚠️ <strong>다만 그 기준은 평일 표본이다 — 남은 잔여.</strong> 표본은 산출 다섯이 공유하고 장 안 서는 날을
 빼므로, <strong>주말에 조회하면</strong> 그 셋의 <code>today</code>(주말 실측)가 평일 중앙값과 비교된다. 주말 표본을
@@ -2852,12 +2876,94 @@ REJECTED 적재가 생기면 이 수의 뜻이 조용히 바뀐다.</p>
 아티팩트로 보인다. 그 위에 "평소"를 세우면 기준 자체가 잡음이 된다.
 ⚠️ 이 수치도 그 시점 dev 조회값이라 저장소만으로 재현되지 않는다 — 근거로 쓸 때 다시 재라.</p>
 <p>표본이 아예 없으면 <code>base</code> 는 <strong>null</strong> 이다 — "평소가 0" 이 아니라 "평소를 모른다"이다.</p>
-<p>🔴 <strong>남은 것 — 평일 장중의 거짓 −100%.</strong> <code>marketBound</code> 가 막는 것은 <strong>장이 안 서는 날</strong>뿐이다.
-평일 오전에는 뉴스 레인이 이미 돌아(00:10·08:10) 기본 조회가 <strong>오늘</strong>로 잡히는데, 가격 레인은
-15:40 이라 그 시각 <code>o.pub</code>·<code>o.trig</code> 의 <code>today</code> 는 0 이고 <code>base</code> 는 정상값이다 — 휴장일에 막으려던
-바로 그 −100% 가 <strong>평일 장중에 기본값으로</strong> 재현된다(서브에이전트 리뷰가 짚었다).</p>
-<p>가르려면 <strong>"오늘 그 산출이 마감됐는가"</strong> 를 답하는 사실이 필요한데 원장에 없다. 소비자 쪽에서
-조회 시각과 레인 마감을 함께 보고 판정을 미루는 것이 지금 가능한 완화다.</p>
+<h3 id="kst-alpha-946">✅ 미완결일 — 조회일이 KST 오늘이면 다섯 전부 기준이 없다 (ALPHA-946)<a class="headerlink" href="#kst-alpha-946" title="Permanent link">&para;</a></h3>
+<p><strong>그 날의 적재 창이 아직 안 지났으면 비교 대상이 아니다.</strong> 기준일 후보는 전부 조회일 미만이라
+<strong>창이 지난</strong> 하루의 값인데, 조회일이 KST 오늘이면 그 값은 <strong>아직 쌓이는 중</strong>이다. dev 배포본
+실측(2026-08-11 14:27 KST)에서 산출 다섯 중 <strong>넷</strong>이 그 이유로 거짓 P1 이었다
+(<code>o.trig</code> −100% · <code>o.pub</code> −71% · <code>o.asr</code> −29% · <code>o.evt</code> −59%).</p>
+<p><strong>두 억제의 순서</strong>: 창이 안 지났으면 <strong>다섯 전부</strong> <code>base</code> 가 없다. 장 안 서는 날 규칙(<code>marketBound</code>)은
+그 뒤에 남는 판정이라, 다 지난 날에만 갈라 선다.</p>
+<p>⚠️ <strong>"완결"이 아니라 "창이 지났다"이다</strong> — 이 술어는 완결을 증명하지 않는다. <strong>지난 날의 값도
+소급으로 자란다</strong>(아래 잔여 1). 주는 것은 <strong>정직한 하한</strong>이다: 장중 거짓 −100% 는 구조적으로
+없애되, 소급 적재분은 여전히 낮게 잰다.</p>
+<p>⚠️ <strong>산출별로 가르지 않는다.</strong> 적재 창이 산출마다 다르기 때문이다:</p>
+<table>
+<thead>
+<tr>
+<th>산출</th>
+<th>그 날 값이 쌓이는 창</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>o.trig</code></td>
+<td><strong>시장 SFN 한 번</strong>(<code>schedule_expression</code> 기본 <code>cron(40 15 ? * MON-FRI *)</code>)이 통째로 넣는 계단 함수. ⚠️ 행에 박힌 <code>detected_at</code>=<strong>15:30</strong> 은 <code>load_price_triggers.py</code> 가 <strong>멱등 키</strong>로 쓰는 결정적 이벤트 시각이지 <strong>적재 시각이 아니다</strong> — 이 값을 완료 시각으로 읽고 15:30 에 게이트를 풀면 배치가 시작도 안 한 상태를 완결값으로 비교한다</td>
+</tr>
+<tr>
+<td><code>o.doc</code>·<code>o.asr</code>·<code>o.evt</code></td>
+<td><strong>하루 종일</strong> — <code>available_at</code> 이 곧 날짜 버킷이고 1분 레인과 배치가 함께 먹인다</td>
+</tr>
+<tr>
+<td><code>o.pub</code></td>
+<td><strong>날짜 경계를 넘는다</strong> — <code>trade_date</code> 가 적재 시각과 분리돼 있고 writer 가 상주 소비자다</td>
+</tr>
+</tbody>
+</table>
+<p>다섯 전부에 참인 술어는 <strong>"그 날이 다 지났는가"</strong> 하나뿐이다. 산출별로 가르려면 산출↔작업 완료
+바인딩이 있어야 하는데 원장에 없다.</p>
+<p>⚠️ <strong><code>o.trig</code> 이 쓰는 것은 <code>price_movement_trigger</code> 하나다.</strong> 1분 레인(<code>minute/price_consumer.py</code>)은
+<code>minute_price_trigger</code> 라는 <strong>다른 표</strong>에 쓴다(ALPHA-709 — 트리거 축은 둘이다). 두 표를 섞어 읽으면
+"장중에도 배치 트리거가 쌓인다"는 없는 전제가 선다.</p>
+<p>🔴 <strong>이 게이트가 안 덮는 잔여 셋</strong>:</p>
+<ol>
+<li><strong>지난 날의 버킷은 양방향으로 흔들린다.</strong> <code>document.available_at</code> 의 뜻이 writer 마다 다르고
+   <strong>충돌 처리도 다르다</strong>:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>writer</th>
+<th><code>available_at</code></th>
+<th><code>ON CONFLICT (source_code, source_document_id)</code></th>
+<th>과거 버킷에 미치는 영향</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>steps/assemble_events.py</code></td>
+<td><strong><code>published_at</code></strong></td>
+<td><code>DO NOTHING</code></td>
+<td>나중에 돌아도 <strong>과거</strong> 버킷에 실린다 → 늘린다</td>
+</tr>
+<tr>
+<td><code>steps/load_documents.py</code></td>
+<td><code>fetched_at</code> 폴백 <code>published_at</code></td>
+<td><code>DO NOTHING</code></td>
+<td>늘린다 — ⚠️ <strong>폴백 여부와 무관하다</strong>. 과거 파티션을 재스캔·재실행하면 그때 처음 들어오는 행의 <code>fetched_at</code> 이 이미 지난 날짜다</td>
+</tr>
+<tr>
+<td><code>minute/canonical_news.py</code></td>
+<td><strong>실제 처리 시각</strong></td>
+<td><code>DO UPDATE … GREATEST(기존, 신규)</code></td>
+<td>정정이 오면 값을 <strong>앞으로 민다</strong> → 과거 버킷을 줄인다</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ <strong>버킷을 정하는 것은 writer 의 종류가 아니라 그 행의 <code>available_at</code> 이 어느 KST 날짜인가</strong>
+   다 — 위 표는 각 writer 가 그 값을 <strong>어디서 얻는지</strong>를 적을 뿐이고, 늦게 도는 것만으로 과거
+   버킷에 실리지는 않는다(늦게 돌아도 그 시점의 <code>fetched_at</code> 을 쓰면 오늘 버킷이다).
+   <code>DO NOTHING</code> 인 배치 둘 사이에서는 <strong>먼저 넣은 쪽이 값을 정하지만</strong>, 1분 레인은 그 뒤에도
+   값을 전진시킬 수 있다. 게다가 뉴스 day-close 는 00:10 에 돌며 <strong>어제 창</strong>을 처리한다(#669).
+   <code>o.pub</code> 도 같은 부류다 — dev 실측(행 기준) 08-10 → 30 당일 + 4 익일 ·
+   <strong>08-03 → 15 + 15(절반이 익일)</strong>. ⇒ 자정 직후 어제를 조회하면 <code>base</code> 는 서는데 <code>today</code> 는 아직
+   움직일 수 있다.
+2. <strong><code>o.trig</code> 은 시장 SFN 이 끝난 뒤엔 과잉 억제</strong> — 그때부터 자정까지는 사실상 확정인데 판정을
+   안 한다. 푸는 조건은 위와 같다(산출↔작업 완료 바인딩).
+3. 🔴 <strong>그 날의 진짜 결손이 자정까지 조용해진다.</strong> 산출이 통째로 0 인 장애를 R13 이 당일에 잡던
+   경로가 사라지는데, <strong>그걸 대신 잡을 규칙이 지금 없다</strong> — 완전성 축이 대부분 <code>UNKNOWN</code> 이라
+   작업이 <code>FULFILLED</code> 로 끝나면 R05~R07 이 조용하다(ALPHA-728). 거짓 P1 다섯 중 넷을 없애는 값으로
+   그 지연을 받았다. 완전성 축이 서면 그쪽이 당일 검출을 맡는다.</p>
+<p>⚠️ 위 실측은 그 시점 dev 원장 조회값이라 저장소만으로 재현되지 않는다 — 근거로 쓸 때 다시 재라.</p>
 <h2 id="_10">경계 축<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
 <p>게시 상태와 테넌트 발번이 <strong>어긋난 건수</strong>. 배열이 아니라 <strong>객체 하나</strong>다 — 다른 축은 "그 날의
 행들"이지만 이건 "지금 어긋난 것이 몇 건인가"라 수 셋으로 끝난다.</p>
