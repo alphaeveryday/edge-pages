@@ -11,28 +11,28 @@
       
       
       
-        <link rel="prev" href="../evolution/">
+        <link rel="prev" href="../2-system-architecture/">
       
       
-        <link rel="next" href="../retrospective/">
+        <link rel="next" href="../../reference/adr/">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>Artifacts - Edge Architecture Portal</title>
+        <title>3 클라우드 아키텍처 - Edge Architecture Portal</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,7 +51,9 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#artifacts" class="md-skip">
+        <a href="#3-aws" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -90,11 +92,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href=".." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
+    <a href="../.." title="Edge Architecture Portal" class="md-header__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+      <img class="ep-logo ep-logo--light" src="../../assets/images/edge-logo-white.svg" alt="Edge Architecture Portal" />
+<img class="ep-logo ep-logo--dark" src="../../assets/images/edge-logo-black.svg" alt="Edge Architecture Portal" />
     </a>
     <label class="md-header__button md-icon" for="__drawer">
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Artifacts
+              3 클라우드 아키텍처
             
           </span>
         </div>
@@ -211,7 +211,7 @@
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -228,9 +228,70 @@
   
   
   
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Diagrams
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
   
     <li class="md-tabs__item">
-      <a href="../evolution/" class="md-tabs__link">
+      <a href="../../reference/adr/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  설계 · ADR
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/contracts/sync-protocol/" class="md-tabs__link">
+          
+  
+  
+  계약
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../evolution/" class="md-tabs__link">
         
   
   
@@ -247,32 +308,11 @@
   
   
   
-    
-  
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Artifacts
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
   
     
     
       <li class="md-tabs__item">
-        <a href="../retrospective/" class="md-tabs__link">
+        <a href="../../retrospective/" class="md-tabs__link">
           
   
   
@@ -292,7 +332,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../reference/context/" class="md-tabs__link">
+        <a href="../../reference/context/" class="md-tabs__link">
           
   
   
@@ -326,11 +366,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
+    <a href="../.." title="Edge Architecture Portal" class="md-nav__button md-logo" aria-label="Edge Architecture Portal" data-md-component="logo">
+      <img class="ep-logo ep-logo--light" src="../../assets/images/edge-logo-white.svg" alt="Edge Architecture Portal" />
+<img class="ep-logo ep-logo--dark" src="../../assets/images/edge-logo-black.svg" alt="Edge Architecture Portal" />
     </a>
     Edge Architecture Portal
   </label>
@@ -344,7 +382,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -368,17 +406,74 @@
       
   
   
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagrams
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diagrams
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
   
   
     <li class="md-nav__item">
-      <a href="../evolution/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Evolution
+    Overview
   
 
     
@@ -390,9 +485,94 @@
     </li>
   
 
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0-information-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
     
-      
-      
+  
+    0 정보 구조
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-application-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 서비스 아키텍처
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-system-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 시스템 아키텍처
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
   
   
     
@@ -407,24 +587,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Artifacts
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -432,7 +594,7 @@
   <span class="md-ellipsis">
     
   
-    Artifacts
+    3 클라우드 아키텍처
   
 
     
@@ -442,69 +604,41 @@
 
       </a>
       
-        
+    </li>
+  
 
-<nav class="md-nav md-nav--secondary" aria-label="목차">
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
   
   
   
+  
+    <li class="md-nav__item">
+      <a href="../../reference/adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
     
   
+    설계 · ADR
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      목차
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        아키텍처 다이어그램
-      
-    </span>
-  </a>
+
+    
+  </span>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#erd" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ERD
-      
-    </span>
-  </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#api" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API 계약
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adr" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ADR
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
+
+      </a>
     </li>
   
 
@@ -539,7 +673,7 @@
   <span class="md-ellipsis">
     
   
-    Retrospective
+    계약
   
 
     
@@ -552,6 +686,232 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    계약
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/contracts/sync-protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/contracts/event-bundle-schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event Bundle Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/contracts/sync-auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync Auth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/contracts/publication-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publication API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/contracts/console-facts-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Console Facts API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../evolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Retrospective
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -568,7 +928,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../retrospective/" class="md-nav__link">
+      <a href="../../retrospective/" class="md-nav__link">
         
   
   
@@ -596,7 +956,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../retrospective/sprint-1/" class="md-nav__link">
+      <a href="../../retrospective/sprint-1/" class="md-nav__link">
         
   
   
@@ -624,7 +984,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../retrospective/sprint-2/" class="md-nav__link">
+      <a href="../../retrospective/sprint-2/" class="md-nav__link">
         
   
   
@@ -652,7 +1012,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../retrospective/sprint-3/" class="md-nav__link">
+      <a href="../../retrospective/sprint-3/" class="md-nav__link">
         
   
   
@@ -680,7 +1040,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../retrospective/sprint-4/" class="md-nav__link">
+      <a href="../../retrospective/sprint-4/" class="md-nav__link">
         
   
   
@@ -708,7 +1068,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../retrospective/sprint-5/" class="md-nav__link">
+      <a href="../../retrospective/sprint-5/" class="md-nav__link">
         
   
   
@@ -736,7 +1096,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../retrospective/sprint-6/" class="md-nav__link">
+      <a href="../../retrospective/sprint-6/" class="md-nav__link">
         
   
   
@@ -764,7 +1124,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../retrospective/sprint-7/" class="md-nav__link">
+      <a href="../../retrospective/sprint-7/" class="md-nav__link">
         
   
   
@@ -812,10 +1172,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -833,8 +1193,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -851,7 +1211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/context/" class="md-nav__link">
+      <a href="../../reference/context/" class="md-nav__link">
         
   
   
@@ -879,7 +1239,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/scope/" class="md-nav__link">
+      <a href="../../reference/scope/" class="md-nav__link">
         
   
   
@@ -907,7 +1267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/implementation/" class="md-nav__link">
+      <a href="../../reference/implementation/" class="md-nav__link">
         
   
   
@@ -935,7 +1295,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/roadmap/" class="md-nav__link">
+      <a href="../../reference/roadmap/" class="md-nav__link">
         
   
   
@@ -963,7 +1323,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/writing-rules/" class="md-nav__link">
+      <a href="../../reference/writing-rules/" class="md-nav__link">
         
   
   
@@ -1004,17 +1364,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_6" >
         
           
-          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_6" id="__nav_7_6_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    Contracts
+    Architecture
   
 
     
@@ -1025,12 +1385,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_6">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_6">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Contracts
+    Architecture
   
 
           </label>
@@ -1043,14 +1403,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/contracts/sync-protocol/" class="md-nav__link">
+      <a href="../../reference/architecture/information-architecture/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Sync Protocol
+    Information Architecture
   
 
     
@@ -1071,14 +1431,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/contracts/event-bundle-schema/" class="md-nav__link">
+      <a href="../../reference/architecture/application-architecture/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Event Bundle Schema
+    Application Architecture
   
 
     
@@ -1099,14 +1459,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/contracts/sync-auth/" class="md-nav__link">
+      <a href="../../reference/architecture/system-architecture/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Sync Auth
+    System Architecture
   
 
     
@@ -1127,14 +1487,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/contracts/publication-api/" class="md-nav__link">
+      <a href="../../reference/architecture/cloud-architecture/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Publication API
+    Cloud Architecture
   
 
     
@@ -1176,10 +1536,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_7" >
         
           
-          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_7" id="__nav_7_7_label" tabindex="0">
             
   
   
@@ -1197,8 +1557,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_7">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1215,7 +1575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/domain/state-machine/" class="md-nav__link">
+      <a href="../../reference/domain/state-machine/" class="md-nav__link">
         
   
   
@@ -1243,7 +1603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/domain/data-residency/" class="md-nav__link">
+      <a href="../../reference/domain/data-residency/" class="md-nav__link">
         
   
   
@@ -1271,7 +1631,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/domain/exposure-log/" class="md-nav__link">
+      <a href="../../reference/domain/exposure-log/" class="md-nav__link">
         
   
   
@@ -1279,6 +1639,34 @@
     
   
     Exposure Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/domain/data-source-licensing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Source Licensing
   
 
     
@@ -1320,10 +1708,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_8" >
         
           
-          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7_8" id="__nav_7_8_label" tabindex="0">
             
   
   
@@ -1341,8 +1729,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_8">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1359,7 +1747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/console-ia/super-admin-console/" class="md-nav__link">
+      <a href="../../reference/console-ia/super-admin-console/" class="md-nav__link">
         
   
   
@@ -1387,7 +1775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/console-ia/tenant-console/" class="md-nav__link">
+      <a href="../../reference/console-ia/tenant-console/" class="md-nav__link">
         
   
   
@@ -1408,14 +1796,6 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
               
                 
   
@@ -1423,14 +1803,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/adr/" class="md-nav__link">
+      <a href="../../reference/console-ia/permission-matrix/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    ADR
+    Permission Matrix
   
 
     
@@ -1439,6 +1819,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1471,58 +1859,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      목차
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        아키텍처 다이어그램
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#erd" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ERD
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#api" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API 계약
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adr" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ADR
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1538,20 +1874,16 @@
 
 
 
-<h1 id="artifacts">Artifacts<a class="headerlink" href="#artifacts" title="Permanent link">&para;</a></h1>
-<p>아키텍처 이미지, ERD, API 계약, ADR 등 <strong>공개용 산출물</strong>을 모으는 페이지입니다.</p>
-<p>이미지는 <code>pages/docs/assets/images/</code>에 버전별로 보관하고 여기에서 링크합니다.
-아직 등록된 산출물이 없으면 아래는 자리표시자이며, 실제 파일이 준비되면 링크로 대체합니다.</p>
-<h2 id="_1">아키텍처 다이어그램<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p><em>아직 등록된 이미지가 없습니다.</em> 준비되면 <code>assets/images/</code>에 파일을 넣고 다음처럼 링크합니다:</p>
-<div class="highlight"><pre><span></span><code>![<span class="nt">시스템 아키텍처</span>](<span class="na">assets/images/architecture-v1.png</span>)
-</code></pre></div>
-<h2 id="erd">ERD<a class="headerlink" href="#erd" title="Permanent link">&para;</a></h2>
-<p><em>준비 중.</em> 현재 DB 변경 절차는 <a href="../reference/implementation/">Reference › Implementation</a>에서, 도메인 상태값·ERD 방향은 <a href="../reference/domain/state-machine/">Reference › Domain › State Machine</a>에서 확인할 수 있습니다.</p>
-<h2 id="api">API 계약<a class="headerlink" href="#api" title="Permanent link">&para;</a></h2>
-<p><em>준비 중.</em> API 표면·응답 규약이 정리되면 이곳에 링크합니다.</p>
-<h2 id="adr">ADR<a class="headerlink" href="#adr" title="Permanent link">&para;</a></h2>
-<p>결정 기록(ADR)은 <a href="../reference/adr/">Reference › ADR</a>에서 볼 수 있습니다.</p>
+<h1 id="3-aws">3 · 클라우드 아키텍처 (AWS)<a class="headerlink" href="#3-aws" title="Permanent link">&para;</a></h1>
+<p>ECS 클러스터 분리·RDS·CloudFront 등 실 배포 토폴로지.</p>
+<div class="admonition info">
+<p class="admonition-title">다이어그램 준비 중</p>
+<p>작도 후 이 자리에 SVG 가 들어간다.
+그때까지는 근거 문서(설계 뷰)를 참조:
+<a href="../../reference/architecture/cloud-architecture/">cloud-architecture.md</a></p>
+</div>
+<hr />
+<p><a href="../2-system-architecture/">← 2 시스템 아키텍처</a> · <a href="../">목록</a></p>
 
 
 
@@ -1601,10 +1933,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
