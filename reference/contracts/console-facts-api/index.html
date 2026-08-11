@@ -1445,6 +1445,56 @@
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
+        데이터셋 축
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="데이터셋 축">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unverifiable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        unverifiable — 판정 가능성의 여집합보다 한 겹 넓다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#due" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        접기는 계약이 걸린 DUE 작업에서만 한다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        한 데이터셋에 작업이 여럿이면
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         조회 창
       
     </span>
@@ -1454,7 +1504,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         어느 날을 고르나
@@ -1465,7 +1515,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       
         런이 어느 날에 속하나
@@ -1492,7 +1542,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       
         부재를 싣는 규약
@@ -1503,7 +1553,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
+  <a href="#_11" class="md-nav__link">
     <span class="md-ellipsis">
       
         성능에 대해 지금 하지 않는 것
@@ -1571,7 +1621,7 @@
 <tr>
 <td>데이터셋 축</td>
 <td><code>datasets[]</code> (작업에서 파생)</td>
-<td>⏭</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>산출 축</td>
@@ -1663,10 +1713,151 @@
 <code>freshnessStatus</code>·<code>freshnessReason</code>)은 작업 축 와이어에 안 나간다.</strong> 그건 <strong>데이터셋 축을
 파생하는 재료</strong>이지 작업 축의 사실이 아니다(<code>dataset_contract</code> 테이블이 없어 <code>ops_expected_task</code>
 의 컬럼으로 산다). 그대로 흘리면 소비자가 같은 사실을 두 축에서 읽고, 한쪽만 고칠 때 갈린다.</p>
-<h2 id="_5">조회 창<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h2 id="_5">데이터셋 축<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><strong>여러 행을 하나의 사실로 접는 유일한 축이다.</strong> 원장에 이 축의 테이블이 없어 그 날의 작업을
+<code>dataset</code> 으로 묶어 세운다. 다른 축은 행과 응답이 1:1 이다 — 런 축도 계획 결손 슬롯을 키에서
+파싱해 <strong>합성</strong>하지만(§계획 결손 슬롯) 슬롯 하나가 행 하나이지 여러 행을 접지는 않는다. 접는
+축은 여기뿐이고, 그래서 <strong>접는 방향이 곧 계약</strong>이다.</p>
+<div class="highlight"><pre><span></span><code>&quot;datasets&quot;: [
+  {
+    &quot;id&quot;: &quot;etf_holdings&quot;,          // = ops_expected_task.dataset (작업 축의 dataset 과 같은 축)
+    &quot;contract&quot;: true,              // 이 데이터셋의 작업 중 하나라도 계약이 걸려 있나
+    &quot;expectedAsOf&quot;: &quot;2026-08-03&quot;,
+    &quot;actualAsOf&quot;: null,
+    &quot;collectedAt&quot;: &quot;2026-08-03T07:00:00Z&quot;,
+    &quot;unverifiable&quot;: &quot;ACTUAL_AS_OF_UNVERIFIED&quot;   // null 이면 신선도를 판정할 수 있다
+  }
+]
+</code></pre></div>
+<p>정렬은 <strong>데이터셋 id</strong> 다. 안 고정하면 같은 원장이 조회마다 다른 순서로 나가고, 소비자가 "첫
+데이터셋"을 집는 순간 판정이 흔들린다(런 축을 <code>run_key</code> 로 고정한 것과 같은 이유).</p>
+<p><code>dataset</code> 이 <strong>없거나 빈 문자열</strong>인 작업은 이 축에서 뺀다 — 빈 id 가 서면 그걸 위반으로 만드는
+규칙이 빈 대상 가드에 걸려 <strong>그 규칙 전체</strong>를 못 돎으로 세우고, 다른 데이터셋의 판정 불가까지
+같이 버려진다. ⚠️ 다만 <strong>조용히 빼지 않는다</strong>: 스키마에 비공백 제약이 없어 원장에 실제로 들어올
+수 있고 그건 writer 결함이다. 요청당 한 줄로 접어 경고를 남기고(행마다 찍으면 결함 하나가
+로그량을 요청량 × 작업 수로 증폭한다), 그 작업 자체는 <code>tasks[]</code> 에 그대로 남는다.</p>
+<h3 id="unverifiable"><code>unverifiable</code> — 판정 가능성의 여집합보다 <strong>한 겹 넓다</strong><a class="headerlink" href="#unverifiable" title="Permanent link">&para;</a></h3>
+<p>판정 <strong>코드</strong>지 문장이 아니다. 술어는 <strong>계약 부재 ∨ 그 날 실행 대상 아님 ∨ actual 근거 부재 ∨
+원장이 <code>UNKNOWN</code> 이라고 말함</strong>이고, 코드는 이 순서로 정해진다:</p>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>언제</th>
+<th>출처</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CONTRACT_NOT_APPLIED</code></td>
+<td>이 데이터셋의 작업 중 계약이 걸린 것이 <strong>하나도 없다</strong></td>
+<td>서버</td>
+</tr>
+<tr>
+<td><code>NOT_APPLICABLE</code></td>
+<td>계약은 있는데 <strong>그 계약으로 그 날 <code>DUE</code> 이던 작업이 없다</strong></td>
+<td>서버</td>
+</tr>
+<tr>
+<td>원장의 <code>freshness_reason</code></td>
+<td>원장이 <code>UNKNOWN</code> 이라 말했고 사유를 남겼다</td>
+<td>원장 그대로</td>
+</tr>
+<tr>
+<td><code>FRESHNESS_REASON_MISSING</code></td>
+<td>원장이 <code>UNKNOWN</code> 이라 말했는데 <strong>사유가 비었다</strong></td>
+<td>서버</td>
+</tr>
+<tr>
+<td><code>ACTUAL_AS_OF_MISSING</code></td>
+<td><code>UNKNOWN</code> 도 아닌데 actual 근거가 없다(스키마상 안 나오는 자리 — 아래)</td>
+<td>서버</td>
+</tr>
+<tr>
+<td><code>null</code></td>
+<td>판정할 수 있다 — 판정 자체는 클라이언트 소관</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="due">접기는 <strong>계약이 걸린 <code>DUE</code> 작업</strong>에서만 한다<a class="headerlink" href="#due" title="Permanent link">&para;</a></h3>
+<p>이 축의 사실은 <strong>계약의 것</strong>이지 데이터셋에 붙은 아무 작업의 것이 아니다. 네 값 중 셋(actual
+as-of·수집 시각·신선도)은 스키마가 이미 그렇게 묶어 두므로(<code>ck_ops_expected_task_freshness_applicability</code>)
+좁히든 말든 같다.</p>
+<p>⚠️ <strong><code>expected_as_of_date</code> 하나만 다르다.</strong> Planner 는 그 컬럼을 계약 유무와 무관하게 <strong>모든
+작업에</strong> 쓰고 값이 갈린다 — 계약 작업은 <code>resolve_expected_as_of</code>, 나머지는 <code>slot_date</code>. 안 좁히면
+<strong>아무 계약도 하지 않은 기대일</strong>이 계약 데이터셋의 <code>expectedAsOf</code> 로 나가고 거기에 계약 작업의
+사유가 붙는다. 실물 조합이다: <code>etf_holdings</code> 는 계약이 걸린 <code>ETF_HOLDINGS_COLLECTION_KRX</code> 와
+계약이 없는 <code>NORMALIZE_ETF</code> 를 함께 갖고(<code>ops/catalog.py</code>), 그 계약은 actual 을 늘 NULL 로 써서
+기대일 접기가 <strong>정상 경로</strong>다.</p>
+<p>⚠️ <strong><code>NOT_APPLICABLE</code> 은 오늘 나가지 않는다</strong> — 계약이 걸린 카탈로그 엔트리는
+<code>ETF_HOLDINGS_COLLECTION_KRX</code> 하나뿐이고 그 엔트리는 <code>kr_trading_calendar</code> 를 켜지 않아 휴장일에도
+<code>DUE</code> 로 선다(플래그를 켠 다섯 엔트리는 계약이 없다). 스키마와 Planner 가 그 조합을 <strong>허용</strong>하므로
+갈래는 두되, "휴장일이 이 코드로 온다"고 읽으면 안 된다.</p>
+<p>⚠️ <strong><code>ACTUAL_AS_OF_MISSING</code> 도 스키마상 안 나오는 자리다</strong> — 계약 ∧ <code>DUE</code> 면 상태가 non-null 이고
+(<code>ck_ops_expected_task_contract_freshness_status</code>) FRESH·STALE 은 actual 을 요구하며
+(<code>ck_ops_expected_task_verified_as_of</code>) UNKNOWN 은 앞 행이 잡는다. 그래도 <code>null</code> 로 떨어뜨리지
+않는다 — 원장이 그 제약을 잃는 날 대안은 <strong>판정 불가가 조용히 정상으로 서는 것</strong>이다.</p>
+<p>⚠️ <strong><code>FRESHNESS_REASON_MISSING</code> 은 <code>ACTUAL_AS_OF_MISSING</code> 과 다른 사실이다.</strong> <code>UNKNOWN</code> 은 as-of 가
+<strong>있어도</strong> 서므로(<code>ck_ops_expected_task_verified_as_of</code> 는 <code>actual &gt; expected</code> 인 UNKNOWN 을
+통과시킨다) 후자를 돌려쓰면 응답이 actual 날짜를 실은 채 "as-of 가 없다"고 말한다 — 판정 불가는
+맞지만 사유가 거짓이라 운영자가 없는 결손을 찾으러 간다.</p>
+<p>⚠️ 셋째 항을 빼면 안 된다. 스키마는 <code>freshness_status='UNKNOWN'</code> 인데 <code>actual_as_of_date</code> 가 있는
+조합을 허용하는데(<code>ck_ops_expected_task_verified_as_of</code> 는 <code>actual &gt; expected</code> 인 UNKNOWN 을
+통과시킨다), as-of 유무만 보면 그 데이터셋이 <strong>판정 가능</strong>으로 서고 값이 낡음 규칙도 통과하면
+<strong>두 규칙 다 위반 0</strong> 이 된다 — 아무도 못 본 데이터셋이 화면에서 정상으로 그려진다. 좁히는 쪽으로
+새면 판정도 못 하고 판정 불가로도 안 잡히는 데이터셋이 생기고, 넓히는 쪽 대가는 낡음 규칙과의
+겹침뿐이다.</p>
+<p>⚠️ 코드→문장 매핑은 <strong>UI 소관이고 아직 없다</strong>.</p>
+<h3 id="_6">한 데이터셋에 작업이 여럿이면<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p><strong>as-of 쌍은 한 작업에서 통째로</strong> 가져온다. <code>expected</code> 와 <code>actual</code> 을 각자 접으면(<code>max</code>·<code>min</code>)
+<strong>어느 작업에도 없던 쌍</strong>이 만들어져, 둘 다 FRESH 인 작업 두 개가 거짓 STALE 을 낸다
+(01/01 과 03/03 → expected 03 · actual 01).</p>
+<table>
+<thead>
+<tr>
+<th>무엇</th>
+<th>어떻게</th>
+<th>왜</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기준 작업</td>
+<td><code>actual</code> 이 <strong>가장 오래된</strong> 작업</td>
+<td>하나만 최신이어도 전체가 최신으로 보이면 낡음이 조용해진다</td>
+</tr>
+<tr>
+<td>동률이면</td>
+<td><strong>기대일이 늦은</strong> 쪽</td>
+<td><code>actual &lt; expected</code> 가 설 가능성이 큰 쪽 — 낡음을 드러내는 방향</td>
+</tr>
+<tr>
+<td>그래도 동률이면</td>
+<td>작업 키</td>
+<td>쌍은 어느 쪽이든 같지만 <strong>사유가 이 선택을 따라오므로</strong>, 없으면 같은 원장이 조회 순서에 따라 서로 다른 사유를 낸다</td>
+</tr>
+<tr>
+<td>판정 불가 사유</td>
+<td><strong>기준 작업</strong>이 <code>UNKNOWN</code> 이면 거기서, 아니면 나머지 <code>UNKNOWN</code> 중 첫 작업</td>
+<td>따로 고르면 한 행이 B 의 as-of 와 A 의 사유를 함께 실어 서로 다른 작업이 한 사실로 섞인다</td>
+</tr>
+<tr>
+<td><code>collectedAt</code></td>
+<td>가장 <strong>최근</strong></td>
+<td>"언제까지 관측 가능해졌나"라 늦은 쪽이 답이다</td>
+</tr>
+</tbody>
+</table>
+<p><code>actual</code> 근거가 아예 없으면 비교할 쌍이 없다 — 그때만 <code>expected</code> 를 따로(최댓값) 접어 표시한다.</p>
+<p>⚠️ <strong>빈 사유는 사유가 아니다.</strong> <code>ck_ops_expected_task_freshness_pair</code> 는 <code>freshness_reason</code> 에
+<code>IS NOT NULL</code> 만 걸어 <strong>빈 문자열을 막지 않는다</strong>. 그대로 내리면 판정 코드를 truthy 로 보는
+소비자가 판정 불가 데이터셋을 정상으로 건너뛴다 — 판정 불가는 유지하고 사유만
+<code>FRESHNESS_REASON_MISSING</code> 으로 떨어뜨린다(위 표).</p>
+<h2 id="_7">조회 창<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <p><strong>창은 하루다.</strong> <code>date</code> 를 생략하면 서버가 고르고, <strong>무엇을 골랐는지 <code>meta.today</code> 로
 되돌려준다</strong> — 화면이 요청한 날짜를 그대로 그리면 서버가 다른 날을 골랐을 때 거짓말이 된다.</p>
-<h3 id="_6">어느 날을 고르나<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<h3 id="_8">어느 날을 고르나<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <ol>
 <li>런이 있던 마지막 날</li>
 <li><strong>계획만 있고 런 행이 없던</strong> 마지막 날(<code>ops_reconciliation_issue</code> <code>PLANNER_MISSING</code>)</li>
@@ -1674,7 +1865,7 @@
 </ol>
 <p>⚠️ 2번을 빼면 안 된다. 런이 하루도 안 뜬 날이 조회 후보에서 사라지는데, <strong>그날이 바로 콘솔이
 열려야 하는 날</strong>이다.</p>
-<h3 id="_7">런이 어느 날에 속하나<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<h3 id="_9">런이 어느 날에 속하나<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">COALESCE</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">trading_date</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">created_at</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Seoul&#39;</span><span class="p">)::</span><span class="nb">date</span><span class="p">)</span>
 </code></pre></div>
 <p>⚠️ <code>trading_date</code> 로 단순화하지 마라 — 비거래일 런은 그 컬럼이 NULL 이라 통째로 새어 나간다.
@@ -1710,7 +1901,7 @@
 게이트가 사고를 숨기는 방향으로 서면 안 된다.</p>
 <p>원장에서 오는 미래도 같은 이유로 막는다: 미래 거래일 런이나 미래 슬롯 키가 하나라도 있으면
 기본 조회가 오지 않은 날로 뛴다. 그래서 후보 조회에 <strong>상한을 KST 오늘</strong>로 건다.</p>
-<h2 id="_8">부재를 싣는 규약<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h2 id="_10">부재를 싣는 규약<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
 <p>이 응답의 핵심은 값이 아니라 <strong>부재의 종류</strong>다. 셋을 끝까지 가른다:</p>
 <table>
 <thead>
@@ -1742,7 +1933,7 @@
 <p>⚠️ 클래스 단위 <code>@JsonInclude(NON_NULL)</code> 을 걸지 않는 이유가 이것이다 — 위에 걸면 "집계
 없음(null)"이 조용히 "계측 없음(필드 부재)"으로 바뀌어, 콘솔이 없애려는 칸 혼동을 서버가 다시
 만든다. 필요한 필드에만 붙인다.</p>
-<h2 id="_9">성능에 대해 지금 하지 않는 것<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<h2 id="_11">성능에 대해 지금 하지 않는 것<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
 <p>날짜 후보 조회에 <strong>하한(lookback)을 두지 않는다.</strong> 한 번 뒀다가 되돌렸다 — 90일 창은 파이프라인이
 그보다 오래 멈췄다 재개한 날 <strong>원장이 아는 마지막 날을 창 밖으로 밀어낸다</strong> — <code>run_latest</code> 도
 계획 결손일도 안 잡혀 기본 조회가 KST 오늘로 떨어지고, 화면은 사고 난 그날 대신 빈 오늘을 연다.
