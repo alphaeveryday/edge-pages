@@ -1804,6 +1804,12 @@
 같이 버려진다. ⚠️ 다만 <strong>조용히 빼지 않는다</strong>: 스키마에 비공백 제약이 없어 원장에 실제로 들어올
 수 있고 그건 writer 결함이다. 요청당 한 줄로 접어 경고를 남기고(행마다 찍으면 결함 하나가
 로그량을 요청량 × 작업 수로 증폭한다), 그 작업 자체는 <code>tasks[]</code> 에 그대로 남는다.</p>
+<p>🔴 <strong>소비자가 요구하는데 이 축이 안 주는 필드가 하나 있다 — <code>windowContract</code>.</strong> 규칙 엔진의
+신선도 규칙(R08)은 <strong>창 계약</strong>(as-of 가 아니라 기간으로 신선도를 보는 데이터셋)을 판정에서 빼는데,
+그 구분을 이 응답이 안 준다. 그래서 실 응답을 먹이면 창 계약 데이터셋이 일반 as-of 계약으로
+판정되고 <code>actual &lt; expected</code> 면 <strong>거짓 STALE</strong> 이 선다. 지금은 소비자가 없어 발화하지 않지만
+(엔진은 아직 동봉 스냅샷만 읽는다) 화면이 붙기 전에 닫아야 한다 — 서버가 이 필드를 싣거나,
+어댑터가 다른 축에서 파생시키거나 둘 중 하나다.</p>
 <h3 id="unverifiable"><code>unverifiable</code> — 판정 가능성의 여집합보다 <strong>한 겹 넓다</strong><a class="headerlink" href="#unverifiable" title="Permanent link">&para;</a></h3>
 <p>판정 <strong>코드</strong>지 문장이 아니다. 술어는 <strong>계약 부재 ∨ 그 날 실행 대상 아님 ∨ actual 근거 부재 ∨
 원장이 <code>UNKNOWN</code> 이라고 말함</strong>이고, 코드는 이 순서로 정해진다:</p>
