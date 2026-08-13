@@ -1980,7 +1980,7 @@
 <h2 id="_4">결과<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
 <li>계약은 <a href="../../contracts/console-facts-api/">docs/contracts/console-facts-api.md</a>.</li>
-<li><strong>R12까지 SQS 실 응답으로 선다.</strong> 남은 계측 공백(R08·R11·R15·R16)은 화면에 <code>못 돎</code> 으로
+<li><strong>R15까지 ETF별 최신 트리거 실행 상태로 선다.</strong> 남은 계측 공백(R08·R11·R16)은 화면에 <code>못 돎</code> 으로
   서야 한다 — <code>평가됨 · 위반 0</code> 과 같은 칸에 그리면
   계측 공백이 정상으로 보인다.</li>
 <li>⚠️ <strong>R10 은 그 뒤 배선됐다</strong>(<a href="https://alphaeveryday.atlassian.net/browse/ALPHA-979">ALPHA-979</a>
@@ -1993,6 +1993,8 @@
     원장을 훑지 않은 <code>ledger_updated &lt; aws_stop</code>은 정상 지연이라 위반에서 제외한다.</li>
 <li><strong>R12도 그 뒤 배선됐다</strong>(ALPHA-979 조각 3, 2026-08-13). SQS 조회가 일부라도 실패하면
     부분 관측을 내리지 않고 축 전체를 <code>null</code>로 둔다.</li>
+<li><strong>R15도 그 뒤 배선됐다</strong>(ALPHA-978, 2026-08-13). 조회일의 배치·장중 발화를 합쳐 ETF별
+    최신 트리거 하나와 그 트리거의 최신 <code>explanation_run.run_status</code>를 낸다.</li>
 <li>🔴 <strong>R08(신선도 위반)은 지금 <code>평가됨</code> 인데 실 응답에서 <code>못 돎</code> 이 된다.</strong> 계약 연결 작업이
   하나뿐이고 그 <code>actual_as_of_date</code> 가 <a href="../0043-dataset-contract-freshness/">ADR-0043</a> 상 영구
   NULL 이기 때문이다. 목이 가리고 있던 계측 공백이 드러나는 것이므로 <strong>회귀가 아니라 정정</strong>이다.</li>
