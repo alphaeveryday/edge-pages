@@ -1961,7 +1961,8 @@
 <p>R03(제어면·원장 불일치)·R11·R12(큐)가 읽는 사실은 DB 에 없다 — Step Functions <code>DescribeExecution</code>
 과 SQS <code>GetQueueAttributes</code> 가 필요하다. 이걸 별도 엔드포인트로 가르지 않고 같은 응답에 넣되,
 <strong>실패해도 DB 축을 막지 않는다</strong>. SFN은 <code>runs[].awsStatus</code>·<code>awsStop</code>과 <code>meta.aws</code>로 붙었고,
-조회 실패는 <code>meta.aws: null</code> + 런별 AWS 값 <code>null</code>로 축 전체를 비운다. SQS <code>queues[]</code>는 후속이다.</p>
+조회 실패는 <code>meta.aws: null</code> + 런별 AWS 값 <code>null</code>로 축 전체를 비운다. SQS도 <code>queues[]</code>로 붙었고,
+한 큐라도 조회에 실패하면 <code>queues: null</code>로 축 전체를 비운다(ALPHA-979 조각 3).</p>
 <p><code>[]</code> 로 보내지 않는 것이 핵심이다 — <code>[]</code> 는 "큐가 0개"라는 거짓말이고, 규칙이 그걸 통과시켜
 <code>평가됨 · 위반 0</code>("봤고 괜찮다")이 된다. <code>null</code> 이면 <code>canRun</code> 이 false 라 <code>못 돎</code> 으로 남는다.</p>
 <h2 id="_3">대안<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
@@ -1979,9 +1980,8 @@
 <h2 id="_4">결과<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
 <li>계약은 <a href="../../contracts/console-facts-api/">docs/contracts/console-facts-api.md</a>.</li>
-<li><strong>19규칙 중 <code>facts</code> 단독 8개, <code>/sources/minute</code> 까지 오면 11개</strong>가 실 응답만으로 선다.
-  나머지는 <strong>AWS 호출이 붙어야 돌거나</strong>(R12) 계측이 없거나(R08·R11·R15·R16) 소스 자체가
-  없다(R10·R13). 뒤 6개는 화면에 <code>못 돎</code> 으로 서야 한다 — <code>평가됨 · 위반 0</code> 과 같은 칸에 그리면
+<li><strong>R12까지 SQS 실 응답으로 선다.</strong> 남은 계측 공백(R08·R11·R15·R16)은 화면에 <code>못 돎</code> 으로
+  서야 한다 — <code>평가됨 · 위반 0</code> 과 같은 칸에 그리면
   계측 공백이 정상으로 보인다.</li>
 <li>⚠️ <strong>R10 은 그 뒤 배선됐다</strong>(<a href="https://alphaeveryday.atlassian.net/browse/ALPHA-979">ALPHA-979</a>
     조각 1, 2026-08-13). 체인이 읽는 표가 전부 클라우드 DB 에 있어(<code>price_movement_trigger</code> ·
@@ -1991,6 +1991,8 @@
     축의 형상(피드 2 + 단계 5)과 그 천장은 계약의 §체인 축이 정본이다.</li>
 <li><strong>R03도 그 뒤 배선됐다</strong>(ALPHA-979 조각 2, 2026-08-13). SFN 종료 뒤 Reconciler가 아직
     원장을 훑지 않은 <code>ledger_updated &lt; aws_stop</code>은 정상 지연이라 위반에서 제외한다.</li>
+<li><strong>R12도 그 뒤 배선됐다</strong>(ALPHA-979 조각 3, 2026-08-13). SQS 조회가 일부라도 실패하면
+    부분 관측을 내리지 않고 축 전체를 <code>null</code>로 둔다.</li>
 <li>🔴 <strong>R08(신선도 위반)은 지금 <code>평가됨</code> 인데 실 응답에서 <code>못 돎</code> 이 된다.</strong> 계약 연결 작업이
   하나뿐이고 그 <code>actual_as_of_date</code> 가 <a href="../0043-dataset-contract-freshness/">ADR-0043</a> 상 영구
   NULL 이기 때문이다. 목이 가리고 있던 계측 공백이 드러나는 것이므로 <strong>회귀가 아니라 정정</strong>이다.</li>
