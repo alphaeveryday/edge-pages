@@ -1980,7 +1980,7 @@
 <h2 id="_4">결과<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
 <li>계약은 <a href="../../contracts/console-facts-api/">docs/contracts/console-facts-api.md</a>.</li>
-<li><strong>R15까지 ETF별 최신 트리거 실행 상태로 선다.</strong> 남은 계측 공백(R08·R11·R16)은 화면에 <code>못 돎</code> 으로
+<li><strong>R15까지 ETF별 최신 트리거 실행 상태로 선다.</strong> 남은 계측 공백(R11·R16)은 화면에 <code>못 돎</code> 으로
   서야 한다 — <code>평가됨 · 위반 0</code> 과 같은 칸에 그리면
   계측 공백이 정상으로 보인다.</li>
 <li>⚠️ <strong>R10 은 그 뒤 배선됐다</strong>(<a href="https://alphaeveryday.atlassian.net/browse/ALPHA-979">ALPHA-979</a>
@@ -1995,10 +1995,10 @@
     부분 관측을 내리지 않고 축 전체를 <code>null</code>로 둔다.</li>
 <li><strong>R15도 그 뒤 배선됐다</strong>(ALPHA-978, 2026-08-13). 조회일의 배치·장중 발화를 합쳐 ETF별
     최신 트리거 하나와 그 트리거의 최신 <code>explanation_run.run_status</code>를 낸다.</li>
-<li>🔴 <strong>R08(신선도 위반)은 지금 <code>평가됨</code> 인데 실 응답에서 <code>못 돎</code> 이 된다.</strong> 계약 연결 작업이
-  하나뿐이고 그 <code>actual_as_of_date</code> 가 <a href="../0043-dataset-contract-freshness/">ADR-0043</a> 상 영구
-  NULL 이기 때문이다. 목이 가리고 있던 계측 공백이 드러나는 것이므로 <strong>회귀가 아니라 정정</strong>이다.</li>
-<li><strong>런북은 29/29 미등록</strong>이 된다 — 레지스트리 계약 1건의 <code>runbook_uri</code> 가 <code>None</code> 이고, 스냅샷의
+<li><strong>R08도 그 뒤 배선됐다</strong>(ALPHA-978). KIS NAV 응답 원본의 최신 <code>stck_bsop_date</code>를
+  <code>actual_as_of_date</code>로 기록한다. KRX holdings는 독립 증거가 없어 계속 NULL이며, NAV 증거까지
+  없거나 손상된 응답에서는 R08이 정직하게 <code>못 돎</code>을 유지한다.</li>
+<li><strong>런북은 29/29 미등록</strong>이 된다 — 레지스트리 계약들의 <code>runbook_uri</code> 가 <code>None</code> 이고, 스냅샷의
   8개 항목은 손으로 쓴 목이다.</li>
 <li>클라이언트 평가를 택했으므로 <strong>화면 12곳의 동기 사실 접근을 비동기로 바꿔야 한다</strong>(하나는
   모듈 import 시점에 읽어 fetch 로는 만족되지 않는다). "import 를 fetch 로 바꾸면 끝"이 아니다.</li>
