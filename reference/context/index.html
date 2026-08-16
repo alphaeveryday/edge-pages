@@ -2138,7 +2138,7 @@
 <tr>
 <td>고객 화면</td>
 <td>벤더 서빙 embed widget (widget-api)</td>
-<td>EDGE 위젯 UI <strong>빌드 산출물 납품</strong>(증권사가 MTS/HTS에 임베드·호스팅) 또는 증권사 자체 UI → 증권사 백엔드 → On-Prem Publication API (<a href="../adr/0035-widget-ui-build-artifact/">ADR-0035</a>)</td>
+<td>EDGE 위젯 UI <strong>빌드 산출물 납품</strong>(증권사가 MTS/HTS에 임베드·호스팅) 또는 증권사 자체 UI → 증권사 엣지(프록시) → On-Prem Publication API 직접 호출 (<a href="../adr/0035-widget-ui-build-artifact/">ADR-0035</a>·<a href="../adr/0053-widget-direct-serving-no-personalization/">ADR-0053</a>)</td>
 </tr>
 <tr>
 <td>Tenant Console</td>
@@ -2189,7 +2189,7 @@
         CES --&gt; TSA[&quot;Tenant Sync API&quot;]
     end
     subgraph onprem[&quot;증권사 On-Premise&quot;]
-        MTS[&quot;MTS / HTS / Internal&quot;] --&gt;|증권사 내부 Backend/API GW 경유| SVA[&quot;Publication API&quot;]
+        MTS[&quot;MTS 위젯&quot;] --&gt;|증권사 엣지 프록시 경유 직접 호출 — ADR-0053| SVA[&quot;Publication API&quot;]
         PS[&quot;Published Store&quot;] --&gt; SC[&quot;Publication Cache&quot;] --&gt; SVA
         SA[&quot;Sync Agent (DMZ)&quot;] --&gt;|&quot;검증 번들 전달&quot;| IN[&quot;Intake (내부망)&quot;]
         IN --&gt; RES[&quot;Raw Event Store&quot;]
@@ -2293,10 +2293,6 @@
 <tr>
 <td>Publication API</td>
 <td>MTS/HTS/Internal에 Published 상태만 반환</td>
-</tr>
-<tr>
-<td>Exposure Log</td>
-<td>고객 노출 이력 (민원/감사 재현용)</td>
 </tr>
 <tr>
 <td>Audit Log</td>

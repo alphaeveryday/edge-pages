@@ -2202,6 +2202,7 @@
 <blockquote>
 <p>원본: <code>EDGE_아키텍처_v0_2.pptx</code> — Slide 3 (System Architecture)</p>
 <p><strong>[설계 뷰]</strong> 논리 설계 개요다. 현행 배포·계약의 권위는 SSOT(<a href="../../context/">../context.md</a>)에 있다. 이 문서의 Service·Worker는 <strong>논리 단위</strong>이며, 실제 배포 모듈로의 대응은 아래 <a href="#논리--배포-모듈-매핑">논리 → 배포 모듈 매핑</a>을 따른다. 충돌 시 SSOT 우선.</p>
+<p>⚠️ <strong>Customer System 경유 서술은 <a href="../../adr/0053-widget-direct-serving-no-personalization/">ADR-0053</a>으로 폐지됨</strong> — 위젯이 증권사 엣지(프록시) 경유로 Publication Service 를 직접 호출하며 고객 식별을 받지 않는다. 다이어그램 갱신은 뷰 재작도 PR 소관.</p>
 </blockquote>
 <h2 id="_1">개요<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>Application Architecture의 논리 구성요소를 실제 시스템 컴포넌트(Client / Gateway / Service / Cache / Database / Scheduler / Worker)로 매핑한 다이어그램. <strong>금융사 통제 환경</strong>과 <strong>EDGE 환경</strong>이 물리적으로 분리되어 있으며, 두 환경은 금융사 측 <strong>Relay Worker (Customer DMZ)</strong> → EDGE <strong>API Gateway</strong> 경로로만 통신한다.</p>

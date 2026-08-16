@@ -2064,10 +2064,10 @@
 </ul>
 <h2 id="erd">ERD 방향 및 상태값<a class="headerlink" href="#erd" title="Permanent link">&para;</a></h2>
 <p>핵심 도메인 추상화 (기능 확장을 막지 않되 MVP UI는 가격 변동 설명에 집중):</p>
-<p><code>event</code> / <code>evidence</code> / <code>analysis_item</code> / <code>screening_check</code> / <code>review_task</code> / <code>publication</code> / <code>exposure_log</code></p>
+<p><code>event</code> / <code>evidence</code> / <code>analysis_item</code> / <code>screening_check</code> / <code>review_task</code> / <code>publication</code> (구 <code>exposure_log</code> 는 ADR-0053 으로 은퇴)</p>
 <ul>
 <li><code>analysis_item.analysis_type</code>: 현재 <strong>PRICE_MOVEMENT</strong>만 사용. 향후 MARKET_BRIEFING, DISCLOSURE_SUMMARY 확장 가능하나 MVP UI 비노출.</li>
-<li>감사 재현은 <code>analysis_item_status_history</code>(append-only)와 exposure log 로 "어느 시점에 어느 문구가 노출되었는지"를 복원한다. (구 정정 리비전 체인은 폐지 — 과거 이력의 CORRECTED 어휘는 상태 이력 원장에만 남는다, ADR-0044.)</li>
+<li>감사 재현은 <code>analysis_item_status_history</code>(append-only)와 게시·정정 이력(<code>publication</code>·<code>console_action_log</code>)·정책 이력으로 "어느 시점에 어떤 게시 상태였는지"를 복원한다 — 고객 단위 노출 재현(exposure log)은 폐지됐다(<a href="../../adr/0053-widget-direct-serving-no-personalization/">ADR-0053</a>). (구 정정 리비전 체인은 폐지 — 과거 이력의 CORRECTED 어휘는 상태 이력 원장에만 남는다, ADR-0044.)</li>
 </ul>
 <p><strong>상태값</strong>:</p>
 <table>
