@@ -533,24 +533,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    2 애플리케이션 아키텍처
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -567,36 +549,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="목차">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      목차
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#v1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        v1 — 초기 설계 (v0.1)
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -1909,25 +1861,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      목차
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#v1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        v1 — 초기 설계 (v0.1)
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1946,11 +1879,16 @@
 <h1 id="2-application-architecture">2 애플리케이션 아키텍처 (Application Architecture)<a class="headerlink" href="#2-application-architecture" title="Permanent link">&para;</a></h1>
 <p>cloud/onprem 하이브리드 — 클라우드에서 만들고 증권사 통제 환경에서 서빙하는 구조.</p>
 <p>상자를 클릭하면 상위·하위 1단계가 함께 강조된다.</p>
-<p class="ep-diagram-meta">버전: <strong>v2</strong> (현재) · <a href="#v1">v1</a> ·
-<a href="../interactive/2-aa.v2.html" target="_blank" rel="noopener">전체 화면으로 열기 ↗</a></p>
+<p class="ep-diagram-meta">버전:
+<select class="ep-version-select" aria-label="다이어그램 버전 선택">
+  <option value="v2" selected>v2 (현재)</option>
+  <option value="v1">v1 — 초기 설계 (v0.1)</option>
+</select> ·
+<a class="ep-open-full" href="../interactive/2-aa.v2.html" data-href-v1="../images/2-aa.v1.png" target="_blank" rel="noopener">전체 화면으로 열기 ↗</a></p>
 
 <div class="ep-diagram-frame">
-  <iframe src="../interactive/2-aa.v2.html" title="EDGE 애플리케이션 아키텍처 다이어그램 v2 — 인터랙티브" loading="lazy"></iframe>
+  <iframe data-version="v2" src="../interactive/2-aa.v2.html" title="EDGE 애플리케이션 아키텍처 다이어그램 v2 — 인터랙티브" loading="lazy"></iframe>
+  <img data-version="v1" src="../images/2-aa.v1.png" alt="EDGE 애플리케이션 아키텍처 다이어그램 v1 — 정적 이미지" loading="lazy" hidden>
 </div>
 
 <div class="admonition note">
@@ -1959,12 +1897,6 @@
 context·contracts 등 SSOT 에 있으며, 충돌 시 SSOT 가 우선한다.</p>
 </div>
 <p>근거 문서(설계 뷰): <a href="../../reference/architecture/application-architecture/">application-architecture.md</a></p>
-<h3 id="v1">v1 — 초기 설계 (v0.1)<a class="headerlink" href="#v1" title="Permanent link">&para;</a></h3>
-<details class="note">
-<summary>v1 정적 이미지 펼치기</summary>
-<p><img alt="EDGE 애플리케이션 아키텍처 다이어그램 v1" src="../images/2-aa.v1.png" /></p>
-<p><a href="../images/2-aa.v1.png" rel="noopener" target="_blank">원본 크기로 열기 ↗</a></p>
-</details>
 <hr />
 <p><a href="../1-information-architecture/">← 1 정보 구조</a> · <a href="../">목록</a> · <a href="../3-system-architecture/">다음 → 3 시스템 아키텍처</a></p>
 
@@ -2020,6 +1952,8 @@ context·contracts 등 SSOT 에 있으며, 충돌 시 SSOT 가 우선한다.</p>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../assets/javascripts/diagram-version.js"></script>
       
     
   </body>
