@@ -2180,25 +2180,25 @@
 </ul>
 <h2 id="3">3. 하이브리드 아키텍처 개요<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>flowchart TB
-    subgraph cloud[&quot;Vendor Cloud&quot;]
-        SRC[&quot;뉴스/공시/시세/수급&quot;] --&gt; DP[&quot;Data Pipeline&quot;]
-        DP --&gt; CAE[&quot;Common Analysis Engine&quot;]
-        DP --&gt; CES[&quot;Cloud Event Store&quot;]
-        CAE --&gt; EB[&quot;Event Bundle 생성&quot;]
+    subgraph cloud["Vendor Cloud"]
+        SRC["뉴스/공시/시세/수급"] --&gt; DP["Data Pipeline"]
+        DP --&gt; CAE["Common Analysis Engine"]
+        DP --&gt; CES["Cloud Event Store"]
+        CAE --&gt; EB["Event Bundle 생성"]
         CES --&gt; EB
-        CES --&gt; TSA[&quot;Tenant Sync API&quot;]
+        CES --&gt; TSA["Tenant Sync API"]
     end
-    subgraph onprem[&quot;증권사 On-Premise&quot;]
-        MTS[&quot;MTS 위젯&quot;] --&gt;|증권사 엣지 프록시 경유 직접 호출 — ADR-0053| SVA[&quot;Publication API&quot;]
-        PS[&quot;Published Store&quot;] --&gt; SC[&quot;Publication Cache&quot;] --&gt; SVA
-        SA[&quot;Sync Agent (DMZ)&quot;] --&gt;|&quot;검증 번들 전달&quot;| IN[&quot;Intake (내부망)&quot;]
-        IN --&gt; RES[&quot;Raw Event Store&quot;]
-        RES --&gt; CE[&quot;Screening Worker&quot;]
+    subgraph onprem["증권사 On-Premise"]
+        MTS["MTS 위젯"] --&gt;|증권사 엣지 프록시 경유 직접 호출 — ADR-0053| SVA["Publication API"]
+        PS["Published Store"] --&gt; SC["Publication Cache"] --&gt; SVA
+        SA["Sync Agent (DMZ)"] --&gt;|"검증 번들 전달"| IN["Intake (내부망)"]
+        IN --&gt; RES["Raw Event Store"]
+        RES --&gt; CE["Screening Worker"]
         CE --&gt;|승인/자동노출| PS
-        CE --&gt; RQ[&quot;Review Queue(논리)&quot;]
-        RQ --- TC[&quot;Tenant Console&lt;br/&gt;(검수/정책/감사)&quot;]
+        CE --&gt; RQ["Review Queue(논리)"]
+        RQ --- TC["Tenant Console&lt;br/&gt;(검수/정책/감사)"]
     end
-    SA --&gt;|&quot;Pull (mTLS)&quot;| TSA
+    SA --&gt;|"Pull (mTLS)"| TSA
 </code></pre></div>
 <ul>
 <li>데이터는 항상 <strong>Cloud → On-Prem 단방향</strong>으로 흐르고, 연결은 항상 <strong>On-Prem → Cloud outbound</strong>로만 열린다.</li>

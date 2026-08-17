@@ -2736,23 +2736,23 @@
 <p>운영자 인증이 필요하다(<code>AdminAuthFilter</code>). 응답은 기존 콘솔 API 와 같은 봉투(<code>result</code>)를 쓰고,
 필드명은 UI 타입과 같은 camelCase 다.</p>
 <div class="highlight"><pre><span></span><code>{
-  &quot;result&quot;: {
-    &quot;runs&quot;: [
+  "result": {
+    "runs": [
       {
-        &quot;id&quot;: &quot;etf-daily:2026-08-03T15:40&quot;,   // = run_key. 사건 식별자의 대상 축
-        &quot;lane&quot;: &quot;etf-daily&quot;,                  // = pipeline_type
-        &quot;tradingDate&quot;: &quot;2026-08-03&quot;,          // 비거래일 런은 null (키는 있다)
-        &quot;ledgerStatus&quot;: &quot;SUCCEEDED&quot;,          // = orchestration_status, 원장 어휘 그대로
-        &quot;ledgerUpdated&quot;: &quot;2026-08-03T07:20:34Z&quot;,
-        &quot;deadline&quot;: null,                     // hard_deadline_at 없으면 null
-        &quot;awsStatus&quot;: &quot;SUCCEEDED&quot;,             // SFN 원문 상태. 못 봤으면 null
-        &quot;awsStop&quot;: &quot;2026-08-03T07:18:06Z&quot;     // SFN 종료 시각. 진행 중·미관측이면 null
+        "id": "etf-daily:2026-08-03T15:40",   // = run_key. 사건 식별자의 대상 축
+        "lane": "etf-daily",                  // = pipeline_type
+        "tradingDate": "2026-08-03",          // 비거래일 런은 null (키는 있다)
+        "ledgerStatus": "SUCCEEDED",          // = orchestration_status, 원장 어휘 그대로
+        "ledgerUpdated": "2026-08-03T07:20:34Z",
+        "deadline": null,                     // hard_deadline_at 없으면 null
+        "awsStatus": "SUCCEEDED",             // SFN 원문 상태. 못 봤으면 null
+        "awsStop": "2026-08-03T07:18:06Z"     // SFN 종료 시각. 진행 중·미관측이면 null
       }
     ],
-    &quot;meta&quot;: {
-      &quot;db&quot;: &quot;2026-08-03T07:20:34Z&quot;,   // DB 시계 — 화면의 &quot;언제 기준인가&quot;
-      &quot;today&quot;: &quot;2026-08-03&quot;,          // 실제로 본 날
-      &quot;aws&quot;: &quot;2026-08-03T07:20:35Z&quot;   // SFN 관측 시각. 조회 실패면 null
+    "meta": {
+      "db": "2026-08-03T07:20:34Z",   // DB 시계 — 화면의 "언제 기준인가"
+      "today": "2026-08-03",          // 실제로 본 날
+      "aws": "2026-08-03T07:20:35Z"   // SFN 관측 시각. 조회 실패면 null
     }
   }
 }
@@ -2761,7 +2761,7 @@
 <p>Terraform의 1분 파이프라인 원큐와 각 DLQ를 SQS <code>GetQueueAttributes</code>로 관측한다. <code>visible</code>은
 원큐 대기, <code>inFlight</code>는 원큐 처리 중, <code>dlq</code>는 DLQ의 visible·in-flight·delayed 합계다. DLQ
 메시지가 상태 사이를 이동하는 순간에도 R12가 유실을 놓치지 않게 합계로 센다.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&quot;queues&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;news-extraction-realtime&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;visible&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;inFlight&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dlq&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">}]</span>
+<div class="highlight"><pre><span></span><code><span class="nt">"queues"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"news-extraction-realtime"</span><span class="p">,</span><span class="w"> </span><span class="nt">"visible"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="nt">"inFlight"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">"dlq"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">}]</span>
 </code></pre></div>
 <p>한 큐라도 조회에 실패하면 부분 성공을 전체 관측처럼 내리지 않고 <code>queues: null</code>로 싣는다. 구 API
 응답에는 필드 자체가 없을 수 있으므로 UI 검증 경계는 부재도 받는다. 둘 다 R12는 <code>못 돎</code>이고,
@@ -2787,12 +2787,12 @@
 <strong>런처럼 생긴 행</strong>으로 같은 배열에 들어간다 — 그 슬롯이 사건의 대상이기 때문이다. 런 행이
 없으니 <code>ledgerStatus</code>·<code>ledgerUpdated</code>·<code>deadline</code> 은 <strong>없는 것이 사실</strong>이라 <code>null</code> 이다.</p>
 <div class="highlight"><pre><span></span><code>{
-  &quot;id&quot;: &quot;etf-daily:2026-08-03T15:40&quot;,
-  &quot;lane&quot;: &quot;etf-daily&quot;,            // 슬롯 키에서 읽는다 (이슈 테이블에 레인 컬럼이 없다)
-  &quot;tradingDate&quot;: &quot;2026-08-03&quot;,    // 〃
-  &quot;ledgerStatus&quot;: null,
-  &quot;planned&quot;: true,                // ← 계획 슬롯에만 실린다
-  &quot;noRunRow&quot;: true                // 〃
+  "id": "etf-daily:2026-08-03T15:40",
+  "lane": "etf-daily",            // 슬롯 키에서 읽는다 (이슈 테이블에 레인 컬럼이 없다)
+  "tradingDate": "2026-08-03",    // 〃
+  "ledgerStatus": null,
+  "planned": true,                // ← 계획 슬롯에만 실린다
+  "noRunRow": true                // 〃
 }
 </code></pre></div>
 <p>⚠️ <strong><code>planned</code>·<code>noRunRow</code> 는 실재 런에서 키 자체가 없다.</strong> <code>false</code> 로 채우면 "계획된 적 없다"는
@@ -2825,14 +2825,14 @@
 <code>dataset</code> 으로 묶어 세운다. 다른 축은 행과 응답이 1:1 이다 — 런 축도 계획 결손 슬롯을 키에서
 파싱해 <strong>합성</strong>하지만(§계획 결손 슬롯) 슬롯 하나가 행 하나이지 여러 행을 접지는 않는다. 접는
 축은 여기뿐이고, 그래서 <strong>접는 방향이 곧 계약</strong>이다.</p>
-<div class="highlight"><pre><span></span><code>&quot;datasets&quot;: [
+<div class="highlight"><pre><span></span><code>"datasets": [
   {
-    &quot;id&quot;: &quot;etf_holdings&quot;,          // = ops_expected_task.dataset (작업 축의 dataset 과 같은 축)
-    &quot;contract&quot;: true,              // 이 데이터셋의 작업 중 하나라도 계약이 걸려 있나
-    &quot;expectedAsOf&quot;: &quot;2026-08-03&quot;,
-    &quot;actualAsOf&quot;: null,
-    &quot;collectedAt&quot;: &quot;2026-08-03T07:00:00Z&quot;,
-    &quot;unverifiable&quot;: &quot;ACTUAL_AS_OF_UNVERIFIED&quot;   // null 이면 신선도를 판정할 수 있다
+    "id": "etf_holdings",          // = ops_expected_task.dataset (작업 축의 dataset 과 같은 축)
+    "contract": true,              // 이 데이터셋의 작업 중 하나라도 계약이 걸려 있나
+    "expectedAsOf": "2026-08-03",
+    "actualAsOf": null,
+    "collectedAt": "2026-08-03T07:00:00Z",
+    "unverifiable": "ACTUAL_AS_OF_UNVERIFIED"   // null 이면 신선도를 판정할 수 있다
   }
 ]
 </code></pre></div>
@@ -2977,9 +2977,9 @@ as-of·수집 시각·신선도)은 스키마가 이미 그렇게 묶어 두므�
 <code>FRESHNESS_REASON_MISSING</code> 으로 떨어뜨린다(위 표).</p>
 <h2 id="_8">산출 축<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
 <p>산출 다섯의 <strong>그 날 값</strong>과 <strong>평소</strong>(직전 거래일 중앙값).</p>
-<div class="highlight"><pre><span></span><code>&quot;outputs&quot;: [
-  { &quot;id&quot;: &quot;o.pub&quot;,  &quot;label&quot;: &quot;게시 ETF&quot;,     &quot;today&quot;: 16, &quot;base&quot;: 32.0, &quot;unit&quot;: &quot;종&quot; },
-  { &quot;id&quot;: &quot;o.trig&quot;, &quot;label&quot;: &quot;배치 트리거&quot;,  &quot;today&quot;: 0,  &quot;base&quot;: null, &quot;unit&quot;: &quot;종&quot; }
+<div class="highlight"><pre><span></span><code>"outputs": [
+  { "id": "o.pub",  "label": "게시 ETF",     "today": 16, "base": 32.0, "unit": "종" },
+  { "id": "o.trig", "label": "배치 트리거",  "today": 0,  "base": null, "unit": "종" }
 ]
 </code></pre></div>
 <table>
@@ -3218,10 +3218,10 @@ REJECTED 적재가 생기면 이 수의 뜻이 조용히 바뀐다.</p>
 <h2 id="_11">경계 축<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
 <p>게시 상태와 테넌트 발번이 <strong>어긋난 건수</strong>. 배열이 아니라 <strong>객체 하나</strong>다 — 다른 축은 "그 날의
 행들"이지만 이건 "지금 어긋난 것이 몇 건인가"라 수 셋으로 끝난다.</p>
-<div class="highlight"><pre><span></span><code>&quot;boundary&quot;: {
-  &quot;publishedWithoutDelivery&quot;: 0,   // 게시했는데 발번이 없다
-  &quot;deliveryNowNonpublished&quot;: 1,    // 발번했는데 지금 비게시다 (무효화 통지도 안 갔다)
-  &quot;deliveryRows&quot;: 114              // 발번 전체 — &quot;발번이 돌고는 있나&quot;
+<div class="highlight"><pre><span></span><code>"boundary": {
+  "publishedWithoutDelivery": 0,   // 게시했는데 발번이 없다
+  "deliveryNowNonpublished": 1,    // 발번했는데 지금 비게시다 (무효화 통지도 안 갔다)
+  "deliveryRows": 114              // 발번 전체 — "발번이 돌고는 있나"
 }
 </code></pre></div>
 <p>🔴 <strong>이 축만 날짜 창을 안 탄다 — 기준 시각이 <code>meta.today</code> 가 아니라 <code>meta.db</code> 다.</strong> 나머지 축은
@@ -3263,9 +3263,9 @@ super-admin-api 가 넣는다. 순서를 지키는 것은 writer 수가 아니�
 <p>조회일에 발화한 배치(<code>price_movement_trigger</code>)와 장중 FIRE(<code>minute_price_trigger</code>)를 합쳐
 <strong>ETF마다 가장 늦은 트리거 하나</strong>를 고른다. 그 트리거에 실행이 여러 번 있으면
 <code>explanation_as_of</code>가 가장 늦은 실행의 <code>run_status</code>를 그대로 싣는다.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&quot;etfLedger&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;rows&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;etf&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;etf-1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;첫 ETF&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;triggered&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;outcome&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FAILED&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="nt">"etfLedger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"rows"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">"etf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"etf-1"</span><span class="p">,</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"첫 ETF"</span><span class="p">,</span><span class="w"> </span><span class="nt">"triggered"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FAILED"</span><span class="p">,</span><span class="w"> </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">}</span>
 <span class="p">]</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 <p>실행이 아직 없으면 <code>outcome: null</code>이다. 진행 중 상태와 실행 부재를 실패로 만들지 않으며 R15는
@@ -3274,17 +3274,17 @@ super-admin-api 가 넣는다. 순서를 지키는 것은 writer 수가 아니�
 <code>못 돎</code>이다. 서버가 축을 보낸 빈 <code>rows</code>는 “조회일에 트리거 ETF가 0종”이라는 실측이다.</p>
 <h2 id="_13">체인 축<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
 <p>설명 생산 흐름에서 <strong>그 날 발화한 트리거가 단계마다 몇 건 남았나</strong>. 배열 둘을 가진 객체다.</p>
-<div class="highlight"><pre><span></span><code>&quot;chain&quot;: {
-  &quot;feeds&quot;: [
-    { &quot;id&quot;: &quot;feed.batch&quot;,    &quot;label&quot;: &quot;배치 트리거&quot;, &quot;v&quot;: 20, &quot;unit&quot;: &quot;ETF&quot;, &quot;src&quot;: &quot;price_movement_trigger&quot; },
-    { &quot;id&quot;: &quot;feed.intraday&quot;, &quot;label&quot;: &quot;장중 트리거&quot;, &quot;v&quot;: 65, &quot;unit&quot;: &quot;건&quot;,  &quot;src&quot;: &quot;minute_price_trigger&quot; }
+<div class="highlight"><pre><span></span><code>"chain": {
+  "feeds": [
+    { "id": "feed.batch",    "label": "배치 트리거", "v": 20, "unit": "ETF", "src": "price_movement_trigger" },
+    { "id": "feed.intraday", "label": "장중 트리거", "v": 65, "unit": "건",  "src": "minute_price_trigger" }
   ],
-  &quot;stages&quot;: [
-    { &quot;id&quot;: &quot;c.obs&quot;,   &quot;label&quot;: &quot;관측&quot;,   &quot;batch&quot;: 20, &quot;intraday&quot;: 0, &quot;src&quot;: &quot;etf_contribution_observation&quot; },
-    { &quot;id&quot;: &quot;c.route&quot;, &quot;label&quot;: &quot;라우트&quot;, &quot;batch&quot;: 20, &quot;intraday&quot;: 0, &quot;src&quot;: &quot;explanation_route&quot; },
-    { &quot;id&quot;: &quot;c.run&quot;,   &quot;label&quot;: &quot;런&quot;,     &quot;batch&quot;: 16, &quot;intraday&quot;: 0, &quot;src&quot;: &quot;explanation_run&quot; },
-    { &quot;id&quot;: &quot;c.res&quot;,   &quot;label&quot;: &quot;결과&quot;,   &quot;batch&quot;: 16, &quot;intraday&quot;: 0, &quot;src&quot;: &quot;explanation_result&quot; },
-    { &quot;id&quot;: &quot;c.pub&quot;,   &quot;label&quot;: &quot;게시&quot;,   &quot;batch&quot;: 16, &quot;intraday&quot;: 0, &quot;src&quot;: &quot;publication_status=PUBLISHED&quot; }
+  "stages": [
+    { "id": "c.obs",   "label": "관측",   "batch": 20, "intraday": 0, "src": "etf_contribution_observation" },
+    { "id": "c.route", "label": "라우트", "batch": 20, "intraday": 0, "src": "explanation_route" },
+    { "id": "c.run",   "label": "런",     "batch": 16, "intraday": 0, "src": "explanation_run" },
+    { "id": "c.res",   "label": "결과",   "batch": 16, "intraday": 0, "src": "explanation_result" },
+    { "id": "c.pub",   "label": "게시",   "batch": 16, "intraday": 0, "src": "publication_status=PUBLISHED" }
   ]
 }
 </code></pre></div>
@@ -3383,7 +3383,7 @@ Run·Dataset·Delivery·Trend·Incidents 까지 <strong>전 화면</strong>이 "
 <p>⚠️ 2번을 빼면 안 된다. 런이 하루도 안 뜬 날이 조회 후보에서 사라지는데, <strong>그날이 바로 콘솔이
 열려야 하는 날</strong>이다.</p>
 <h3 id="_20">런이 어느 날에 속하나<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">COALESCE</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">trading_date</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">created_at</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">&#39;Asia/Seoul&#39;</span><span class="p">)::</span><span class="nb">date</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">COALESCE</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">trading_date</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">created_at</span><span class="w"> </span><span class="k">AT</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="s1">'Asia/Seoul'</span><span class="p">)::</span><span class="nb">date</span><span class="p">)</span>
 </code></pre></div>
 <p>⚠️ <code>trading_date</code> 로 단순화하지 마라 — 비거래일 런은 그 컬럼이 NULL 이라 통째로 새어 나간다.
 이 식을 쓰는 자리가 앞으로 여럿이 된다(조회 창 · 작업 조인 · 최신 날짜). <strong>한 자리라도 다르게

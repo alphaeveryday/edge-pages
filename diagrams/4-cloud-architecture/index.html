@@ -589,6 +589,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 클라우드 아키텍처
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -605,6 +623,36 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#v1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v1 — 초기 설계 (v0.1)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1861,6 +1909,25 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#v1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v1 — 초기 설계 (v0.1)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1879,7 +1946,7 @@
 <h1 id="4-cloud-architecture">4 클라우드 아키텍처 (Cloud Architecture)<a class="headerlink" href="#4-cloud-architecture" title="Permanent link">&para;</a></h1>
 <p>ECS 클러스터 분리·RDS·CloudFront 등 실 배포 토폴로지.</p>
 <p>상자를 클릭하면 상위·하위 1단계가 함께 강조된다.</p>
-<p class="ep-diagram-meta">버전: <strong>v2</strong> (현재) ·
+<p class="ep-diagram-meta">버전: <strong>v2</strong> (현재) · <a href="#v1">v1</a> ·
 <a href="../interactive/4-ca.v2.html" target="_blank" rel="noopener">전체 화면으로 열기 ↗</a></p>
 
 <div class="ep-diagram-frame">
@@ -1892,6 +1959,12 @@
 현행 인프라의 권위는 infra/terraform 등 SSOT 에 있으며, 충돌 시 SSOT 가 우선한다.</p>
 </div>
 <p>근거 문서(설계 뷰): <a href="../../reference/architecture/cloud-architecture/">cloud-architecture.md</a></p>
+<h3 id="v1">v1 — 초기 설계 (v0.1)<a class="headerlink" href="#v1" title="Permanent link">&para;</a></h3>
+<details class="note">
+<summary>v1 정적 이미지 펼치기</summary>
+<p><img alt="EDGE 클라우드 아키텍처 다이어그램 v1" src="../images/4-ca.v1.png" /></p>
+<p><a href="../images/4-ca.v1.png" rel="noopener" target="_blank">원본 크기로 열기 ↗</a></p>
+</details>
 <hr />
 <p><a href="../3-system-architecture/">← 3 시스템 아키텍처</a> · <a href="../">목록</a></p>
 
