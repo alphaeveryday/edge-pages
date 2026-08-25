@@ -2045,21 +2045,27 @@
 <ul>
 <li><code>etf_ticker</code>: 국내 상장 ETF 종목코드 (MVP 커버리지 — <a href="../../adr/0024-scope-domestic-etf/">../adr/0024</a>). <code>[확정 필요 — 식별자 체계: 종목코드 vs ISIN. 초안은 종목코드]</code></li>
 <li><code>trade_date</code> 생략 시 <strong>최신 거래일</strong>의 게시분 — 화면(AI 분석 탭)은 "가장 최근 거래일의 분석"을 원하므로 게시 시각이 아니라 거래일 기준이다. 과거 거래일 분석이 나중에 게시(지연 검수)돼도 최신 거래일 게시분이 우선한다. 같은 거래일에 유효 스냅샷이 여럿 공존하면 <code>explanation_as_of</code> 최신이 이긴다(무효화분 제외 — "유효 최신 승리", ADR-0045 결정 3·ALPHA-743). 최신이 무효화되면 직전 유효 스냅샷이 이 규칙만으로 자동 재노출된다. 응답의 <code>explanation_as_of</code>가 스냅샷 기준시각을 말한다. 동률은 게시 시각으로 해소.
-<strong>응답 200</strong> (노출 가능한 설명이 있을 때):</li>
+<strong>응답 200</strong> — 성공은 항상 200 + 공통 응답 포맷(jvm-common <code>ApiResponse</code>)이다(<a href="../../adr/0054-publication-explanations-uniform-response/">ADR-0054</a>). 설명이 있으면 <code>result</code> 에 실리고, 없으면 <code>result</code> 키 자체가 생략된다.</li>
 </ul>
+<p>노출 가능한 설명이 있을 때 — <code>result</code> 내용:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"publication_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"etf"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"ticker"</span><span class="p">:</span><span class="w"> </span><span class="s2">"069500"</span><span class="p">,</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"KODEX 200"</span><span class="w"> </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">"trade_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-07-15"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"반도체 비중 상위 구성종목의 동반 상승이 반영된 것으로 보이는 공개 정보 기반 변동 요인 후보입니다."</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"confidence_level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEDIUM"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"evidences"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEWS"</span><span class="p">,</span><span class="w"> </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"반도체 수출 반등"</span><span class="p">,</span><span class="w"> </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nt">"published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w"> </span><span class="p">}</span>
-<span class="w">  </span><span class="p">],</span>
-<span class="w">  </span><span class="nt">"disclaimer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"본 내용은 공개 정보 기반의 변동 요인 후보이며 투자 권유가 아닙니다."</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-07-15T16:40:00+09:00"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"explanation_as_of"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-07-15T16:00:00+09:00"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"content_as_of"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-07-15T10:30:00+09:00"</span>
+<span class="w">  </span><span class="nt">"isSuccess"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COMMON200"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"성공입니다."</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"publication_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"etf"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"ticker"</span><span class="p">:</span><span class="w"> </span><span class="s2">"069500"</span><span class="p">,</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"KODEX 200"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"trade_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-07-15"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"반도체 비중 상위 구성종목의 동반 상승이 반영된 것으로 보이는 공개 정보 기반 변동 요인 후보입니다."</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"confidence_level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEDIUM"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"evidences"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NEWS"</span><span class="p">,</span><span class="w"> </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"반도체 수출 반등"</span><span class="p">,</span><span class="w"> </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nt">"published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">"disclaimer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"본 내용은 공개 정보 기반의 변동 요인 후보이며 투자 권유가 아닙니다."</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"published_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-07-15T16:40:00+09:00"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"explanation_as_of"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-07-15T16:00:00+09:00"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"content_as_of"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-07-15T10:30:00+09:00"</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <ul>
@@ -2069,7 +2075,7 @@
 <li><code>evidences</code> 요소 형상은 <code>{kind, title, source, published_at}</code>(근거 뉴스/공시 문서 목록)로 <strong>확정</strong>(ALPHA-395 — <a href="../event-bundle-schema/">event-bundle-schema.md</a> "경계면 컬럼" 절). 번들 <code>evidences</code>가 온프렘 저장(<code>analysis_item.evidences</code>)을 거쳐 이 응답으로 서빙된다(<code>ExplanationStore</code>가 파싱하는 형상 — 저장분에는 <code>source_uri</code>(ALPHA-739, 검수 콘솔용)도 있으나 <strong>서빙 계약에는 싣지 않는다</strong>: 내부 lineage URI 를 고객 표면에 노출하지 않음). 반대 요인 등 부가 텍스트는 물리 스키마에 전용 컬럼이 없어(candidate: <code>stage_results</code> JSONB) 계약에 넣지 않는다 — 필요해지면 스키마 확장(양자 합의) 후 추가.</li>
 <li>노출 이력은 기록하지 않는다(ADR-0053 — 고객 단위 감사 요건 폐지). 민원 대응의 재구성 근거는 게시·정정 이력(<code>publication</code>·<code>console_action_log</code>)과 정책 이력(<code>policy_version</code> 활성 구간)이다 — 특정 고객에게 무엇이 나갔는가는 재구성 대상이 아니다.</li>
 </ul>
-<p><strong>응답 204</strong> (해당 ETF·일자에 노출 가능한 설명이 없을 때): 정상 상태다 — 모든 ETF가 매일 설명을 갖지 않는다. body 없음.</p>
+<p><strong>설명 없음</strong> (해당 ETF·일자에 노출 가능한 설명이 없을 때): 정상 상태다 — 모든 ETF가 매일 설명을 갖지 않는다. 200 + <code>result</code> 키 생략으로 응답한다(<code>{ "isSuccess": true, "code": "COMMON200", "message": "..." }</code>). <code>"result": null</code> 명시가 아니라 <strong>키 부재</strong>다 — 소비자는 키 존재로 판별한다. 구 204 응답은 폐지됐다(ADR-0054).</p>
 <p><strong>에러</strong>:</p>
 <table>
 <thead>
@@ -2081,11 +2087,11 @@
 <tbody>
 <tr>
 <td>400</td>
-<td>잘못된 <code>trade_date</code> 형식</td>
+<td>잘못된 <code>trade_date</code> 형식 (<code>COMMON400</code>)</td>
 </tr>
 <tr>
 <td>404</td>
-<td>알 수 없는 ETF 종목코드</td>
+<td>알 수 없는 ETF 종목코드 (<code>SERV4040</code>)</td>
 </tr>
 <tr>
 <td>5xx</td>
@@ -2094,7 +2100,7 @@
 </tbody>
 </table>
 <ul>
-<li>에러 body 형상은 jvm-common 공통 응답 포맷 <code>ApiResponse</code> — <code>{ "isSuccess": false, "code": "SERV4004", "message": "..." }</code>(result 생략). 도메인 코드 <code>SERV4004</code>(400)·<code>SERV4040</code>(404) — <code>SERV4001</code>~<code>4003</code>(헤더 검증)은 ADR-0053 으로 폐지됐고 번호는 재사용하지 않는다. 프레임워크 예외는 상태코드 기반 공통 코드(<code>COMMON404</code> 등). 성공(200) 본문은 이 포맷으로 감싸지 않는다. (확정 — ALPHA-498, 코드 <code>PublicationErrorStatus</code>·openapi <code>ErrorResponse</code>)</li>
+<li>에러 body 형상은 jvm-common 공통 응답 포맷 <code>ApiResponse</code> — <code>{ "isSuccess": false, "code": "SERV4040", "message": "..." }</code>(result 생략). 도메인 코드는 <code>SERV4040</code>(404)뿐이고, <code>trade_date</code> 형식 위반(400)은 프레임워크 변환 실패라 공통 코드 <code>COMMON400</code> 이다. <code>SERV4001</code>~<code>4003</code>(헤더 검증, ADR-0053)·<code>SERV4004</code>(구 trade_date 도메인 코드 — 파싱을 프레임워크 변환에 위임하며 폐지)는 은퇴됐고 번호는 재사용하지 않는다. 그 외 프레임워크 예외도 상태코드 기반 공통 코드(<code>COMMON404</code> 등). (코드 <code>PublicationErrorStatus</code>·openapi <code>ErrorResponse</code>)</li>
 </ul>
 <h3 id="_2">미확정 목록<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <ol>
