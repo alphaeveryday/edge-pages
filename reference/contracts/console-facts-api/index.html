@@ -2942,9 +2942,12 @@
 <h2 id="_7">작업 축<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <p>그 날의 기대 작업 전건. <code>runId</code> 는 런의 <code>id</code>(=<code>run_key</code>)와 <strong>같은 축</strong>이다 — 내부
 <code>pipeline_run_id</code> 를 쓰면 와이어에서 런 축과 안 이어진다. 창은 런 축과 <strong>같은 식</strong>을 쓴다.</p>
-<p>⚠️ <strong>모르는 값은 <code>null</code> 이다.</strong> <code>records_out</code>·<code>failed_records</code>·<code>completeness_*</code> 는 원장이 안 준
+<p>⚠️ <strong>모르는 값은 <code>null</code> 이다.</strong> <code>records_out</code>·<code>unsupported_records</code>·<code>failed_records</code>·
+<code>completeness_*</code> 는 원장이 안 준
 경우가 있는데, JDBC 의 <code>getLong</code> 은 SQL NULL 을 <strong>0 으로 준다</strong> — 접히면 "0건 처리"와 "신호 없음"이
 화면에서 같은 칸이 된다. <code>attempts</code> 는 <code>count(*)</code> 라 0 이 실측이다.</p>
+<p><code>unsupported_records</code>는 정상 입력이지만 현재 적재 모델이 지원하지 않아 제외한 건수다. 유실이나
+<code>INCOMPLETE</code> 판정에 포함하지 않으며, 과거·비계측 작업의 <code>null</code>을 0으로 바꾸지 않는다.</p>
 <p>⚠️ <strong>정렬은 파이프라인 순서다</strong>(<code>raw</code> → <code>normalize</code> → 그 외). 문자열 순이면 역순이 된다
 (<code>feature</code> &lt; <code>normalize</code> &lt; <code>raw</code>).</p>
 <p>⚠️ <strong>계약·신선도 컬럼(<code>datasetContractKey</code>·<code>expectedAsOf</code>·<code>actualAsOf</code>·<code>collectedAt</code>·
