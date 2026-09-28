@@ -11,28 +11,24 @@
       
       
       
-        <link rel="prev" href="../../diagrams/4-cloud-architecture/">
-      
-      
-        <link rel="next" href="../contracts/sync-protocol/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/edge-favicon.svg">
+      <link rel="icon" href="../../../assets/images/edge-favicon.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>설계 · ADR - Docs</title>
+        <title>ADR-0056: ETF Orca 앱 API(app-api) 클라우드 인프라: 별도 PostgreSQL·ElastiCache·N 인스턴스·단일 호스트 - Docs</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,9 +47,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#architecture-decision-records-adr" class="md-skip">
+        <a href="#adr-0056-etf-orca-apiapp-api-postgresqlelasticachen" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -92,9 +88,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../.." title="Docs" class="md-header__button md-logo" aria-label="Docs" data-md-component="logo">
+    <a href="../../.." title="Docs" class="md-header__button md-logo" aria-label="Docs" data-md-component="logo">
       
-  <img src="../../assets/images/edge-logo-animated.svg" alt="logo">
+  <img src="../../../assets/images/edge-logo-animated.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              설계 · ADR
+              ADR-0056: ETF Orca 앱 API(app-api) 클라우드 인프라: 별도 PostgreSQL·ElastiCache·N 인스턴스·단일 호스트
             
           </span>
         </div>
@@ -212,7 +208,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -233,7 +229,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../diagrams/" class="md-tabs__link">
+        <a href="../../../diagrams/" class="md-tabs__link">
           
   
   
@@ -249,11 +245,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
         
   
   
@@ -274,7 +268,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../contracts/sync-protocol/" class="md-tabs__link">
+        <a href="../../contracts/sync-protocol/" class="md-tabs__link">
           
   
   
@@ -292,7 +286,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../evolution/" class="md-tabs__link">
+      <a href="../../../evolution/" class="md-tabs__link">
         
   
   
@@ -313,7 +307,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../retrospective/" class="md-tabs__link">
+        <a href="../../../retrospective/" class="md-tabs__link">
           
   
   
@@ -333,7 +327,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../context/" class="md-tabs__link">
+        <a href="../../context/" class="md-tabs__link">
           
   
   
@@ -367,9 +361,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Docs" class="md-nav__button md-logo" aria-label="Docs" data-md-component="logo">
+    <a href="../../.." title="Docs" class="md-nav__button md-logo" aria-label="Docs" data-md-component="logo">
       
-  <img src="../../assets/images/edge-logo-animated.svg" alt="logo">
+  <img src="../../../assets/images/edge-logo-animated.svg" alt="logo">
 
     </a>
     Docs
@@ -384,7 +378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -463,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagrams/" class="md-nav__link">
+      <a href="../../../diagrams/" class="md-nav__link">
         
   
   
@@ -491,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagrams/1-information-architecture/" class="md-nav__link">
+      <a href="../../../diagrams/1-information-architecture/" class="md-nav__link">
         
   
   
@@ -519,7 +513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagrams/2-application-architecture/" class="md-nav__link">
+      <a href="../../../diagrams/2-application-architecture/" class="md-nav__link">
         
   
   
@@ -547,7 +541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagrams/3-system-architecture/" class="md-nav__link">
+      <a href="../../../diagrams/3-system-architecture/" class="md-nav__link">
         
   
   
@@ -575,7 +569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagrams/4-cloud-architecture/" class="md-nav__link">
+      <a href="../../../diagrams/4-cloud-architecture/" class="md-nav__link">
         
   
   
@@ -607,19 +601,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -635,7 +620,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -699,7 +683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/sync-protocol/" class="md-nav__link">
+      <a href="../../contracts/sync-protocol/" class="md-nav__link">
         
   
   
@@ -727,7 +711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/event-bundle-schema/" class="md-nav__link">
+      <a href="../../contracts/event-bundle-schema/" class="md-nav__link">
         
   
   
@@ -755,7 +739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/sync-auth/" class="md-nav__link">
+      <a href="../../contracts/sync-auth/" class="md-nav__link">
         
   
   
@@ -783,7 +767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/publication-api/" class="md-nav__link">
+      <a href="../../contracts/publication-api/" class="md-nav__link">
         
   
   
@@ -811,7 +795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/console-facts-api/" class="md-nav__link">
+      <a href="../../contracts/console-facts-api/" class="md-nav__link">
         
   
   
@@ -846,7 +830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../evolution/" class="md-nav__link">
+      <a href="../../../evolution/" class="md-nav__link">
         
   
   
@@ -925,7 +909,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/" class="md-nav__link">
+      <a href="../../../retrospective/" class="md-nav__link">
         
   
   
@@ -953,7 +937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-1/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-1/" class="md-nav__link">
         
   
   
@@ -981,7 +965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-2/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-2/" class="md-nav__link">
         
   
   
@@ -1009,7 +993,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-3/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-3/" class="md-nav__link">
         
   
   
@@ -1037,7 +1021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-4/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-4/" class="md-nav__link">
         
   
   
@@ -1065,7 +1049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-5/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-5/" class="md-nav__link">
         
   
   
@@ -1093,7 +1077,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-6/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-6/" class="md-nav__link">
         
   
   
@@ -1121,7 +1105,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-7/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-7/" class="md-nav__link">
         
   
   
@@ -1208,7 +1192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../context/" class="md-nav__link">
+      <a href="../../context/" class="md-nav__link">
         
   
   
@@ -1236,7 +1220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scope/" class="md-nav__link">
+      <a href="../../scope/" class="md-nav__link">
         
   
   
@@ -1264,7 +1248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../implementation/" class="md-nav__link">
+      <a href="../../implementation/" class="md-nav__link">
         
   
   
@@ -1292,7 +1276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../roadmap/" class="md-nav__link">
+      <a href="../../roadmap/" class="md-nav__link">
         
   
   
@@ -1320,7 +1304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../writing-rules/" class="md-nav__link">
+      <a href="../../writing-rules/" class="md-nav__link">
         
   
   
@@ -1400,7 +1384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/information-architecture/" class="md-nav__link">
+      <a href="../../architecture/information-architecture/" class="md-nav__link">
         
   
   
@@ -1428,7 +1412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/application-architecture/" class="md-nav__link">
+      <a href="../../architecture/application-architecture/" class="md-nav__link">
         
   
   
@@ -1456,7 +1440,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/system-architecture/" class="md-nav__link">
+      <a href="../../architecture/system-architecture/" class="md-nav__link">
         
   
   
@@ -1484,7 +1468,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/cloud-architecture/" class="md-nav__link">
+      <a href="../../architecture/cloud-architecture/" class="md-nav__link">
         
   
   
@@ -1572,7 +1556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/state-machine/" class="md-nav__link">
+      <a href="../../domain/state-machine/" class="md-nav__link">
         
   
   
@@ -1600,7 +1584,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/data-residency/" class="md-nav__link">
+      <a href="../../domain/data-residency/" class="md-nav__link">
         
   
   
@@ -1628,7 +1612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/exposure-log/" class="md-nav__link">
+      <a href="../../domain/exposure-log/" class="md-nav__link">
         
   
   
@@ -1656,7 +1640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/data-source-licensing/" class="md-nav__link">
+      <a href="../../domain/data-source-licensing/" class="md-nav__link">
         
   
   
@@ -1744,7 +1728,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/super-admin-console/" class="md-nav__link">
+      <a href="../../console-ia/super-admin-console/" class="md-nav__link">
         
   
   
@@ -1772,7 +1756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/tenant-console/" class="md-nav__link">
+      <a href="../../console-ia/tenant-console/" class="md-nav__link">
         
   
   
@@ -1800,7 +1784,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/permission-matrix/" class="md-nav__link">
+      <a href="../../console-ia/permission-matrix/" class="md-nav__link">
         
   
   
@@ -1856,6 +1840,97 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        맥락
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        근거
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="근거">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DB 분리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PostgreSQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도메인
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결과
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1871,304 +1946,47 @@
 
 
 
-<h1 id="architecture-decision-records-adr">Architecture Decision Records (ADR)<a class="headerlink" href="#architecture-decision-records-adr" title="Permanent link">&para;</a></h1>
-<p>중요한 설계·운영 결정을 한 형식으로 기록한다. 회의록이나 PRD가 아니라, <strong>결정과 그 이유</strong>만 증류한다.</p>
+<h1 id="adr-0056-etf-orca-apiapp-api-postgresqlelasticachen">ADR-0056: ETF Orca 앱 API(app-api) 클라우드 인프라: 별도 PostgreSQL·ElastiCache·N 인스턴스·단일 호스트<a class="headerlink" href="#adr-0056-etf-orca-apiapp-api-postgresqlelasticachen" title="Permanent link">&para;</a></h1>
 <ul>
-<li>형식은 <a href="0000-template/">0000-template.md</a> 하나로 고정한다 — 맥락 · 결정 · 대안 · 결과.</li>
-<li>한 번 승인된 ADR은 수정하지 않는다. 결정이 바뀌면 <strong>새 ADR을 추가하고</strong> 옛 ADR의 상태를 <code>대체됨(→ ADR-XXXX)</code>으로 표시한다.</li>
-<li>번호는 순차 증가. 파일명은 <code>NNNN-kebab-제목.md</code>.</li>
+<li>상태: 승인됨 (2026-09-28 — 인프라 배선 머지로 승인 전환)</li>
+<li>날짜: 2026-09-28</li>
+<li>관련: ADR-0009(AWS 배포 토폴로지) · ADR-0034(ALB 호스트 1:1) · ADR-0055(앱 계층 다중 인스턴스, ShedLock 선례) · <code>src/apps/cloud/app-api/README.md</code> · <code>src/apps/cloud/app-ui/screens.md</code></li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>ADR</th>
-<th>제목</th>
-<th>상태</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="0001-monorepo-structure/">0001</a></td>
-<td>모노레포·폴리글랏 워크스페이스 구조</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0002-agent-instructions-ssot/">0002</a></td>
-<td>에이전트 지침은 AGENTS.md 단일 출처</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0003-branch-strategy/">0003</a></td>
-<td>브랜치 전략 — dev 경유 엄격한 사다리</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0004-squash-only-merge/">0004</a></td>
-<td>Squash 전용 머지</td>
-<td>대체됨 (→ <a href="0007-merge-strategy/">0007</a>)</td>
-</tr>
-<tr>
-<td><a href="0005-db-as-contract/">0005</a></td>
-<td>DB를 단일 계약으로 · 확장-수축 마이그레이션</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0006-gateway-single-edge/">0006</a></td>
-<td>gateway 단일 엣지 · 라우트별 신뢰 필터</td>
-<td>대체됨 (→ <a href="0010-hybrid-onprem-pivot/">0010</a>)</td>
-</tr>
-<tr>
-<td><a href="0007-merge-strategy/">0007</a></td>
-<td>머지 전략 — 경계별(feature→dev Squash, dev→main Merge commit)</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0008-super-admin-console/">0008</a></td>
-<td>super-admin 콘솔 — cross-tenant 운영자 표면</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0009-aws-deployment-topology/">0009</a></td>
-<td>AWS 배포 토폴로지 — Terraform IaC · 단계 스택</td>
-<td>제안됨</td>
-</tr>
-<tr>
-<td><a href="0010-hybrid-onprem-pivot/">0010</a></td>
-<td>하이브리드 On-Premise 피벗 — 고객 접점·컴플라이언스의 증권사 이전</td>
-<td>승인됨 (노출 이력 항목 대체 → <a href="0053-widget-direct-serving-no-personalization/">0053</a>)</td>
-</tr>
-<tr>
-<td><a href="0011-rls-to-physical-isolation/">0011</a></td>
-<td>RLS 멀티테넌시에서 테넌트별 물리 격리로 전환</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0012-sync-cert-bootstrap/">0012</a></td>
-<td>Sync 인증서 부트스트랩 — CSR 방식, 개인키 비반출</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0013-exposure-log-recording/">0013</a></td>
-<td>Exposure Log 기록 — 조회 시점 자동 기록, 고객 해시는 증권사 생성</td>
-<td>대체됨(0053)</td>
-</tr>
-<tr>
-<td><a href="0014-correction-repreview/">0014</a></td>
-<td>정정 이벤트 처리 — 무조건 재검수</td>
-<td>대체됨(0041)</td>
-</tr>
-<tr>
-<td><a href="0015-sync-protocol-mvp/">0015</a></td>
-<td>Sync 프로토콜 — cursor 기반 delta, MVP 스펙과 목표 계약 분리</td>
-<td>대체됨 (→ <a href="0040-sync-integrity-mvp-to-signing/">0040</a>)</td>
-</tr>
-<tr>
-<td><a href="0016-single-repo-two-artifacts/">0016</a></td>
-<td>코드베이스 — 단일 레포, 배포 아티팩트 2종</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0017-demo-topology-compose/">0017</a></td>
-<td>데모/개발 토폴로지 — 별도 EC2 + Docker Compose 가상 온프렘</td>
-<td>승인됨 (스택 열거 중 Redis 대체 → <a href="0051-byoc-deployment-topology/">0051</a>)</td>
-</tr>
-<tr>
-<td><a href="0018-rule-deployment-path/">0018</a></td>
-<td>Compliance Rule 배포 경로 — Rule Type은 릴리스, Sync 채널은 데이터 전용</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0019-team-ownership-interface/">0019</a></td>
-<td>팀 오너십 — Sync 프로토콜 양단 단일 오너, 인터페이스 계약 고정</td>
-<td>대체됨 (→ <a href="0026-ownership-boundary-db/">0026</a>)</td>
-</tr>
-<tr>
-<td><a href="0020-verification-realign/">0020</a></td>
-<td>검증 반영 — 규제 서사 재정렬 및 설계 정합 일괄 정정</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0021-design-reinforcement/">0021</a></td>
-<td>설계 보강 — DMZ 배치·cursor 발번 시점·정정 리비전 모델 확정</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0022-verification-round2/">0022</a></td>
-<td>검증·보강 2차 — 규제 사실관계 외부 검증 및 배치·온보딩 옵션 보강</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0023-customer-validation/">0023</a></td>
-<td>고객 검증 반영 — 증권사 현업 리뷰 확보·이해상충은 노출 범위 제외로 통제</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0024-scope-domestic-etf/">0024</a></td>
-<td>MVP 상품 범위 — 국내 ETF, 스키마는 미국 확장성 선반영</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0025-onprem-auth-hybrid/">0025</a></td>
-<td>온프렘 콘솔 인증 — SSO/AD 지향 + 데모 자체 계정 하이브리드</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0026-ownership-boundary-db/">0026</a></td>
-<td>팀 오너십 경계 정정 — 진기는 DB 적재까지, 인터페이스는 DB 스키마</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0027-entity-id-scheme/">0027</a></td>
-<td>도메인 ID 체계 — 불투명 서로게이트(ULID), 외부 식별자는 속성</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0028-unified-pipeline-sfn/">0028</a></td>
-<td>파이프라인 SFN 통합 — feature/분석 경계 (분석은 ALPHA-806 에서 예고대로 큐 소비자로 분리 → SFN 은 3페이즈)</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0029-apps-plane-grouping/">0029</a></td>
-<td>apps 플레인 그룹핑 · schema 마이그레이션 세트 대칭 명명</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0030-raw-phase-partial-failure/">0030</a></td>
-<td>raw 페이즈는 부분 실패를 격리한다 — 전량 성공 게이트 제거</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0031-serving-to-publication/">0031</a></td>
-<td>serving-api를 Publication 도메인으로 리네이밍</td>
-<td>승인됨 (호출자·노출 기록 조항 대체 → <a href="0053-widget-direct-serving-no-personalization/">0053</a>)</td>
-</tr>
-<tr>
-<td><a href="0032-retire-gateway/">0032</a></td>
-<td>gateway 은퇴 — 클라우드 엣지를 ALB 직결로</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0033-demo-onprem-stack/">0033</a></td>
-<td>데모 온프렘 terraform 스택 분리 — 실 클라우드와 state 격리</td>
-<td>승인됨 (Redis 대체 → <a href="0051-byoc-deployment-topology/">0051</a> · 데모 프록시 문면 대체 → <a href="0053-widget-direct-serving-no-personalization/">0053</a>)</td>
-</tr>
-<tr>
-<td><a href="0034-host-per-edge-alb/">0034</a></td>
-<td>공개 엣지 호스트 단위 분리 — 서비스당 ALB 1개, 경로 라우팅 없음</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0035-widget-ui-build-artifact/">0035</a></td>
-<td>위젯 UI를 빌드 산출물로 납품 — 실행 서버 없음</td>
-<td>승인됨 (런타임 경로 문면 대체 → <a href="0053-widget-direct-serving-no-personalization/">0053</a>)</td>
-</tr>
-<tr>
-<td><a href="0036-sync-agent-intake-topology/">0036</a></td>
-<td>Sync 온프렘 토폴로지 — Sync Agent(DMZ)+Intake(내부망) 2모듈 표준</td>
-<td>승인됨 (조율 메커니즘 대체 → <a href="0052-sync-two-module-standard-reaffirmed/">0052</a>)</td>
-</tr>
-<tr>
-<td><a href="0037-compliance-engine-to-screening-worker/">0037</a></td>
-<td>점검 실행 모듈 명칭 — Compliance Engine → Screening Worker</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0038-jpa-onprem-read-standard/">0038</a></td>
-<td>온프렘 조회 표준으로 JPA 도입 — 스키마는 Flyway SSOT, 앱은 validate-only</td>
-<td>승인됨 (가변 엔티티 예시 문면 대체 → <a href="0053-widget-direct-serving-no-personalization/">0053</a>)</td>
-</tr>
-<tr>
-<td><a href="0039-screening-policy-ddd-trigger/">0039</a></td>
-<td>Screening 판정의 DDD 전환은 사건 기반 — 첫 테넌트 기준 연결이 방아쇠</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0040-sync-integrity-mvp-to-signing/">0040</a></td>
-<td>Sync 번들 무결성 — 체크섬·byte[] 응답을 MVP에서 목표 계약(서명)으로 이관</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0041-correction-same-screening/">0041</a></td>
-<td>정정 리비전도 신규와 동일한 정책 평가 — 0014 대체</td>
-<td>대체됨(0044)</td>
-</tr>
-<tr>
-<td><a href="0042-sync-pull-uniform-response/">0042</a></td>
-<td>sync Pull 응답을 공통 응답 포맷으로 통일 — 신규 없음 204 폐지</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0043-dataset-contract-freshness/">0043</a></td>
-<td>Dataset Contract와 ETF freshness 상태 축</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0044-correction-abolition/">0044</a></td>
-<td>정정(CORRECTION) 전달 폐지 — 무효화(INVALIDATION) 단독</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0045-realtime-snapshot-publication/">0045</a></td>
-<td>실시간 스냅샷 게시 전환 — day-grain 게이트 폐지, 승계와 3축 무효화</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0046-confidence-gate-risk-grade-abolition/">0046</a></td>
-<td>위험등급 융합 산정 폐기 — 확신도 AND 게이트 전환, max_risk 은퇴</td>
-<td>승인됨 (결정 5 후단 대체 → <a href="0047-banned-word-risk-retirement/">0047</a>)</td>
-</tr>
-<tr>
-<td><a href="0047-banned-word-risk-retirement/">0047</a></td>
-<td>금칙어 심각도 은퇴 — 결과를 정하는 축은 처리 방식뿐</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0048-explanation-s3-fallback-abolition/">0048</a></td>
-<td>설명 S3 폴백 폐기 — 영속 전제는 LLM 앞에서 검사, bundle 주입 필수화</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0049-screening-llm-triage-layer/">0049</a></td>
-<td>스크리닝 LLM 트리아지 층 — 게시 후 감사·검수 확정 회수</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0050-console-facts-endpoint/">0050</a></td>
-<td>콘솔 규칙 엔진의 사실 공급 — 엔드포인트는 사실만, 평가는 클라이언트</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0051-byoc-deployment-topology/">0051</a></td>
-<td>BYOC 배포 토폴로지 — 증권사 클라우드 사상, 단계형 구성과 승격 조건</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0052-sync-two-module-standard-reaffirmed/">0052</a></td>
-<td>Sync 온프렘 토폴로지 재검토 — 클라우드 사상에서도 2모듈 표준 유지, 근거 재정초</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0053-widget-direct-serving-no-personalization/">0053</a></td>
-<td>고객 컨텍스트 제거 — MTS 위젯 직접 호출, Exposure Log 은퇴</td>
-<td>승인됨 (응답 형상·204 수렴 문면 대체 → <a href="0054-publication-explanations-uniform-response/">0054</a>)</td>
-</tr>
-<tr>
-<td><a href="0054-publication-explanations-uniform-response/">0054</a></td>
-<td>publication-api 설명 조회 응답을 공통 응답 포맷으로 통일 — 설명 없음 204 폐지</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0056-etforca-app-api-infra/">0056</a></td>
-<td>ETF Orca 앱 API(app-api) 클라우드 인프라 — 별도 PostgreSQL·ElastiCache·N 인스턴스·단일 호스트</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0057-lake-dataset-canonical-consumption-and-retirement/">0057</a></td>
-<td>레이크 데이터셋 정본과 운영 소비 경로, 승격·폐기 절차</td>
-<td>제안됨 (적용 보류)</td>
-</tr>
-</tbody>
-</table>
+<h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>app-api 는 ETF 전망 투표의 Redis 장애 실험 트랙으로 시작해 자체 compose(MySQL 8.4 + Redis)로만 돌았다. ETF Orca 앱(app-ui, Expo)의 B2C 서버로 확장하기로 했고, 화면은 mock 으로 관통을 마쳤다. 백엔드 계약 설계에 앞서 인프라를 먼저 올린다. 결정할 것은 넷이다. 인스턴스 수, DB 분리, DB 엔진, 도메인.</p>
+<p>현재 클라우드는 ECS Fargate 상시 클러스터(<code>edge-dev-service</code>), 재사용 모듈 <code>ecs-service</code>·<code>alb</code>·<code>rds</code>(PostgreSQL), 와일드카드 ACM <code>*.edgesignal.dev</code>, RDS 한 대(<code>edge-dev</code>, 파이프라인·콘솔 공용)다. Redis 모듈은 없다.</p>
+<h2 id="_2">결정<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>인스턴스 1~N.</strong> <code>ecs-service</code> 의 <code>desired_count</code> 로 시작하고 target tracking 오토스케일(초기 최소 1·최대 2)을 모듈에 추가한다. 앱의 <code>@Scheduled</code> 셋(VoteReconciler·VoteWarmer·VoteFlusher)은 ShedLock 으로 한 대만 실행한다(ADR-0055 와 같은 방식). Redis 는 ElastiCache(클러스터 모드 끔, 프라이머리 1 + 레플리카 1, Multi-AZ)로 신설 모듈을 둔다. dev 는 상시 과금을 줄이려 단일 노드로 시작하고, 페일오버 실측이 필요할 때 2 로 올린다.</li>
+<li><strong>DB 는 별도 RDS 인스턴스.</strong> <code>edge-dev</code> 와 인스턴스를 나눈다. 같은 인스턴스 안의 스키마 분리는 택하지 않는다.</li>
+<li><strong>엔진은 PostgreSQL.</strong> app-api 를 MySQL 에서 전환한다. 전환 시점은 지금이다. Flyway 파일이 1개뿐이다.</li>
+<li><strong>도메인은 <code>etforca.edgesignal.dev</code>.</strong> ALB 호스트 1:1 규약(ADR-0034)대로 전용 ALB 하나, 경로는 <code>/api/v1</code>. dev 도 같은 이름을 쓴다. 와일드카드 인증서로 덮이므로 foundation 변경은 없다.</li>
+</ol>
+<h2 id="_3">근거<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="db">DB 분리<a class="headerlink" href="#db" title="Permanent link">&para;</a></h3>
+<ul>
+<li>폭발 반경. <code>edge-dev</code> 는 <code>apply_immediately</code> 라 스키마 모듈 머지가 곧 재부팅이고 1분 레인 5종을 세운다(ALPHA-924). B2C 스키마 변경을 장 마감 시각에 묶지 않고, 파이프라인 변경이 앱 사용자를 끊지 않게 한다.</li>
+<li>부하 성격. 배치 쓰기와 B2C 읽기 급증은 스케일 방향이 다르다.</li>
+<li>경계. 사용자 PII·동의 기록과 파이프라인 데이터의 권한을 인스턴스 단위로 가른다. 파이프라인 데이터는 앱 DB 로 명시적 동기화로만 들어오며, 그 한 지점이 마지막 단계의 실데이터 연동 지점이 된다.</li>
+</ul>
+<h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
+<p>데이터 특성에서 오는 이유 셋과 운영 이유 둘이다.
+- 투표 재투표는 "없으면 넣고 있으면 갱신"이다. <code>INSERT … ON CONFLICT DO UPDATE</code> 가 한 문장으로 원자적이다. InnoDB 는 유니크 키 경합 시 갭 락으로 동시 삽입 데드락이 난다.
+- 분석 본문(요인 5축·근거·오늘 추가된 것·출처)은 배열·중첩이 많고 화면마다 형태가 다르다. JSONB + GIN 으로 인덱스를 유지하며 유연하게 둔다. MySQL JSON 은 생성 컬럼으로 우회해야 한다.
+- 피드 조회는 "삭제 안 된 글 중 이 ETF" 류 조건이 대부분이다. 부분 인덱스와 배열 컬럼으로 조인을 줄인다.
+- 실데이터 연동. 파이프라인 DB 가 PostgreSQL 이라 논리 복제·<code>pg_dump</code> 로 끝난다. 엔진이 다르면 타입 매핑 ETL 을 따로 짠다.
+- 인프라 재사용. <code>rds</code> 모듈·로테이션 창(ALPHA-986)·db-query 경로·메모리 경보가 PostgreSQL 기준으로 검증돼 있다. 한 엔진이면 장애 판단이 빠르다.</p>
+<p>MySQL 이 나은 점도 있다. Redis 장애 실험이 MySQL 기준 실측이고 익숙하다. 다만 그 실험은 Redis·커넥션 풀 동작을 본 것이라 엔진 종속 결론이 아니고, JPA 를 쓰면 익숙함의 차이는 방언·드라이버·Flyway 타입 몇 개로 줄어든다. 이 규모에서 성능은 결정 근거가 아니다.</p>
+<h3 id="_4">도메인<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>브랜드 이름을 호스트로 쓰고, 기존 존·인증서를 그대로 쓴다. 모바일 앱은 쿠키·same-origin 문제가 없어 admin 콘솔처럼 CloudFront 프록시가 필요 없다. 브랜드 전용 도메인(별도 존)은 뒤로 미루며, 그때도 앱은 환경 변수 하나만 바뀐다.</p>
+<h2 id="_5">결과<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li>신설: <code>modules/elasticache</code>, <code>ecs-service</code> 오토스케일 입력, <code>envs/dev</code> 에 <code>app_rds</code>·<code>app_redis</code>·<code>app_alb</code>·<code>app_api</code> 모듈 인스턴스.</li>
+<li>app-api: PostgreSQL 전환(드라이버·방언·Flyway <code>db/etf-migration</code> 타입), ShedLock, Boot 4 헬스체크 함정 반영, <code>X-User-Id</code> 헤더 인증은 계약 단계에서 교체.</li>
+<li>CD: super-admin-api 와 같은 OIDC 이미지 빌드·롤아웃. JWT 서명 키는 Secrets Manager 에 선생성해 ECS secrets 로 주입한다(부트스트랩 비밀번호와 같은 규율).</li>
+<li>비용: RDS <code>db.t4g.micro</code> + ElastiCache <code>cache.t4g.micro</code> 1 + ALB 1 이 추가된다.</li>
+<li>미결: 브랜드 도메인 시점, 오토스케일 상한, 실데이터 동기화 방식(논리 복제 vs 배치)은 계약 설계 뒤로 넘긴다.</li>
+</ul>
 
 
 
@@ -2218,12 +2036,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../assets/javascripts/diagram-version.js"></script>
+        <script src="../../../assets/javascripts/diagram-version.js"></script>
       
     
   </body>
