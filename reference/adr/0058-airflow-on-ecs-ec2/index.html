@@ -11,28 +11,24 @@
       
       
       
-        <link rel="prev" href="../../diagrams/4-cloud-architecture/">
-      
-      
-        <link rel="next" href="../contracts/sync-protocol/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/edge-favicon.svg">
+      <link rel="icon" href="../../../assets/images/edge-favicon.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>설계 · ADR - Docs</title>
+        <title>ADR-0058: 유한 배치의 Airflow 실행 환경 — ECS on EC2 자체 운영 - Docs</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,9 +47,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#architecture-decision-records-adr" class="md-skip">
+        <a href="#adr-0058-airflow-ecs-on-ec2" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -92,9 +88,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../.." title="Docs" class="md-header__button md-logo" aria-label="Docs" data-md-component="logo">
+    <a href="../../.." title="Docs" class="md-header__button md-logo" aria-label="Docs" data-md-component="logo">
       
-  <img src="../../assets/images/edge-logo-animated.svg" alt="logo">
+  <img src="../../../assets/images/edge-logo-animated.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              설계 · ADR
+              ADR-0058: 유한 배치의 Airflow 실행 환경 — ECS on EC2 자체 운영
             
           </span>
         </div>
@@ -212,7 +208,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -233,7 +229,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../diagrams/" class="md-tabs__link">
+        <a href="../../../diagrams/" class="md-tabs__link">
           
   
   
@@ -249,11 +245,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
         
   
   
@@ -274,7 +268,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../contracts/sync-protocol/" class="md-tabs__link">
+        <a href="../../contracts/sync-protocol/" class="md-tabs__link">
           
   
   
@@ -292,7 +286,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../evolution/" class="md-tabs__link">
+      <a href="../../../evolution/" class="md-tabs__link">
         
   
   
@@ -313,7 +307,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../retrospective/" class="md-tabs__link">
+        <a href="../../../retrospective/" class="md-tabs__link">
           
   
   
@@ -333,7 +327,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../context/" class="md-tabs__link">
+        <a href="../../context/" class="md-tabs__link">
           
   
   
@@ -367,9 +361,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Docs" class="md-nav__button md-logo" aria-label="Docs" data-md-component="logo">
+    <a href="../../.." title="Docs" class="md-nav__button md-logo" aria-label="Docs" data-md-component="logo">
       
-  <img src="../../assets/images/edge-logo-animated.svg" alt="logo">
+  <img src="../../../assets/images/edge-logo-animated.svg" alt="logo">
 
     </a>
     Docs
@@ -384,7 +378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -463,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagrams/" class="md-nav__link">
+      <a href="../../../diagrams/" class="md-nav__link">
         
   
   
@@ -491,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagrams/1-information-architecture/" class="md-nav__link">
+      <a href="../../../diagrams/1-information-architecture/" class="md-nav__link">
         
   
   
@@ -519,7 +513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagrams/2-application-architecture/" class="md-nav__link">
+      <a href="../../../diagrams/2-application-architecture/" class="md-nav__link">
         
   
   
@@ -547,7 +541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagrams/3-system-architecture/" class="md-nav__link">
+      <a href="../../../diagrams/3-system-architecture/" class="md-nav__link">
         
   
   
@@ -575,7 +569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagrams/4-cloud-architecture/" class="md-nav__link">
+      <a href="../../../diagrams/4-cloud-architecture/" class="md-nav__link">
         
   
   
@@ -607,19 +601,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -635,7 +620,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -699,7 +683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/sync-protocol/" class="md-nav__link">
+      <a href="../../contracts/sync-protocol/" class="md-nav__link">
         
   
   
@@ -727,7 +711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/event-bundle-schema/" class="md-nav__link">
+      <a href="../../contracts/event-bundle-schema/" class="md-nav__link">
         
   
   
@@ -755,7 +739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/sync-auth/" class="md-nav__link">
+      <a href="../../contracts/sync-auth/" class="md-nav__link">
         
   
   
@@ -783,7 +767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/publication-api/" class="md-nav__link">
+      <a href="../../contracts/publication-api/" class="md-nav__link">
         
   
   
@@ -811,7 +795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contracts/console-facts-api/" class="md-nav__link">
+      <a href="../../contracts/console-facts-api/" class="md-nav__link">
         
   
   
@@ -846,7 +830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../evolution/" class="md-nav__link">
+      <a href="../../../evolution/" class="md-nav__link">
         
   
   
@@ -925,7 +909,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/" class="md-nav__link">
+      <a href="../../../retrospective/" class="md-nav__link">
         
   
   
@@ -953,7 +937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-1/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-1/" class="md-nav__link">
         
   
   
@@ -981,7 +965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-2/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-2/" class="md-nav__link">
         
   
   
@@ -1009,7 +993,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-3/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-3/" class="md-nav__link">
         
   
   
@@ -1037,7 +1021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-4/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-4/" class="md-nav__link">
         
   
   
@@ -1065,7 +1049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-5/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-5/" class="md-nav__link">
         
   
   
@@ -1093,7 +1077,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-6/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-6/" class="md-nav__link">
         
   
   
@@ -1121,7 +1105,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../retrospective/sprint-7/" class="md-nav__link">
+      <a href="../../../retrospective/sprint-7/" class="md-nav__link">
         
   
   
@@ -1208,7 +1192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../context/" class="md-nav__link">
+      <a href="../../context/" class="md-nav__link">
         
   
   
@@ -1236,7 +1220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scope/" class="md-nav__link">
+      <a href="../../scope/" class="md-nav__link">
         
   
   
@@ -1264,7 +1248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../implementation/" class="md-nav__link">
+      <a href="../../implementation/" class="md-nav__link">
         
   
   
@@ -1292,7 +1276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../roadmap/" class="md-nav__link">
+      <a href="../../roadmap/" class="md-nav__link">
         
   
   
@@ -1320,7 +1304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../writing-rules/" class="md-nav__link">
+      <a href="../../writing-rules/" class="md-nav__link">
         
   
   
@@ -1400,7 +1384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/information-architecture/" class="md-nav__link">
+      <a href="../../architecture/information-architecture/" class="md-nav__link">
         
   
   
@@ -1428,7 +1412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/application-architecture/" class="md-nav__link">
+      <a href="../../architecture/application-architecture/" class="md-nav__link">
         
   
   
@@ -1456,7 +1440,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/system-architecture/" class="md-nav__link">
+      <a href="../../architecture/system-architecture/" class="md-nav__link">
         
   
   
@@ -1484,7 +1468,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/cloud-architecture/" class="md-nav__link">
+      <a href="../../architecture/cloud-architecture/" class="md-nav__link">
         
   
   
@@ -1572,7 +1556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/state-machine/" class="md-nav__link">
+      <a href="../../domain/state-machine/" class="md-nav__link">
         
   
   
@@ -1600,7 +1584,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/data-residency/" class="md-nav__link">
+      <a href="../../domain/data-residency/" class="md-nav__link">
         
   
   
@@ -1628,7 +1612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/exposure-log/" class="md-nav__link">
+      <a href="../../domain/exposure-log/" class="md-nav__link">
         
   
   
@@ -1656,7 +1640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain/data-source-licensing/" class="md-nav__link">
+      <a href="../../domain/data-source-licensing/" class="md-nav__link">
         
   
   
@@ -1744,7 +1728,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/super-admin-console/" class="md-nav__link">
+      <a href="../../console-ia/super-admin-console/" class="md-nav__link">
         
   
   
@@ -1772,7 +1756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/tenant-console/" class="md-nav__link">
+      <a href="../../console-ia/tenant-console/" class="md-nav__link">
         
   
   
@@ -1800,7 +1784,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../console-ia/permission-matrix/" class="md-nav__link">
+      <a href="../../console-ia/permission-matrix/" class="md-nav__link">
         
   
   
@@ -1856,6 +1840,58 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        맥락
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        대안
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결과
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1871,314 +1907,38 @@
 
 
 
-<h1 id="architecture-decision-records-adr">Architecture Decision Records (ADR)<a class="headerlink" href="#architecture-decision-records-adr" title="Permanent link">&para;</a></h1>
-<p>중요한 설계·운영 결정을 한 형식으로 기록한다. 회의록이나 PRD가 아니라, <strong>결정과 그 이유</strong>만 증류한다.</p>
+<h1 id="adr-0058-airflow-ecs-on-ec2">ADR-0058: 유한 배치의 Airflow 실행 환경 — ECS on EC2 자체 운영<a class="headerlink" href="#adr-0058-airflow-ecs-on-ec2" title="Permanent link">&para;</a></h1>
 <ul>
-<li>형식은 <a href="0000-template/">0000-template.md</a> 하나로 고정한다 — 맥락 · 결정 · 대안 · 결과.</li>
-<li>한 번 승인된 ADR은 수정하지 않는다. 결정이 바뀌면 <strong>새 ADR을 추가하고</strong> 옛 ADR의 상태를 <code>대체됨(→ ADR-XXXX)</code>으로 표시한다.</li>
-<li>번호는 순차 증가. 파일명은 <code>NNNN-kebab-제목.md</code>.</li>
+<li>상태: 제안됨</li>
+<li>날짜: 2026-09-28</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>ADR</th>
-<th>제목</th>
-<th>상태</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="0001-monorepo-structure/">0001</a></td>
-<td>모노레포·폴리글랏 워크스페이스 구조</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0002-agent-instructions-ssot/">0002</a></td>
-<td>에이전트 지침은 AGENTS.md 단일 출처</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0003-branch-strategy/">0003</a></td>
-<td>브랜치 전략 — dev 경유 엄격한 사다리</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0004-squash-only-merge/">0004</a></td>
-<td>Squash 전용 머지</td>
-<td>대체됨 (→ <a href="0007-merge-strategy/">0007</a>)</td>
-</tr>
-<tr>
-<td><a href="0005-db-as-contract/">0005</a></td>
-<td>DB를 단일 계약으로 · 확장-수축 마이그레이션</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0006-gateway-single-edge/">0006</a></td>
-<td>gateway 단일 엣지 · 라우트별 신뢰 필터</td>
-<td>대체됨 (→ <a href="0010-hybrid-onprem-pivot/">0010</a>)</td>
-</tr>
-<tr>
-<td><a href="0007-merge-strategy/">0007</a></td>
-<td>머지 전략 — 경계별(feature→dev Squash, dev→main Merge commit)</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0008-super-admin-console/">0008</a></td>
-<td>super-admin 콘솔 — cross-tenant 운영자 표면</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0009-aws-deployment-topology/">0009</a></td>
-<td>AWS 배포 토폴로지 — Terraform IaC · 단계 스택</td>
-<td>제안됨</td>
-</tr>
-<tr>
-<td><a href="0010-hybrid-onprem-pivot/">0010</a></td>
-<td>하이브리드 On-Premise 피벗 — 고객 접점·컴플라이언스의 증권사 이전</td>
-<td>승인됨 (노출 이력 항목 대체 → <a href="0053-widget-direct-serving-no-personalization/">0053</a>)</td>
-</tr>
-<tr>
-<td><a href="0011-rls-to-physical-isolation/">0011</a></td>
-<td>RLS 멀티테넌시에서 테넌트별 물리 격리로 전환</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0012-sync-cert-bootstrap/">0012</a></td>
-<td>Sync 인증서 부트스트랩 — CSR 방식, 개인키 비반출</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0013-exposure-log-recording/">0013</a></td>
-<td>Exposure Log 기록 — 조회 시점 자동 기록, 고객 해시는 증권사 생성</td>
-<td>대체됨(0053)</td>
-</tr>
-<tr>
-<td><a href="0014-correction-repreview/">0014</a></td>
-<td>정정 이벤트 처리 — 무조건 재검수</td>
-<td>대체됨(0041)</td>
-</tr>
-<tr>
-<td><a href="0015-sync-protocol-mvp/">0015</a></td>
-<td>Sync 프로토콜 — cursor 기반 delta, MVP 스펙과 목표 계약 분리</td>
-<td>대체됨 (→ <a href="0040-sync-integrity-mvp-to-signing/">0040</a>)</td>
-</tr>
-<tr>
-<td><a href="0016-single-repo-two-artifacts/">0016</a></td>
-<td>코드베이스 — 단일 레포, 배포 아티팩트 2종</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0017-demo-topology-compose/">0017</a></td>
-<td>데모/개발 토폴로지 — 별도 EC2 + Docker Compose 가상 온프렘</td>
-<td>승인됨 (스택 열거 중 Redis 대체 → <a href="0051-byoc-deployment-topology/">0051</a>)</td>
-</tr>
-<tr>
-<td><a href="0018-rule-deployment-path/">0018</a></td>
-<td>Compliance Rule 배포 경로 — Rule Type은 릴리스, Sync 채널은 데이터 전용</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0019-team-ownership-interface/">0019</a></td>
-<td>팀 오너십 — Sync 프로토콜 양단 단일 오너, 인터페이스 계약 고정</td>
-<td>대체됨 (→ <a href="0026-ownership-boundary-db/">0026</a>)</td>
-</tr>
-<tr>
-<td><a href="0020-verification-realign/">0020</a></td>
-<td>검증 반영 — 규제 서사 재정렬 및 설계 정합 일괄 정정</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0021-design-reinforcement/">0021</a></td>
-<td>설계 보강 — DMZ 배치·cursor 발번 시점·정정 리비전 모델 확정</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0022-verification-round2/">0022</a></td>
-<td>검증·보강 2차 — 규제 사실관계 외부 검증 및 배치·온보딩 옵션 보강</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0023-customer-validation/">0023</a></td>
-<td>고객 검증 반영 — 증권사 현업 리뷰 확보·이해상충은 노출 범위 제외로 통제</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0024-scope-domestic-etf/">0024</a></td>
-<td>MVP 상품 범위 — 국내 ETF, 스키마는 미국 확장성 선반영</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0025-onprem-auth-hybrid/">0025</a></td>
-<td>온프렘 콘솔 인증 — SSO/AD 지향 + 데모 자체 계정 하이브리드</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0026-ownership-boundary-db/">0026</a></td>
-<td>팀 오너십 경계 정정 — 진기는 DB 적재까지, 인터페이스는 DB 스키마</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0027-entity-id-scheme/">0027</a></td>
-<td>도메인 ID 체계 — 불투명 서로게이트(ULID), 외부 식별자는 속성</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0028-unified-pipeline-sfn/">0028</a></td>
-<td>파이프라인 SFN 통합 — feature/분석 경계 (분석은 ALPHA-806 에서 예고대로 큐 소비자로 분리 → SFN 은 3페이즈)</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0029-apps-plane-grouping/">0029</a></td>
-<td>apps 플레인 그룹핑 · schema 마이그레이션 세트 대칭 명명</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0030-raw-phase-partial-failure/">0030</a></td>
-<td>raw 페이즈는 부분 실패를 격리한다 — 전량 성공 게이트 제거</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0031-serving-to-publication/">0031</a></td>
-<td>serving-api를 Publication 도메인으로 리네이밍</td>
-<td>승인됨 (호출자·노출 기록 조항 대체 → <a href="0053-widget-direct-serving-no-personalization/">0053</a>)</td>
-</tr>
-<tr>
-<td><a href="0032-retire-gateway/">0032</a></td>
-<td>gateway 은퇴 — 클라우드 엣지를 ALB 직결로</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0033-demo-onprem-stack/">0033</a></td>
-<td>데모 온프렘 terraform 스택 분리 — 실 클라우드와 state 격리</td>
-<td>승인됨 (Redis 대체 → <a href="0051-byoc-deployment-topology/">0051</a> · 데모 프록시 문면 대체 → <a href="0053-widget-direct-serving-no-personalization/">0053</a>)</td>
-</tr>
-<tr>
-<td><a href="0034-host-per-edge-alb/">0034</a></td>
-<td>공개 엣지 호스트 단위 분리 — 서비스당 ALB 1개, 경로 라우팅 없음</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0035-widget-ui-build-artifact/">0035</a></td>
-<td>위젯 UI를 빌드 산출물로 납품 — 실행 서버 없음</td>
-<td>승인됨 (런타임 경로 문면 대체 → <a href="0053-widget-direct-serving-no-personalization/">0053</a>)</td>
-</tr>
-<tr>
-<td><a href="0036-sync-agent-intake-topology/">0036</a></td>
-<td>Sync 온프렘 토폴로지 — Sync Agent(DMZ)+Intake(내부망) 2모듈 표준</td>
-<td>승인됨 (조율 메커니즘 대체 → <a href="0052-sync-two-module-standard-reaffirmed/">0052</a>)</td>
-</tr>
-<tr>
-<td><a href="0037-compliance-engine-to-screening-worker/">0037</a></td>
-<td>점검 실행 모듈 명칭 — Compliance Engine → Screening Worker</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0038-jpa-onprem-read-standard/">0038</a></td>
-<td>온프렘 조회 표준으로 JPA 도입 — 스키마는 Flyway SSOT, 앱은 validate-only</td>
-<td>승인됨 (가변 엔티티 예시 문면 대체 → <a href="0053-widget-direct-serving-no-personalization/">0053</a>)</td>
-</tr>
-<tr>
-<td><a href="0039-screening-policy-ddd-trigger/">0039</a></td>
-<td>Screening 판정의 DDD 전환은 사건 기반 — 첫 테넌트 기준 연결이 방아쇠</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0040-sync-integrity-mvp-to-signing/">0040</a></td>
-<td>Sync 번들 무결성 — 체크섬·byte[] 응답을 MVP에서 목표 계약(서명)으로 이관</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0041-correction-same-screening/">0041</a></td>
-<td>정정 리비전도 신규와 동일한 정책 평가 — 0014 대체</td>
-<td>대체됨(0044)</td>
-</tr>
-<tr>
-<td><a href="0042-sync-pull-uniform-response/">0042</a></td>
-<td>sync Pull 응답을 공통 응답 포맷으로 통일 — 신규 없음 204 폐지</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0043-dataset-contract-freshness/">0043</a></td>
-<td>Dataset Contract와 ETF freshness 상태 축</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0044-correction-abolition/">0044</a></td>
-<td>정정(CORRECTION) 전달 폐지 — 무효화(INVALIDATION) 단독</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0045-realtime-snapshot-publication/">0045</a></td>
-<td>실시간 스냅샷 게시 전환 — day-grain 게이트 폐지, 승계와 3축 무효화</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0046-confidence-gate-risk-grade-abolition/">0046</a></td>
-<td>위험등급 융합 산정 폐기 — 확신도 AND 게이트 전환, max_risk 은퇴</td>
-<td>승인됨 (결정 5 후단 대체 → <a href="0047-banned-word-risk-retirement/">0047</a>)</td>
-</tr>
-<tr>
-<td><a href="0047-banned-word-risk-retirement/">0047</a></td>
-<td>금칙어 심각도 은퇴 — 결과를 정하는 축은 처리 방식뿐</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0048-explanation-s3-fallback-abolition/">0048</a></td>
-<td>설명 S3 폴백 폐기 — 영속 전제는 LLM 앞에서 검사, bundle 주입 필수화</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0049-screening-llm-triage-layer/">0049</a></td>
-<td>스크리닝 LLM 트리아지 층 — 게시 후 감사·검수 확정 회수</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0050-console-facts-endpoint/">0050</a></td>
-<td>콘솔 규칙 엔진의 사실 공급 — 엔드포인트는 사실만, 평가는 클라이언트</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0051-byoc-deployment-topology/">0051</a></td>
-<td>BYOC 배포 토폴로지 — 증권사 클라우드 사상, 단계형 구성과 승격 조건</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0052-sync-two-module-standard-reaffirmed/">0052</a></td>
-<td>Sync 온프렘 토폴로지 재검토 — 클라우드 사상에서도 2모듈 표준 유지, 근거 재정초</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0053-widget-direct-serving-no-personalization/">0053</a></td>
-<td>고객 컨텍스트 제거 — MTS 위젯 직접 호출, Exposure Log 은퇴</td>
-<td>승인됨 (응답 형상·204 수렴 문면 대체 → <a href="0054-publication-explanations-uniform-response/">0054</a>)</td>
-</tr>
-<tr>
-<td><a href="0054-publication-explanations-uniform-response/">0054</a></td>
-<td>publication-api 설명 조회 응답을 공통 응답 포맷으로 통일 — 설명 없음 204 폐지</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0055-kis-shared-call-budget-on-postgres/">0055</a></td>
-<td>KIS 호출 한도를 PostgreSQL 공유 예산으로 통제 — 기본 비활성, 응답 불확실 시 발신 중단</td>
-<td>제안됨</td>
-</tr>
-<tr>
-<td><a href="0056-etforca-app-api-infra/">0056</a></td>
-<td>ETF Orca 앱 API(app-api) 클라우드 인프라 — 별도 PostgreSQL·ElastiCache·N 인스턴스·단일 호스트</td>
-<td>승인됨</td>
-</tr>
-<tr>
-<td><a href="0057-lake-dataset-canonical-consumption-and-retirement/">0057</a></td>
-<td>레이크 데이터셋 정본과 운영 소비 경로, 승격·폐기 절차</td>
-<td>제안됨 (적용 보류)</td>
-</tr>
-<tr>
-<td><a href="0058-airflow-on-ecs-ec2/">0058</a></td>
-<td>유한 배치의 Airflow 실행 환경 — ECS on EC2 자체 운영</td>
-<td>제안됨</td>
-</tr>
-</tbody>
-</table>
+<h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>유한 배치(SFN 5개)를 레인별로 Airflow 로 옮기기로 했고, 첫 레인(장중 수급) DAG·원장 연동이 dev 에 머지됐다(ALPHA-1088, #949·#950). DAG 를 돌릴 실행 환경이 없었다. 관리형 MWAA 는 조직 SCP 가 API 자체를 거부한다. 업무 실행은 기존 Fargate 태스크가 계속 맡으므로, 필요한 것은 실행 관리(스케줄·재시도·추적) 프로세스를 상시 띄울 자리다.</p>
+<h2 id="_2">결정<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>일반 ECS on EC2</strong>(ASG + Capacity Provider)로 자체 운영한다. ECS Managed Instances 가 아니다.</li>
+<li>전용 클러스터 <code>edge-dev-airflow</code>, t4g.small 1대(ASG 1~2), 서비스 1개·태스크 1개에 api-server·scheduler·dag-processor(태스크 메모리 1536MiB 하나를 공유). LocalExecutor(parallelism 1), triggerer 없음. 사양은 로컬 합산 상한 검증으로 정했다 — t4g.micro 는 호스트 몫을 빼면 OOM(README "사양 검증").</li>
+<li>메타DB 는 업무 DB 와 <strong>인스턴스를 나눈다</strong>(RDS db.t4g.micro). DAG 는 이미지에 구워 한 태그로 모든 구성요소를 교체한다. 메타DB 마이그레이션은 배포마다 단일 one-off 작업으로 서비스 교체 전에 돈다.</li>
+<li>UI 는 SSM 포트 포워딩으로만 접근한다(공개 진입점 없음).</li>
+<li>실행 주체 전환은 이 결정과 별개다(<code>investor_intraday_orchestrator</code>, 별도 승인).</li>
+</ul>
+<h2 id="_3">대안<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>MWAA</strong> — SCP 거부로 불가.</li>
+<li><strong>ECS Fargate 상시 서비스</strong> — 호스트 관리가 없지만, 요청 범위가 EC2 기반이었고 같은 메모리에서 상시 과금이 더 크다.</li>
+<li><strong>기존 worker 클러스터에 EC2 용량 추가</strong> — 그 클러스터의 capacity provider 목록을 한 리소스가 통째로 소유해 기존 리소스 변경이 된다. 클러스터는 무료라 분리 비용이 없다.</li>
+<li><strong>메타DB 를 업무 DB(<code>edge-dev</code>)에 같이</strong> — 월 약 21 USD 절감. <strong>미결(검증 과제)</strong>: 연결은 3~5개로 제약이 아니지만, 메모리 고갈 이력이 있는 인스턴스의 메모리·장 시작 CPU 영향은 로컬로 잴 수 없다. DB·계정을 나눠도 자원은 격리되지 않는다. 실제 on/off 측정과 중단 기준은 README "기존 RDS 재사용 평가".</li>
+<li><strong>Celery·Kubernetes executor</strong> — 레인이 직렬이라 근거가 없다.</li>
+<li><strong>t4g.micro·t4g.medium</strong> — micro 는 로컬 합산 상한 768MiB(호스트 몫 가정 차감)에서 OOM, medium 은 small 차감 조건(1792MiB)이 전 기준을 통과해 근거가 없다.</li>
+</ul>
+<h2 id="_4">결과<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li>월 약 42~44 USD 가 는다(small + 별도 RDS. 기존 RDS 재사용이 검증되면 약 20~23 — 내역은 <code>src/apps/cloud/airflow/README.md</code> "월 비용").</li>
+<li>호스트 1대가 단일 장애점이다. 죽으면 스케줄이 멈추고(업무 ECS 는 끝까지 돈다), ASG 교체 뒤 EdgeStep 이 재접속하거나 보류한다. 멈춘 동안의 슬롯은 공백이다.</li>
+<li>배포 때 1~3분 Airflow 가 멈춘다(한 태스크 교체). 평일 장중 배포는 워크플로가 막는다.</li>
+<li>AMI·Airflow 버전 갱신·메타DB 복원은 운영자 절차다(README "호스트 교체"·"배포·롤백"·"메타DB").</li>
+<li>SimpleAuthManager(단일 사용자)는 Airflow 가 개발용으로 분류한다. 사용자가 늘면 인증 관리자를 바꾼다.</li>
+</ul>
 
 
 
@@ -2228,12 +1988,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../assets/javascripts/diagram-version.js"></script>
+        <script src="../../../assets/javascripts/diagram-version.js"></script>
       
     
   </body>
