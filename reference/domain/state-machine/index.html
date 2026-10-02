@@ -2010,7 +2010,7 @@
 <li>Event Bundle을 생성한다.</li>
 <li>On-Premise Sync Agent(DMZ)가 Tenant Sync API를 Pull·무결성 검증한다.</li>
 <li>Intake(내부망)가 검증된 Event Bundle을 넘겨받아 Raw Event Store에 저장한다 (단일 모듈 옵션에서는 Sync Agent가 저장까지 — <a href="../../adr/0036-sync-agent-intake-topology/">ADR-0036</a>).</li>
-<li>Screening Worker가 증권사 정책(점검)을 적용한다.</li>
+<li>Screening Worker가 v1에는 증권사 정책(점검)을 적용하고, v2는 관리자 승인 없이 자동 게시한다.</li>
 <li>결과에 따라 상태를 분기한다.</li>
 </ol>
 <p><strong>상태 분기</strong>:</p>
@@ -2023,6 +2023,11 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>v2 가격변동 설명 수신</td>
+<td>AUTO_PUBLISHED</td>
+<td>검수 정책 없이 게시. 근거·게시 상태 이력 보존</td>
+</tr>
 <tr>
 <td>정책 통과(청정 + 자동 제공 기준 충족 — 확신도 게이트 포함, ADR-0046)</td>
 <td>AUTO_PUBLISHED</td>
