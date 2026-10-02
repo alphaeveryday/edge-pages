@@ -855,6 +855,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#v2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v2 가격 설명의 전달 참조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#api" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2100,6 +2111,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#v2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v2 가격 설명의 전달 참조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#api" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2353,6 +2375,36 @@
 <li><strong>NEW는 전체 상태 전달(full snapshot)</strong> — diff/patch가 아니다. On-Prem은 도메인 ID 기준 멱등 upsert만 하면 되고, 부분 갱신 병합 로직이 필요 없다.</li>
 <li>INVALIDATION 수신 시 On-Prem 동작(item·게시분 즉시 비노출)은 <a href="../../domain/state-machine/">../domain/state-machine.md</a> 소관. 정정(CORRECTION) 형상은 계약에서 폐지됐다 — 소비자는 미지 유형과 동일하게 거부한다(<a href="../../adr/0044-correction-abolition/">ADR-0044</a>).</li>
 </ul>
+<h3 id="v2_1">v2 가격 설명의 전달 참조<a class="headerlink" href="#v2_1" title="Permanent link">&para;</a></h3>
+<p><code>tenant_delivery</code>에 <code>movement_analysis_id</code>와 <code>target_movement_analysis_id</code>를 추가한다.
+둘 다 <code>movement_analyses.analysis_id</code>를 참조하며, 기존 v1 참조와 커서 규칙은 유지한다.</p>
+<table>
+<thead>
+<tr>
+<th>전달</th>
+<th>v1</th>
+<th>v2</th>
+<th>공통 조건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NEW</td>
+<td><code>explanation_result_id</code></td>
+<td><code>movement_analysis_id</code></td>
+<td>본체 참조는 둘 중 하나. 회수 대상·사유 없음</td>
+</tr>
+<tr>
+<td>INVALIDATION</td>
+<td><code>target_explanation_result_id</code></td>
+<td><code>target_movement_analysis_id</code></td>
+<td>회수 대상은 둘 중 하나. 본체 참조 없음·사유 필수</td>
+</tr>
+</tbody>
+</table>
+<p>이 변경은 저장 형상만 준비한다. v2 발번은 번들 조립·회수 코드와 수신 검증 이후에 활성화한다.
+v2에서 산출하지 않는 v1 설명 유형·확신도를 임의 생성하지 않는다. 이 판정값의 전달 방식은
+생산자 연결 시 별도로 확정한다. 기존 v1 기록과 외부 JSON 계약은 이번 migration에서 바꾸지 않는다.</p>
 <h3 id="api">검수콘솔 API의 계산 근거 전달<a class="headerlink" href="#api" title="Permanent link">&para;</a></h3>
 <p>설명 조회 API는 <code>news_id</code>, <code>tool_run_id</code>, <code>item_ids</code>, <code>as_of</code>, <code>arguments</code>, <code>output</code>,
 <code>formula_latex</code>, <code>description</code>을 각각 <code>newsId</code>, <code>toolRunId</code>, <code>itemIds</code>, <code>asOf</code>,
