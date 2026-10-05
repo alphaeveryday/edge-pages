@@ -1988,6 +1988,8 @@
   (<a href="https://github.com/alphaeveryday/edge/blob/dev/docs/design/lake-path-transition-ledger.md">현황 대장</a> §7). 지금 적용하는 것은 §1~§4를 신규 수집 데이터의 저장
   계약(<a href="https://github.com/alphaeveryday/edge/blob/dev/docs/design/etf-data-storage-plan.md">설계 초안</a> §9)에 참고하는 데까지다.
   예외가 하나 있다. 5분봉 애드혹 raw의 표준 raw 복사는 이미 실행됐다(추가만, 소비자 없음 — 대장 §3.1).</li>
+<li>2026-10-05 추기: 맥락이 인용한 v1 분석엔진 소비자(<code>collect/intraday.py</code>·<code>pit.py</code>·<code>fin.py</code>·<code>flowhist.py</code>·<code>dgwide.py</code>·
+  <code>tau_sidecar.py</code>)는 #1140(ALPHA-1173)으로 소스째 제거됐다. 아래 "분석엔진" 서술은 작성 시점(v1) 기준이다.</li>
 </ul>
 <h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>분석엔진이 읽는 레이크 표면은 정본 존(<code>raw</code>·<code>canonical</code>·<code>feature</code>·<code>operations_archive</code>) 밖에도 있다.

@@ -2424,7 +2424,7 @@ Relay Worker → Intake Worker (내부망) → Screening Worker → Explanation 
 <tr>
 <td>Screening Worker</td>
 <td><code>screening-worker</code></td>
-<td>점검 <strong>실행</strong> (≠ Policy) — 금칙어·기준 적용→상태 분기. walking skeleton 구현(무조건 통과 정책, <a href="../../adr/0037-compliance-engine-to-screening-worker/">adr/0037</a>)</td>
+<td>점검 <strong>실행</strong> (≠ Policy) — 금칙어·기준 적용→상태 분기. 활성 정책(룰·임계값) 평가로 구현(ALPHA-429, <a href="../../adr/0037-compliance-engine-to-screening-worker/">adr/0037</a>)</td>
 </tr>
 <tr>
 <td>Relay Worker</td>
@@ -2439,7 +2439,7 @@ Relay Worker → Intake Worker (내부망) → Screening Worker → Explanation 
 </tbody>
 </table>
 <blockquote>
-<p>위 온프렘 배포 모듈은 전부 walking skeleton 으로 구현됐다(<code>sync-agent</code>·<code>intake</code>·<code>screening-worker</code>·<code>publication-api</code>·<code>tenant-console-api</code>·<code>-ui</code> — <a href="https://github.com/alphaeveryday/edge/blob/dev/docs/repo-structure.md">docs/repo-structure.md</a> 프로젝트 상태).</p>
+<p>위 온프렘 배포 모듈은 전부 구현됐다(<code>sync-agent</code>·<code>intake</code>·<code>screening-worker</code>·<code>publication-api</code>·<code>tenant-console-api</code>·<code>-ui</code> — <a href="https://github.com/alphaeveryday/edge/blob/dev/docs/repo-structure.md">docs/repo-structure.md</a> 프로젝트 상태).</p>
 </blockquote>
 <p><strong>클라우드 (Vendor Cloud)</strong></p>
 <table>
@@ -2454,7 +2454,7 @@ Relay Worker → Intake Worker (내부망) → Screening Worker → Explanation 
 <tr>
 <td>User·Tenant·<strong>Analysis</strong> Service</td>
 <td>Super Admin Console (<code>apps/cloud/super-admin-api</code>·<code>super-admin-ui</code>)</td>
-<td>Analysis Service = 콘솔 <strong>조회</strong> 서비스 (≠ 파이프라인 <code>analysis-engine</code>)</td>
+<td>Analysis Service = 콘솔 <strong>조회</strong> 서비스 (≠ 분석 엔진 <code>analysis-engine-v2</code>)</td>
 </tr>
 <tr>
 <td>Tenant Sync Service</td>
@@ -2468,8 +2468,8 @@ Relay Worker → Intake Worker (내부망) → Screening Worker → Explanation 
 </tr>
 <tr>
 <td>Price Analysis Worker</td>
-<td><code>apps/cloud/analysis-engine</code></td>
-<td>SFN 페이즈가 아니라 <strong>분봉 트리거 큐 상주 소비자</strong>다 (ALPHA-806 — 일 단위 실행은 장중에 층을 못 세워 제거)</td>
+<td><code>apps/cloud/analysis-engine-v2</code></td>
+<td>파이프라인 SFN 페이즈가 아니라 <strong>분봉 트리거 큐 소비자</strong>가 분석 SFN 을 시작한다 (ALPHA-806 — 일 단위 실행은 장중에 층을 못 세워 제거. v1 <code>analysis-engine</code> 은 #1140 으로 제거)</td>
 </tr>
 </tbody>
 </table>
