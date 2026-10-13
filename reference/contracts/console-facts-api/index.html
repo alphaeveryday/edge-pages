@@ -900,6 +900,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v2 분석 일별 추이
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1053,7 +1064,7 @@
   <a href="#kst-alpha-946" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ✅ 미완결일 — 조회일이 KST 오늘이면 다섯 전부 기준이 없다 (ALPHA-946)
+        ✅ 미완결일 — 조회일이 KST 오늘이면 산출 전부 기준이 없다 (ALPHA-946)
       
     </span>
   </a>
@@ -2333,6 +2344,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v2 분석 일별 추이
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2486,7 +2508,7 @@
   <a href="#kst-alpha-946" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ✅ 미완결일 — 조회일이 KST 오늘이면 다섯 전부 기준이 없다 (ALPHA-946)
+        ✅ 미완결일 — 조회일이 KST 오늘이면 산출 전부 기준이 없다 (ALPHA-946)
       
     </span>
   </a>
@@ -2843,6 +2865,36 @@
 </code></pre></div>
 <p><code>totalArguments: 0</code>은 실제 0건 관측이라 점과 두 계수는 남긴다. 다만 <code>0/0</code>은 비율이 아니므로
 그때 <code>rate</code>는 <code>null</code>이다. 서버는 이 값으로 정상·이상이나 색상을 판정하지 않는다.</p>
+<h3 id="v2">v2 분석 일별 추이<a class="headerlink" href="#v2" title="Permanent link">&para;</a></h3>
+<p>새 분석 엔진(analysis-engine-v2)의 전망·가격변동 분석이 날짜별로 몇 건 끝났는지 낸다(ALPHA-1290).</p>
+<div class="highlight"><pre><span></span><code>GET /api/v1/console/trends/analysis[?maxDate=YYYY-MM-DD&amp;days=30]
+</code></pre></div>
+<p><code>maxDate</code>는 마지막 날짜(KST)이며 생략하면 API 서버 시계의 KST 오늘이다. <code>days</code> 기본값은 30,
+허용 범위는 1–31이다. 날짜 형식 오류·미래 날짜·범위 밖 일수는 400이다.</p>
+<div class="highlight"><pre><span></span><code>{
+  "result": {
+    "from": "2026-09-14", "to": "2026-10-13",
+    "kinds": [
+      { "kind": "outlook",  "points": [
+        { "date": "2026-10-13", "completed": 150, "failed": 3, "running": 0,
+          "completedEtfs": 148, "failedEtfs": 3 } ] },
+      { "kind": "movement", "points": [] }
+    ]
+  }
+}
+</code></pre></div>
+<ul>
+<li><code>kinds</code> 는 항상 <code>outlook</code>·<code>movement</code> 둘이고 이 순서다. 값은 <code>outlook_analyses</code>·<code>movement_analyses</code>
+  에서 오고, 날짜는 <code>analysis_at</code> 의 KST 날짜다. <code>data_source = 'database'</code> 만 센다.</li>
+<li><code>points</code> 는 <strong>분석 행이 있던 날짜만</strong> 담는다(오래된 날부터). 행이 없던 날을 0 인 점으로 채우지
+  않는다 — 가격변동 분석은 장이 열린 날에만 생기고, 이 표가 생기기 전 날짜에는 값이 없다.</li>
+<li><code>completed</code>·<code>failed</code>·<code>running</code> 은 그 상태의 분석 행 수다. <strong><code>running</code> 은 실패가 아니다</strong> — 상태가
+  진행 중인 채 남은 행이고, 아직 도는 중인지 끝나지 못한 것인지 이 표만으로는 가를 수 없다.</li>
+<li><code>completedEtfs</code>·<code>failedEtfs</code> 는 그 상태의 행이 하나라도 있는 ETF 종 수다. 같은 ETF 가 그날
+  실패한 뒤 다시 완료되면 양쪽에 다 든다.</li>
+<li>완료는 게시와 다르다. 가격변동 분석은 완료돼도 <code>published_at</code> 이 비어 있을 수 있고 회수될 수
+  있다. 이 응답은 게시·회수 상태를 싣지 않는다.</li>
+</ul>
 <h3 id="_3">장중 분석 귀결 추이<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p>하루 facts의 장중 체인을 여러 날짜에 걸쳐 비교할 수 있도록 연속 날짜 사실 표면을 둔다.</p>
 <div class="highlight"><pre><span></span><code>GET /api/v1/console/trends/intraday-analysis[?maxDate=YYYY-MM-DD&amp;days=30]
@@ -3111,9 +3163,9 @@ as-of·수집 시각·신선도)은 스키마가 이미 그렇게 묶어 두므�
 소비자가 판정 불가 데이터셋을 정상으로 건너뛴다 — 판정 불가는 유지하고 사유만
 <code>FRESHNESS_REASON_MISSING</code> 으로 떨어뜨린다(위 표).</p>
 <h2 id="_10">산출 축<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
-<p>산출 다섯의 <strong>그 날 값</strong>과 <strong>평소</strong>(직전 거래일 중앙값).</p>
+<p>산출 여섯의 <strong>그 날 값</strong>과 <strong>평소</strong>(직전 거래일 중앙값).</p>
 <div class="highlight"><pre><span></span><code>"outputs": [
-  { "id": "o.pub",  "label": "게시 ETF",     "today": 16, "base": 32.0, "unit": "종",
+  { "id": "o.outlook", "label": "전망 완료 ETF", "today": 16, "base": 32.0, "unit": "종",
     "history": [ { "date": "2026-07-30", "count": 0 }, { "date": "2026-07-31", "count": 32 } ] },
   { "id": "o.trig", "label": "배치 트리거",  "today": 0,  "base": null, "unit": "종", "history": [] }
 ]
@@ -3142,11 +3194,19 @@ as-of·수집 시각·신선도)은 스키마가 이미 그렇게 묶어 두므�
 </thead>
 <tbody>
 <tr>
-<td><code>o.pub</code></td>
-<td>게시 ETF</td>
-<td><code>explanation_result</code></td>
-<td><code>PUBLISHED</code> 만</td>
-<td><code>trade_date</code></td>
+<td><code>o.outlook</code></td>
+<td>전망 완료 ETF</td>
+<td><code>outlook_analyses</code></td>
+<td><code>completed</code> · <code>data_source=database</code></td>
+<td><code>analysis_at</code> 의 KST 날짜</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>o.movement</code></td>
+<td>가격변동 분석 완료 ETF</td>
+<td><code>movement_analyses</code></td>
+<td><code>completed</code> · <code>data_source=database</code></td>
+<td>〃</td>
 <td>✅</td>
 </tr>
 <tr>
@@ -3197,7 +3257,7 @@ REJECTED 적재가 생기면 이 수의 뜻이 조용히 바뀐다.</p>
 실측</strong>이고, <code>base</code> 는 <strong>null 이 "비교할 평소가 없다"</strong> 이다. 기준을 0 으로 메우면 소비자가 그
 산출을 −100% 로 판정한다.</p>
 <p>⚠️ <strong>일관성을 주는 것은 트랜잭션이다.</strong> 조회 전체가 REPEATABLE READ 라 나눠 세도 같은 스냅샷을
-읽는다 — 산출 다섯이 서로 다른 문장인데도 서로 일관된 것이 그 증거다. 오늘 값과 기준일을 한
+읽는다 — 산출 여섯이 서로 다른 문장인데도 서로 일관된 것이 그 증거다. 오늘 값과 기준일을 한
 문장으로 세는 것은 왕복을 줄이는 선택이고, <strong>격리수준을 낮추면</strong> 그때야 값들이 갈린다.</p>
 <h3 id="_11">기준 표본 — 순서 셋이 다 계약이다<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
 <p>표본은 <code>(런이 있던 날 ∪ 계획 결손일) − 장 안 서는 날</code> 의 <strong>최근 10개</strong>다(주말 + 평일 휴장). 세 연산의 순서를 바꾸면
@@ -3262,24 +3322,24 @@ REJECTED 적재가 생기면 이 수의 뜻이 조용히 바뀐다.</p>
 <p>⚠️ 평일 휴장의 제외는 <strong>날짜 단위</strong>다. 그 신호는 <code>kr_trading_calendar=true</code> 인 <strong>작업</strong>에만
 붙고(가격 레인 셋 + 장중 수급 레인 둘 — 같은 레인 안에서도 작업마다 다르다), 뉴스·공시 레인은
 휴장일에도 돈다 — 런 단위로 상관시키면 그 런이 같은 날짜를 되살린다.</p>
-<p>조회일이 장 안 서는 날이면(주말이든 휴장이든) <strong><code>o.pub</code>·<code>o.trig</code> 만</strong> <code>base</code> 를 안 준다. 그날
+<p>조회일이 장 안 서는 날이면(주말이든 휴장이든) <strong><code>o.movement</code>·<code>o.trig</code> 만</strong> <code>base</code> 를 안 준다. 그날
 그 둘의 0 은 실측이 맞지만 <strong>비교할 평소가 없는 날</strong>이라, 기준을 주면 소비자가 −100% 로 판정한다.
-⚠️ 이 갈래는 <strong>다 지난 날에만</strong> 의미가 있다 — 조회일이 KST 오늘이면 그 앞에서 다섯 전부가
+⚠️ 이 갈래는 <strong>다 지난 날에만</strong> 의미가 있다 — 조회일이 KST 오늘이면 그 앞에서 산출 전부가
 이미 빠진다(아래 「미완결일」).</p>
 <p><code>o.doc</code>·<code>o.asr</code>·<code>o.evt</code> 는 <strong>그날도 기준을 받는다</strong> — 장과 무관하게 도는 산출이라 비교가 성립한다.</p>
-<p>⚠️ <strong>다만 그 기준은 평일 표본이다 — 남은 잔여.</strong> 표본은 산출 다섯이 공유하고 장 안 서는 날을
+<p>⚠️ <strong>다만 그 기준은 평일 표본이다 — 남은 잔여.</strong> 표본은 산출 전부가 공유하고 장 안 서는 날을
 빼므로, <strong>주말에 조회하면</strong> 그 셋의 <code>today</code>(주말 실측)가 평일 중앙값과 비교된다. 주말 표본을
 따로 두지 않은 이유는 <strong>주말 뉴스량에 중심값이 없어서</strong>다 — dev 실측(2026-08-11 기준 최근 21일)에서
 주말 문서 수가 <strong>755 · 2,250 · 62,930 · 231,055</strong>(평일은 4,000~6,600)로, 토요일 급증은 백필
 아티팩트로 보인다. 그 위에 "평소"를 세우면 기준 자체가 잡음이 된다.
 ⚠️ 이 수치도 그 시점 dev 조회값이라 저장소만으로 재현되지 않는다 — 근거로 쓸 때 다시 재라.</p>
 <p>표본이 아예 없으면 <code>base</code> 는 <strong>null</strong> 이다 — "평소가 0" 이 아니라 "평소를 모른다"이다.</p>
-<h3 id="kst-alpha-946">✅ 미완결일 — 조회일이 KST 오늘이면 다섯 전부 기준이 없다 (ALPHA-946)<a class="headerlink" href="#kst-alpha-946" title="Permanent link">&para;</a></h3>
+<h3 id="kst-alpha-946">✅ 미완결일 — 조회일이 KST 오늘이면 산출 전부 기준이 없다 (ALPHA-946)<a class="headerlink" href="#kst-alpha-946" title="Permanent link">&para;</a></h3>
 <p><strong>그 날의 적재 창이 아직 안 지났으면 비교 대상이 아니다.</strong> 기준일 후보는 전부 조회일 미만이라
 <strong>창이 지난</strong> 하루의 값인데, 조회일이 KST 오늘이면 그 값은 <strong>아직 쌓이는 중</strong>이다. dev 배포본
-실측(2026-08-11 14:27 KST)에서 산출 다섯 중 <strong>넷</strong>이 그 이유로 거짓 P1 이었다
-(<code>o.trig</code> −100% · <code>o.pub</code> −71% · <code>o.asr</code> −29% · <code>o.evt</code> −59%).</p>
-<p><strong>두 억제의 순서</strong>: 창이 안 지났으면 <strong>다섯 전부</strong> <code>base</code> 가 없다. 장 안 서는 날 규칙(<code>marketBound</code>)은
+실측(2026-08-11 14:27 KST)에서 당시 산출 다섯 중 <strong>넷</strong>이 그 이유로 거짓 P1 이었다
+(<code>o.trig</code> −100% · 옛 게시 ETF 산출 −71% · <code>o.asr</code> −29% · <code>o.evt</code> −59%).</p>
+<p><strong>두 억제의 순서</strong>: 창이 안 지났으면 <strong>산출 전부</strong> <code>base</code> 가 없다. 장 안 서는 날 규칙(<code>marketBound</code>)은
 그 뒤에 남는 판정이라, 다 지난 날에만 갈라 선다.</p>
 <p>⚠️ <strong>"완결"이 아니라 "창이 지났다"이다</strong> — 이 술어는 완결을 증명하지 않는다. <strong>지난 날의 값도
 소급으로 자란다</strong>(아래 잔여 1). 주는 것은 <strong>정직한 하한</strong>이다: 장중 거짓 −100% 는 구조적으로
@@ -3302,12 +3362,16 @@ REJECTED 적재가 생기면 이 수의 뜻이 조용히 바뀐다.</p>
 <td><strong>하루 종일</strong> — <code>available_at</code> 이 곧 날짜 버킷이고 1분 레인과 배치가 함께 먹인다</td>
 </tr>
 <tr>
-<td><code>o.pub</code></td>
-<td><strong>날짜 경계를 넘는다</strong> — <code>trade_date</code> 가 적재 시각과 분리돼 있고 writer 가 상주 소비자다</td>
+<td><code>o.outlook</code></td>
+<td>전망 배치가 매일 06:00 KST 에 돈다. 주말·휴일에도 돈다</td>
+</tr>
+<tr>
+<td><code>o.movement</code></td>
+<td>장이 열린 날 분석이 생길 때마다 쌓인다</td>
 </tr>
 </tbody>
 </table>
-<p>다섯 전부에 참인 술어는 <strong>"그 날이 다 지났는가"</strong> 하나뿐이다. 산출별로 가르려면 산출↔작업 완료
+<p>산출 전부에 참인 술어는 <strong>"그 날이 다 지났는가"</strong> 하나뿐이다. 산출별로 가르려면 산출↔작업 완료
 바인딩이 있어야 하는데 원장에 없다.</p>
 <p>⚠️ <strong><code>o.trig</code> 이 쓰는 것은 <code>price_movement_trigger</code> 하나다.</strong> 1분 레인(<code>minute/price_consumer.py</code>)은
 <code>minute_price_trigger</code> 라는 <strong>다른 표</strong>에 쓴다(ALPHA-709 — 트리거 축은 둘이다). 두 표를 섞어 읽으면
@@ -3352,7 +3416,7 @@ REJECTED 적재가 생기면 이 수의 뜻이 조용히 바뀐다.</p>
    버킷에 실리지는 않는다(늦게 돌아도 그 시점의 <code>fetched_at</code> 을 쓰면 오늘 버킷이다).
    <code>DO NOTHING</code> 인 배치 둘 사이에서는 <strong>먼저 넣은 쪽이 값을 정하지만</strong>, 1분 레인은 그 뒤에도
    값을 전진시킬 수 있다. 게다가 뉴스 day-close 는 00:10 에 돌며 <strong>어제 창</strong>을 처리한다(#669).
-   <code>o.pub</code> 도 같은 부류다 — dev 실측(행 기준) 08-10 → 30 당일 + 4 익일 ·
+   옛 게시 ETF 산출(ALPHA-1290 으로 없어졌다)도 같은 부류였다 — dev 실측(행 기준) 08-10 → 30 당일 + 4 익일 ·
    <strong>08-03 → 15 + 15(절반이 익일)</strong>. ⇒ 자정 직후 어제를 조회하면 <code>base</code> 는 서는데 <code>today</code> 는 아직
    움직일 수 있다.
 2. <strong><code>o.trig</code> 은 시장 SFN 이 끝난 뒤엔 과잉 억제</strong> — 그때부터 자정까지는 사실상 확정인데 판정을
