@@ -1116,6 +1116,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#v2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v2 분석 실패 축
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_15" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2560,6 +2571,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#v2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v2 분석 실패 축
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_15" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2890,8 +2912,11 @@
   않는다 — 가격변동 분석은 장이 열린 날에만 생기고, 이 표가 생기기 전 날짜에는 값이 없다.</li>
 <li><code>completed</code>·<code>failed</code>·<code>running</code> 은 그 상태의 분석 행 수다. <strong><code>running</code> 은 실패가 아니다</strong> — 상태가
   진행 중인 채 남은 행이고, 아직 도는 중인지 끝나지 못한 것인지 이 표만으로는 가를 수 없다.</li>
-<li><code>completedEtfs</code>·<code>failedEtfs</code> 는 그 상태의 행이 하나라도 있는 ETF 종 수다. 같은 ETF 가 그날
-  실패한 뒤 다시 완료되면 양쪽에 다 든다.</li>
+<li><code>completedEtfs</code> 는 그날 완료 행이 하나라도 있는 ETF 종 수다.</li>
+<li><code>failedEtfs</code> 는 <strong>그날 실패 행이 있고 완료 행이 하나도 없는 ETF 종 수</strong>다(ALPHA-1291). 실패했다가
+  같은 날 다시 돌아 완료된 ETF 는 넣지 않는다 — v2 는 실패한 분석을 다시 돌려 끝내는 일이 흔하다.
+  running 만 있는 ETF 도 넣지 않는다. 실패한 행 수 전체는 <code>failed</code> 가 답한다. ⚠️ ALPHA-1290 의 첫
+  배포본에서는 이 필드가 "실패 행이 하나라도 있는 ETF 종 수"였다 — 이름은 같고 뜻이 좁아졌다.</li>
 <li>완료는 게시와 다르다. 가격변동 분석은 완료돼도 <code>published_at</code> 이 비어 있을 수 있고 회수될 수
   있다. 이 응답은 게시·회수 상태를 싣지 않는다.</li>
 </ul>
@@ -3479,10 +3504,31 @@ super-admin-api 가 넣는다. 순서를 지키는 것은 writer 수가 아니�
 <span class="w">    </span><span class="nt">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FAILED"</span><span class="p">,</span><span class="w"> </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">}</span>
 <span class="p">]</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
-<p>실행이 아직 없으면 <code>outcome: null</code>이다. 진행 중 상태와 실행 부재를 실패로 만들지 않으며 R15는
-정확히 <code>FAILED</code>만 센다. 원장에 오류 문자열이 없어 <code>error</code>는 <code>null</code>이고, 설명을 꾸며내지 않는다.
-구 API 응답에는 축 자체가 없을 수 있으므로 UI 경계는 <code>etfLedger</code> 부재를 허용하며 그때 R15는
-<code>못 돎</code>이다. 서버가 축을 보낸 빈 <code>rows</code>는 “조회일에 트리거 ETF가 0종”이라는 실측이다.</p>
+<p>실행이 아직 없으면 <code>outcome: null</code>이다. 진행 중 상태와 실행 부재를 실패로 만들지 않는다. 원장에 오류 문자열이 없어 <code>error</code>는 <code>null</code>이고, 설명을 꾸며내지 않는다.
+구 API 응답에는 축 자체가 없을 수 있으므로 UI 경계는 <code>etfLedger</code> 부재를 허용한다. 서버가 축을
+보낸 빈 <code>rows</code>는 “조회일에 트리거 ETF가 0종”이라는 실측이다.</p>
+<p>⚠️ <strong>R15 는 이 축을 더는 읽지 않는다</strong>(ALPHA-1291). 이 축은 옛 설명 엔진의 표에서 오고 그 엔진은
+10-01 이 마지막 실행이라, 그 뒤 날짜에서는 <code>outcome</code> 이 전부 <code>null</code> 이다. 흐름 화면의 ETF 표만 이 축을
+읽는다. 분석 실패 판정은 아래 「v2 분석 실패 축」이 한다.</p>
+<h2 id="v2_1">v2 분석 실패 축<a class="headerlink" href="#v2_1" title="Permanent link">&para;</a></h2>
+<p>조회일에 새 분석 엔진(v2)의 분석이 <strong>끝내 완료되지 못한</strong> ETF 다(ALPHA-1291). R15 가 읽는다.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">"analysisFailures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"outlook"</span><span class="p">,</span><span class="w">  </span><span class="nt">"failedEtfs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"movement"</span><span class="p">,</span><span class="w"> </span><span class="nt">"failedEtfs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"069500"</span><span class="p">,</span><span class="w"> </span><span class="s2">"229200"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>항목은 항상 <code>outlook</code>(전망)·<code>movement</code>(가격변동 분석) 둘이고 이 순서다.</li>
+<li><code>failedEtfs</code> 는 그날(<code>analysis_at</code> 의 KST 날짜) 그 종류의 분석에 <strong>실패 행이 있고 완료 행이 하나도
+  없는</strong> ETF 코드다(코드 오름차순). <code>data_source = 'database'</code> 만 본다. 분석 추이의 <code>failedEtfs</code>(수)와
+  같은 기준이다.</li>
+<li>들어가지 않는 것: 실패했다가 같은 날 다시 돌아 완료된 ETF, running 만 있는 ETF. running 은 진행
+  중인지 끝나지 못한 것인지 이 표만으로 가를 수 없다.</li>
+<li>빈 배열은 "그런 ETF 가 없다"는 실측이다. <strong>축 자체가 없는 것</strong>(이 축을 안 싣는 API)과 다르다 —
+  UI 경계는 축 부재를 허용하고 그때 R15 는 <code>못 돎</code>이다.</li>
+<li>조회일이 오늘이면 아직 다시 돌 분석이 남았을 수 있다. 서버도 규칙도 당일을 유예하지 않는다.</li>
+<li>날짜 경계: 자정 직전에 실패하고 자정 뒤에 다시 돌아 완료된 ETF 는 앞 날짜의 실패로 남는다.</li>
+</ul>
 <h2 id="_15">체인 축<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
 <p>설명 생산 흐름에서 <strong>그 날 발화한 트리거가 단계마다 몇 건 남았나</strong>. 배열 둘을 가진 객체다.</p>
 <div class="highlight"><pre><span></span><code>"chain": {
