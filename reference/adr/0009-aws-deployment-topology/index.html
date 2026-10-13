@@ -1926,7 +1926,7 @@
 - <strong>리전은 <code>ap-northeast-2</code> 단일</strong> — ALB·ACM·ECR·RDS 모두 동일 리전.
 - <strong>ECS Fargate</strong>, 클러스터를 <strong>상시 API(<code>*-service</code>)와 배치 워커(<code>*-worker</code>)로 분리</strong>(클러스터는 무료라 cost-neutral). API 간 내부 호출은 Service Connect.
 - <strong>네트워크 경계</strong> — gateway 만 공개 엣지(ALB), 나머지는 private 서브넷. 신뢰 경계 결정 자체는 [[0006-gateway-single-edge]]; 여기선 그 네트워크 구현만 다룬다.
-- <strong>분석 배치는 Step Functions</strong> — ECS <code>runTask.sync</code> 로 수집→정제→분석 8스텝을 순차 오케스트레이션. 기존 CDK 파이프라인을 <strong>병행 재작성 → 검증 → 컷오버(A안)</strong>로 이관하고, 그 과정에서 VPC·RDS 를 env 로 통합한다.
+- <strong>분석 배치는 Step Functions</strong> — ECS <code>runTask.sync</code> 로 수집→정제→분석 8스텝을 순차 오케스트레이션. 기존 CDK 파이프라인을 **병행 재작성 → 검증 → 컷오버(A안)**로 이관하고, 그 과정에서 VPC·RDS 를 env 로 통합한다.
 - <strong>비밀번호는 코드/state 에 두지 않는다</strong> — RDS 관리형 시크릿, 외부 API 키는 Secrets Manager(값 수동 주입).
 - <strong>단계 간 결합은 느슨하게</strong> — env 는 foundation 을 이미지 URI·zone <code>data</code>·OIDC ARN 으로 참조한다(remote_state 강결합 회피).</p>
 <h2 id="_3">대안<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>

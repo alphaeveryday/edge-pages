@@ -1922,7 +1922,7 @@
   실 벤더 클라우드(<code>envs/dev</code>, prod-bound, ECS·SFN·RDS) vs 데모(throwaway, EC2+compose).
 - 데모는 데모마다 세우고 부순다. 실 클라우드는 절대 그러면 안 된다.</p>
 <h2 id="_2">결정<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>데모를 <strong>별도 terraform 스택(<code>envs/demo-onprem</code>)</strong>으로 두고 <strong>state를 분리</strong>한다(같은 S3 백엔드,
+<p>데모를 **별도 terraform 스택(<code>envs/demo-onprem</code>)**으로 두고 <strong>state를 분리</strong>한다(같은 S3 백엔드,
 다른 key). apps처럼 cloud/onprem 디렉터리를 미러링하지 않는다 — 온프렘 프로덕션은 terraform 대상이
 아니므로 대칭 분할이 성립하지 않는다.</p>
 <ul>
