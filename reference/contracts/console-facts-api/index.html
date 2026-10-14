@@ -1116,6 +1116,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#etf-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ETF별 v2 분석 귀결 축
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#v2_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2582,6 +2593,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#etf-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ETF별 v2 분석 귀결 축
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#v2_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2837,7 +2859,12 @@
 </tr>
 <tr>
 <td>ETF 귀결 축</td>
-<td><code>etfLedger</code> — ETF별 최신 트리거의 최신 설명 실행 상태</td>
+<td><code>etfLedger</code> — ETF별 최신 트리거의 최신 설명 실행 상태(옛 설명 엔진)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ETF별 v2 분석 귀결 축</td>
+<td><code>etfAnalyses</code> — ETF별 전망·가격변동 분석의 그날 상태</td>
 <td>✅</td>
 </tr>
 <tr>
@@ -3542,8 +3569,78 @@ super-admin-api 가 넣는다. 순서를 지키는 것은 writer 수가 아니�
 구 API 응답에는 축 자체가 없을 수 있으므로 UI 경계는 <code>etfLedger</code> 부재를 허용한다. 서버가 축을
 보낸 빈 <code>rows</code>는 “조회일에 트리거 ETF가 0종”이라는 실측이다.</p>
 <p>⚠️ <strong>R15 는 이 축을 더는 읽지 않는다</strong>(ALPHA-1291). 이 축은 옛 설명 엔진의 표에서 오고 그 엔진은
-10-01 이 마지막 실행이라, 그 뒤 날짜에서는 <code>outcome</code> 이 전부 <code>null</code> 이다. 흐름 화면의 ETF 표만 이 축을
-읽는다. 분석 실패 판정은 아래 「v2 분석 실패 축」이 한다.</p>
+10-01 이 마지막 실행이라, 그 뒤 날짜에서는 <code>outcome</code> 이 전부 <code>null</code> 이다. 분석 실패 판정은 아래
+「v2 분석 실패 축」이 한다.</p>
+<p>⚠️ <strong>흐름 화면의 ETF 표도 이 축을 더는 읽지 않는다</strong>(ALPHA-1312) — 아래 「ETF별 v2 분석 귀결 축」을
+읽는다. 이 축은 그 축을 모르는 옛 화면을 위해 응답에 남긴다. 두 앱이 배포된 뒤에 지운다.</p>
+<h2 id="etf-v2">ETF별 v2 분석 귀결 축<a class="headerlink" href="#etf-v2" title="Permanent link">&para;</a></h2>
+<p>조회일에 새 분석 엔진(v2)이 ETF마다 어디까지 갔는가(ALPHA-1312). 흐름 화면의 ETF 표가 그린다.
+<strong>보여 주기만 한다</strong> — 규칙은 이 축을 읽지 않는다(실패는 R15, 시작 못 함은 R10 이 판정한다).</p>
+<div class="highlight"><pre><span></span><code><span class="nt">"etfAnalyses"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"rows"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">"etf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"069500"</span><span class="p">,</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"KODEX 200"</span><span class="p">,</span><span class="w"> </span><span class="nt">"outlook"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w"> </span><span class="nt">"movement"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not_started"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">"etf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"229200"</span><span class="p">,</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"229200"</span><span class="p">,</span><span class="w">    </span><span class="nt">"outlook"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w">      </span><span class="nt">"movement"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="w"> </span><span class="p">}</span>
+<span class="p">]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><strong>행</strong>: 그날 전망 분석 행이 있거나, 가격변동 분석 행이 있거나, 장중 트리거(FIRE)가 발화한 ETF 다.
+  코드 오름차순이다. 셋 다 없는 ETF 는 나오지 않는다.</li>
+<li><strong>종류별 상태</strong>는 이 순서로 정한다. <code>data_source = 'database'</code> 만 보고, 분석 행의 날짜는
+  <code>analysis_at</code> 의 KST 날짜다.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>completed</code></td>
+<td>그날 완료 행이 하나라도 있다</td>
+</tr>
+<tr>
+<td><code>failed</code></td>
+<td>실패 행이 있고 완료 행이 없다. 「v2 분석 실패 축」과 <strong>같은 기준</strong>이라 두 축의 실패 ETF 가 같다</td>
+</tr>
+<tr>
+<td><code>running</code></td>
+<td>진행 중인 행만 있다</td>
+</tr>
+<tr>
+<td><code>not_started</code></td>
+<td>(<code>movement</code> 만) 그날 그 ETF 의 트리거 가운데, 수용된 요청이 있는데 분석 행이 없고 유예 밖인 트리거가 하나라도 있다</td>
+</tr>
+<tr>
+<td><code>pending</code></td>
+<td>(<code>movement</code> 만) 그런 트리거가 모두 유예 안이라 아직 판정할 수 없다</td>
+</tr>
+<tr>
+<td><code>none</code></td>
+<td>위 어느 것도 아니다</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>not_started</code>·<code>pending</code> 의 기준은 체인 축의 <code>pending</code> 과 같다 — 같은 유예 시간(28,800초), 같은
+  기점(요청의 <code>accepted_at</code>), 같은 연결(요청 입력의 <code>source.trigger_id</code>). 트리거의 날짜는
+  <code>window_start</code> 의 KST 날짜다. 유예의 단위도 체인 축과 같이 <strong>트리거</strong>다: 한 트리거에 수용된 요청이
+  여럿이면 가장 늦게 수용된 요청이 유예 안인 동안 그 트리거는 유예 안이다.</li>
+<li>상태는 ETF 단위로 접는다. 하루에 세 번 발화해 두 번은 완료되고 한 번은 시작되지 못한 ETF 는
+  <code>completed</code> 다 — 시작되지 못한 건수는 체인 축이 센다.</li>
+<li><code>movement</code> 의 <code>none</code> 에는 그날 트리거가 없던 ETF 와, 트리거는 발화했는데 수용된 요청이 없는 ETF 가
+  함께 든다. 뒤의 것은 체인 축의 트리거 → 분석 요청 감소다.</li>
+<li>⚠️ <strong><code>outlook</code> 의 <code>none</code> 은 "그날 전망 분석 행이 없다"까지만 말한다.</strong> 전망 배치의 대상 목록은 DB 에
+  없다(배치 워크플로 정의에 박힌 Terraform 변수 <code>outlook_etf_codes</code> 이고 수집 설정의 ETF 목록에서
+  온다). 그래서 대상인데 빠진 ETF 와 대상이 아닌 ETF 를 이 축이 가르지 못하고, 그날 분석 행도
+  트리거도 없는 ETF 는 행 자체가 없다.</li>
+<li><code>name</code> 은 옛 ETF 표와 같은 출처다: <code>etf</code> 는 종목 코드라 <code>instrument(market_code='XKRX', ticker)</code> 로
+  <code>instrument_id</code> 를 얻고 <code>entity.display_name</code> 을 읽는다. 이어지지 않는 코드는 코드 그대로 낸다
+  (행을 버리지 않는다).</li>
+<li>구 API 응답에는 축 자체가 없다. UI 경계는 부재를 허용하고, 그때 표는 "기록 없음"이다 — 옛 축
+  (<code>etfLedger</code>)으로 대신 그리지 않는다. 서버가 보낸 빈 <code>rows</code> 는 "그날 분석도 트리거도 없었다"는
+  실측이다.</li>
+</ul>
 <h2 id="v2_1">v2 분석 실패 축<a class="headerlink" href="#v2_1" title="Permanent link">&para;</a></h2>
 <p>조회일에 새 분석 엔진(v2)의 분석이 <strong>끝내 완료되지 못한</strong> ETF 다(ALPHA-1291). R15 가 읽는다.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">"analysisFailures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
