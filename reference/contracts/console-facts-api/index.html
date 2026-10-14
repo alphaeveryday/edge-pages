@@ -3078,12 +3078,27 @@
         "activeRuns": 2,
         "failedRuns": 1,
         "results": 57,
-        "published": 55
+        "published": 55,
+        "analysis": {
+          "blind": false,
+          "requested": 60, "requestPending": 2,
+          "started": 52, "startPending": 5,
+          "completed": 48, "published": 45
+        }
       }
     ]
   }
 }
 </code></pre></div>
+<p>✅ <strong><code>analysis</code> — 새 분석 엔진의 단계</strong>(ALPHA-1329). 그날 발화한 장중 트리거 가운데 분석 요청 → 분석
+시작 → 분석 완료 → 게시에 도달한 트리거 수다. 날짜마다 <code>/console/facts</code> 의 <code>chain.analysisStages</code> 와
+<strong>같은 조회</strong>를 불러 세므로 같은 날짜면 흐름 띠와 같은 수다. <code>requestPending</code>·<code>startPending</code> 은 아직
+판정할 수 없는 트리거 수(흐름 띠의 <code>pending</code>)이고 도달 수에 들어 있지 않다. <code>blind</code> 가 참이면 그날은
+새 분석 엔진의 요청이 아직 없던 날이라(첫 요청이 그날보다 뒤) 수의 0 은 실측이 아니다 — 관측 불가.
+날짜 수만큼 조회가 는다(30일이면 30번).</p>
+<p>⏭ 아래 <code>observations</code>~<code>published</code> 는 <strong>옛 설명 엔진</strong>의 단계라 10-02 이후 0 이다. ALPHA-1329 이전의 UI 가
+이 필드를 요구해(없으면 응답 전체를 거부한다) 이번에는 남기고, 그 UI 가 배포된 뒤 지운다. 화면은
+<code>analysis</code> 를 읽고, 그 필드가 없는 응답(옛 API)은 "상태 미제공"으로 그린다.</p>
 <ul>
 <li>코호트는 그 날짜의 <code>minute_price_trigger.trigger_kind='FIRE'</code> 행이다. <code>REVERT</code>는 설명을 만들지
   않는 회수 마커라 제외한다.</li>
@@ -3771,22 +3786,17 @@ NEW 에만, <code>target_movement_analysis_id</code> 를 INVALIDATION 에만 허
     { "id": "feed.batch",    "label": "배치 트리거", "v": 20, "unit": "ETF", "src": "price_movement_trigger" },
     { "id": "feed.intraday", "label": "장중 트리거", "v": 65, "unit": "건",  "src": "minute_price_trigger" }
   ],
-  "stages": [
-    { "id": "c.obs",   "label": "관측",   "batch": 20, "intraday": 0, "src": "etf_contribution_observation" },
-    { "id": "c.route", "label": "라우트", "batch": 20, "intraday": 0, "src": "explanation_route" },
-    { "id": "c.run",   "label": "런",     "batch": 16, "intraday": 0, "src": "explanation_run" },
-    { "id": "c.res",   "label": "결과",   "batch": 16, "intraday": 0, "src": "explanation_result" },
-    { "id": "c.pub",   "label": "게시",   "batch": 16, "intraday": 0, "src": "publication_status=PUBLISHED" }
-  ]
+  "analysisStages": [ /* 아래 절 */ ]
 }
 </code></pre></div>
+<p>✅ <strong>옛 설명 엔진의 단계 목록(<code>stages</code>)은 지웠다</strong>(2026-10-14, ALPHA-1329). 그 엔진은 10-01 이 마지막
+실행이고 화면·규칙이 읽지 않았다. 그 목록을 세던 조회, 옛 엔진 마지막 실행일 조회, 관측 불가 판정도
+함께 지웠다. <code>feeds</code> 는 트리거 수만 세는 조회로 바꿨다(정의는 그대로 — 배치 트리거, 장중은 <code>FIRE</code>
+만). 이 아래의 <code>stages</code>·관측·라우트·런 서술은 그 목록이 있던 때의 기록이다.</p>
 <h3 id="analysisstages-alpha-1296">새 분석 엔진의 단계 — <code>analysisStages</code> (ALPHA-1296)<a class="headerlink" href="#analysisstages-alpha-1296" title="Permanent link">&para;</a></h3>
-<p><code>chain</code> 은 <code>stages</code> 옆에 <strong><code>analysisStages</code></strong> 를 함께 싣는다. 화면(<code>/ops/chain</code>)과 R10 이 읽는 것은
-이 목록이다. <code>stages</code>(옛 설명 엔진의 단계)는 그 목록만 아는 옛 화면을 위해 그대로 남긴다.</p>
-<p>⏭ <strong><code>stages</code> 는 다음 배포에서 지운다</strong>(ALPHA-1328). ALPHA-1328 이전의 UI 는 <code>chain</code> 이 오면 <code>stages</code> 가
-비어 있지 않은 배열이어야 응답 전체를 받는다 — 빼거나 빈 목록으로 두면 그 UI 의 운영 화면 전체가
-멈춘다. 그래서 이번에는 서버가 종전 값을 계속 싣고, UI 만 <code>stages</code> 가 없어도 받게 했다. 그 UI 가
-배포된 뒤 서버에서 <code>stages</code>·그 조회·옛 엔진 마지막 실행일 조회를 지운다.</p>
+<p><code>chain</code> 은 <code>feeds</code> 옆에 <strong><code>analysisStages</code></strong> 를 싣는다. 화면(<code>/ops/chain</code>)과 R10 이 읽는 것은 이
+목록이다. 옛 설명 엔진의 단계 목록(<code>stages</code>)은 ALPHA-1328 에서 UI 가 부재를 받게 한 뒤 ALPHA-1329 에서
+서버가 지웠다. 실행 이력 화면의 장중 분석 귀결 추이도 날짜마다 이 목록과 같은 조회로 센다.</p>
 <div class="highlight"><pre><span></span><code>"analysisStages": [
   { "id": "c.req",   "label": "분석 요청", "batch": null, "intraday": 256, "src": "analysis_execution_requests", "blind": false, "pending": 0 },
   { "id": "c.start", "label": "분석 시작", "batch": null, "intraday": 214, "src": "movement_analyses",           "blind": false, "pending": 0 },
@@ -4059,11 +4069,6 @@ Run·Dataset·Delivery·Trend·Incidents 까지 <strong>전 화면</strong>이 "
 <td>런과 계획 결손 슬롯</td>
 </tr>
 <tr>
-<td><code>legacyEngine</code></td>
-<td><code>db</code></td>
-<td>옛 설명 엔진의 마지막 실행일(옛 체인 단계의 관측 불가 표시가 쓴다)</td>
-</tr>
-<tr>
 <td><code>tasks</code></td>
 <td><code>db</code></td>
 <td>작업 축</td>
@@ -4079,9 +4084,9 @@ Run·Dataset·Delivery·Trend·Incidents 까지 <strong>전 화면</strong>이 "
 <td>경계 축</td>
 </tr>
 <tr>
-<td><code>chain</code></td>
+<td><code>feeds</code></td>
 <td><code>db</code></td>
-<td>옛 설명 엔진의 단계(<code>chain.feeds</code>·<code>chain.stages</code>)</td>
+<td>체인의 입력 두 갈래(<code>chain.feeds</code>) — 배치 트리거 수와 장중 발화 수</td>
 </tr>
 <tr>
 <td><code>analysisStages</code></td>
