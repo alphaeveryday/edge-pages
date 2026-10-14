@@ -3073,12 +3073,6 @@
       {
         "date": "2026-08-20",
         "triggers": 65,
-        "observations": 61,
-        "runs": 60,
-        "activeRuns": 2,
-        "failedRuns": 1,
-        "results": 57,
-        "published": 55,
         "analysis": {
           "blind": false,
           "requested": 60, "requestPending": 2,
@@ -3096,27 +3090,18 @@
 판정할 수 없는 트리거 수(흐름 띠의 <code>pending</code>)이고 도달 수에 들어 있지 않다. <code>blind</code> 가 참이면 그날은
 새 분석 엔진의 요청이 아직 없던 날이라(첫 요청이 그날보다 뒤) 수의 0 은 실측이 아니다 — 관측 불가.
 날짜 수만큼 조회가 는다(30일이면 30번).</p>
-<p>⏭ 아래 <code>observations</code>~<code>published</code> 는 <strong>옛 설명 엔진</strong>의 단계라 10-02 이후 0 이다. ALPHA-1329 이전의 UI 가
-이 필드를 요구해(없으면 응답 전체를 거부한다) 이번에는 남기고, 그 UI 가 배포된 뒤 지운다. 화면은
-<code>analysis</code> 를 읽고, 그 필드가 없는 응답(옛 API)은 "상태 미제공"으로 그린다.</p>
+<p>✅ <strong>옛 설명 엔진의 단계 필드(<code>observations</code>·<code>runs</code>·<code>activeRuns</code>·<code>failedRuns</code>·<code>results</code>·<code>published</code>)는
+지웠다</strong>(2026-10-14, ALPHA-1330). 그 엔진은 10-01 이 마지막 실행이라 10-02 이후 전부 0 이었고, 화면은
+<code>analysis</code> 만 읽는다. 그 필드를 세던 옛 엔진 표 조인도 지웠다. 그 필드가 있는 응답(이 변경 앞의 API)도
+UI 는 그대로 받는다.</p>
 <ul>
-<li>코호트는 그 날짜의 <code>minute_price_trigger.trigger_kind='FIRE'</code> 행이다. <code>REVERT</code>는 설명을 만들지
-  않는 회수 마커라 제외한다.</li>
-<li><code>observations</code>·<code>runs</code>·<code>results</code>·<code>published</code>는 행 수가 아니라 그 단계에 도달한 코호트 관측
-  수다. 따라서 재실행이 단계를 부풀리거나 결손을 상쇄하지 않고
-  <code>triggers &gt;= observations &gt;= runs &gt;= results &gt;= published</code>가 구조적으로 성립한다.</li>
-<li><code>activeRuns</code>·<code>failedRuns</code>는 라우트별 최신 실행을 <code>explanation_as_of</code>·<code>started_at</code>·ID 순으로
-  골라 각각 <code>PENDING|RUNNING</code>, <code>FAILED</code>인 관측 수다. <code>CANCELLED</code>는 <code>runs</code>에는 들지만 두 부분
-  상태에는 들지 않는다.</li>
-<li><code>results</code>는 전체 재실행 중 결과에 한 번이라도 도달했는지를 센다. <code>published</code>는 그 결과들 중
-  <strong>현재</strong> <code>PUBLISHED</code>인 것이 있는 관측 수다. 새 실패/DRAFT 재실행만으로 기존 게시본이
-  사라지지는 않지만, 운영자가 <code>WITHDRAWN</code>으로 전이하면 현재 게시 수는 감소한다. 상태 전이 이력은
-  이 원장에 없으므로 "과거에 게시된 적 있음"을 뜻하지 않는다.</li>
+<li><code>triggers</code> 는 그 날짜의 <code>minute_price_trigger.trigger_kind='FIRE'</code> 행 수다(<code>window_start</code> 의 KST
+  날짜). <code>REVERT</code>는 분석을 만들지 않는 회수 마커라 제외한다. 체인 입력(<code>chain.feeds</code> 의 장중 수)과 같은
+  정의라 같은 날짜면 같은 수다.</li>
 <li>서버는 정상·이상, 색상, 감소 원인을 판정하지 않는다.</li>
 </ul>
-<p>dev 실데이터 사전 성능 게이트(2026-08-20)는 장중 트리거 678건에서 30일 집계 22.45ms,
-임시 파일 0이었다. 트리거 표 순차 스캔은 16 shared-hit blocks/0.35ms이고 하류는 기존 인덱스를
-사용했다. 현재 유입률 약 38건/일에서는 선행 인덱스를 추가하지 않는다. 실행계획이 악화되면
+<p>dev 실데이터 사전 성능 게이트(2026-08-20, 옛 엔진 조인이 있던 때)는 장중 트리거 678건에서 30일 집계
+22.45ms, 임시 파일 0이었다. 트리거 표 순차 스캔은 16 shared-hit blocks/0.35ms였다. 현재 유입률 약 38건/일에서는 선행 인덱스를 추가하지 않는다. 실행계획이 악화되면
 <code>window_start</code> 선두 인덱스를 먼저 검토한다.</p>
 <h2 id="_4">큐 축<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>Terraform의 1분 파이프라인 원큐와 각 DLQ를 SQS <code>GetQueueAttributes</code>로 관측한다. <code>visible</code>은
