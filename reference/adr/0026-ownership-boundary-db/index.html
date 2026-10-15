@@ -1947,7 +1947,7 @@
 <ul>
 <li><strong>김진기</strong>: Data Pipeline → Common Analysis Engine → <strong>Cloud Event Store 적재까지</strong> (DB 에 쓰는 것까지).</li>
 <li><strong>조영서</strong>: DB 에 적재된 데이터를 소비하는 <strong>이후 전부</strong> — Event Bundle 생성(tenant-sync-api 내부 DB 조회·조립), 전달 레코드(fan-out), Tenant Sync API, Sync Agent, 온프렘 전체.</li>
-<li><strong>진기-영서 인터페이스 = Cloud Event Store DB 스키마 하나</strong> (<a href="../0005-db-as-contract/">ADR-0005</a> db-as-contract). 스키마 변경은 양자 합의(CODEOWNERS <code>/src/libs/schema/</code>), 번들 JSON·체크섬·프로토콜은 영서 단독 스펙.</li>
+<li><strong>진기-영서 인터페이스 = Cloud Event Store DB 스키마 하나</strong> (<a href="../0005-db-as-contract/">ADR-0005</a> db-as-contract). 스키마 변경은 양자 합의(CODEOWNERS <code>/libs/schema/</code>), 번들 JSON·체크섬·프로토콜은 영서 단독 스펙.</li>
 <li>유지되는 것: Sync 프로토콜 양단 단일 오너(영서), 정준영 = AI/ML (ADR-0019 의 나머지 내용).</li>
 </ul>
 <h2 id="_3">대안<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>

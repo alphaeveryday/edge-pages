@@ -1989,7 +1989,7 @@
 <ul>
 <li>상태: 승인됨 (2026-09-28 — 인프라 배선 머지로 승인 전환)</li>
 <li>날짜: 2026-09-28</li>
-<li>관련: ADR-0009(AWS 배포 토폴로지) · ADR-0034(ALB 호스트 1:1) · ADR-0055(앱 계층 다중 인스턴스, ShedLock 선례) · <code>src/apps/cloud/app-api/README.md</code> · <code>src/apps/cloud/app-ui/screens.md</code></li>
+<li>관련: ADR-0009(AWS 배포 토폴로지) · ADR-0034(ALB 호스트 1:1) · ADR-0055(앱 계층 다중 인스턴스, ShedLock 선례) · <code>apps/etforca/app-api/README.md</code> · <code>apps/etforca/app-ui/screens.md</code></li>
 </ul>
 <h2 id="_1">맥락<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>app-api 는 ETF 전망 투표의 Redis 장애 실험 트랙으로 시작해 자체 compose(MySQL 8.4 + Redis)로만 돌았다. ETF Orca 앱(app-ui, Expo)의 B2C 서버로 확장하기로 했고, 화면은 mock 으로 관통을 마쳤다. 백엔드 계약 설계에 앞서 인프라를 먼저 올린다. 결정할 것은 넷이다. 인스턴스 수, DB 분리, DB 엔진, 도메인.</p>
