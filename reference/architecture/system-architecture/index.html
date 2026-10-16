@@ -2229,8 +2229,9 @@
 <h1 id="edge-system-architecture">EDGE — System Architecture<a class="headerlink" href="#edge-system-architecture" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p>원본: <code>EDGE_아키텍처_v0_2.pptx</code> — Slide 3 (System Architecture)</p>
+<p>루트 README 의 <code>docs/assets/readme/SA.drawio.png</code> 는 2026-10-16 판(drawio "SA v0.4")이다. 열·기능 단위는 원본 그대로이고 ETF Orca 층(Service 7·App Database·Vote Cache·Sync Worker)과 엔진의 Intraday Worker·Explanation Queue 가 더해졌다. Customer System 상자는 증권사가 MTS 와 같은 출처에 두는 리버스 프록시(Reverse Proxy)로 바뀌었다(ADR-0053 — 구현은 증권사 몫이며 데모는 CloudFront).</p>
 <p><strong>[설계 뷰]</strong> 논리 설계 개요다. 현행 배포·계약의 권위는 SSOT(<a href="../../context/">../context.md</a>)에 있다. 이 문서의 Service·Worker는 <strong>논리 단위</strong>이며, 실제 배포 모듈로의 대응은 아래 <a href="#논리--배포-모듈-매핑">논리 → 배포 모듈 매핑</a>을 따른다. 충돌 시 SSOT 우선.</p>
-<p>⚠️ <strong>Customer System 경유 서술은 <a href="../../adr/0053-widget-direct-serving-no-personalization/">ADR-0053</a>으로 폐지됨</strong> — 위젯이 증권사 엣지(프록시) 경유로 Publication Service 를 직접 호출하며 고객 식별을 받지 않는다. 다이어그램 갱신은 뷰 재작도 PR 소관.</p>
+<p>⚠️ <strong>Customer System 경유 서술은 <a href="../../adr/0053-widget-direct-serving-no-personalization/">ADR-0053</a>으로 폐지됨</strong> — 위젯이 증권사 엣지(프록시) 경유로 Publication Service 를 직접 호출하며 고객 식별을 받지 않는다. 루트 README 그림(SA v0.4)에는 반영됐고, 아래 본문의 Customer System 서술은 옛 그림(v0.2) 기준 기록이다.</p>
 </blockquote>
 <h2 id="_1">개요<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>Application Architecture의 논리 구성요소를 실제 시스템 컴포넌트(Client / Gateway / Service / Cache / Database / Scheduler / Worker)로 매핑한 다이어그램. <strong>금융사 통제 환경</strong>과 <strong>EDGE 환경</strong>이 물리적으로 분리되어 있으며, 두 환경은 금융사 측 <strong>Relay Worker (Customer DMZ)</strong> → EDGE <strong>API Gateway</strong> 경로로만 통신한다.</p>
@@ -2498,6 +2499,26 @@ Relay Worker → Intake Worker (내부망) → Screening Worker → Explanation 
 <td>Price Analysis Worker</td>
 <td><code>apps/engine/analysis-engine-v2</code></td>
 <td>파이프라인 SFN 페이즈가 아니라 <strong>분봉 트리거 큐 소비자</strong>가 분석 SFN 을 시작한다 (ALPHA-806 — 일 단위 실행은 장중에 층을 못 세워 제거. v1 <code>analysis-engine</code> 은 #1140 으로 제거)</td>
+</tr>
+<tr>
+<td>Intraday Worker · Explanation Queue</td>
+<td><code>apps/engine/data-pipeline</code> 장중 1분 서비스 · SQS</td>
+<td>시세·뉴스·공시를 1분 주기로 받아 가격 변동 사건을 큐에 넣고, analysis-engine-v2 가 소비한다</td>
+</tr>
+<tr>
+<td>Delivery Outbox</td>
+<td>cloud DB <code>tenant_delivery</code> 테이블</td>
+<td>큐 서비스가 아니다. analysis-engine-v2 가 테넌트별 fan-out 행을 쓰고, 무효화 행은 analysis-engine-v2(가격 복귀 자동 철회)와 super-admin-api(관리자 무효화)가 쓴다. tenant-sync-api 가 cursor 순으로 읽어 번들을 만든다(<a href="../../contracts/sync-protocol/">contracts/sync-protocol.md</a>)</td>
+</tr>
+<tr>
+<td>ETF·Analysis·Member·Watchlist·Vote·Community·Notification Service</td>
+<td><code>apps/etforca/app-api</code></td>
+<td>ETF Orca 앱 API. 앱 기능 단위의 논리 서비스이며 배포는 모듈 하나. Analysis Service = 앱의 가격 변동 설명·전망 조회(≠ 슈퍼 어드민의 Analysis Service, ≠ 분석 엔진)</td>
+</tr>
+<tr>
+<td>Sync Worker</td>
+<td><code>apps/etforca/app-api</code> sync 패키지</td>
+<td>파이프라인 RDS 의 ETF·분석 데이터를 읽기 전용으로 App Database 에 적재 (<a href="../../adr/0056-etforca-app-api-infra/">adr/0056</a>)</td>
 </tr>
 </tbody>
 </table>
