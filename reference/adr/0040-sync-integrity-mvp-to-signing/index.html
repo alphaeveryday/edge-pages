@@ -2044,7 +2044,7 @@ sha256=&lt;hex&gt;</code> 헤더를 실으며, <code>BundleSerializer</code>가 
   항목은 목표 계약으로 이동(T0에서 반영).</li>
 <li><strong>잔여 리스크(수용, 재평가)</strong>: 체크섬은 <strong><code>sync-agent</code> 수신 시점(<code>BundleRelayService</code>)에 1회만</strong> 검증되고
   이후 재검증은 없다(intake·screening은 저장된 body를 그대로 파싱). 따라서 체크섬이 실제로 지키는 구간은
-  **와이어(클라우드 직렬화→agent 수신)**뿐이고, 그중 무방비 구간은 <strong>ECS→ALB 평문 홉 하나</strong>다(나머지
+  <strong>와이어(클라우드 직렬화→agent 수신)</strong>뿐이고, 그중 무방비 구간은 <strong>ECS→ALB 평문 홉 하나</strong>다(나머지
   와이어는 TLS. [[0034-host-per-edge-alb]], <code>infra/terraform/modules/alb/main.tf</code> target protocol=HTTP).</li>
 <li><strong>피해 반경 정정</strong>: 이전 판의 "비개인화 메타데이터라 반경 좁음"은 <strong>틀렸다</strong>. 번들 본체
     (<code>explanation_result</code>)는 <strong>고객 노출 후보 문구</strong>이고(event-bundle-schema.md), walking skeleton에서 NEW는
@@ -2057,7 +2057,7 @@ sha256=&lt;hex&gt;</code> 헤더를 실으며, <code>BundleSerializer</code>가 
     실제로 필요하면 답은 <strong>게시 지점까지의 종단 간 무결성</strong>이고 그 수단이 서명(진정성까지 함께)이다 —
     단 서명도 <strong>게시 경계에서 재검증하거나 서명 원본↔게시 데이터의 암호학적 계보를 유지</strong>해야 성립한다.
     수신 시점 1회 검증에 그치면 오늘 체크섬과 똑같은 한계(수신 후 오염 미탐지)를 갖는다. 따라서 목표
-    계약은 단순 "서명 도입"이 아니라 **"게시 지점까지 검증되는 서명"**을 요구해야 하며, 이 ADR이 미루는
+    계약은 단순 "서명 도입"이 아니라 <strong>"게시 지점까지 검증되는 서명"</strong>을 요구해야 하며, 이 ADR이 미루는
     대상이 바로 그것이다.</li>
 <li>요컨대 체크섬 제거로 늘어나는 노출은 "평문 한 홉의 저확률 오염"으로 좁게 한정되며, 위험의 본체
     (종단 간)는 체크섬 유무와 무관하게 서명 도입 전까지 남는다.</li>
