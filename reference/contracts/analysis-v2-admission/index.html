@@ -1940,6 +1940,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#sqsstep-functions-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQS·Step Functions 없는 호스트 (db 모드)
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2104,6 +2115,57 @@
 권한을 연결하고 검증한 후 ECS의 실행 명령을 전환한다. 이 단계는 독립적으로
 검증 가능한 소비 루프이며 실행 진입점·배포 설정은 추가하지 않는다.
 기존 소비자는 큐 상태에 따른 0대 축소·재기동 설정을 유지한다.</p>
+<h2 id="sqsstep-functions-db">SQS·Step Functions 없는 호스트 (db 모드)<a class="headerlink" href="#sqsstep-functions-db" title="Permanent link">&para;</a></h2>
+<p><code>ANALYSIS_QUEUE_TRANSPORT=db</code>(기본 <code>sqs</code>)면 같은 소비 루프가 SQS·SFN·ECS 없이 돈다
+(<code>cloud/local.py</code>). 기본값에서는 위 계약이 그대로다.</p>
+<ol>
+<li>가격 사건: <code>dataset_commit_outbox</code>의 <code>price-explanation-realtime</code> 행을 직접 집는다. 집는 조건은 Relay와 같아 한 행을 둘이 동시에 쥐지 않는다. 접수를 마치면 <code>PUBLISHED</code>로 닫는다.</li>
+<li>접수: <code>analysis_execution_requests</code>에 예약만 한다. <code>execution_arn</code>은 <code>local:&lt;analysis_id&gt;</code>, <code>accepted_at</code>은 비워 둔다.</li>
+<li>실행: 같은 호스트에서 <code>cloud.worker</code>를 자식 프로세스로 띄운다. 동시 실행은 <code>ANALYSIS_SLOTS</code>건, 같은 ETF는 한 번에 한 건.</li>
+<li>종료: 자식 프로세스가 끝나면 종료 코드와 무관하게 <code>accepted_at</code>을 채운다. 이 모드에서 <code>accepted_at</code>은 "SFN 접수 시각"이 아니라 "실행 프로세스 종료 시각"이다.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>상황</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>접수 실패 반복</td>
+<td>300초 뒤 다시 집힘. 16회를 넘기면 outbox 행을 <code>DEAD</code>로 닫고 <code>last_error=DB_MAX_RECEIVE</code></td>
+</tr>
+<tr>
+<td>분석 프로세스 실패·강제 종료</td>
+<td>다시 실행하지 않음. 요청당 프로세스 1회</td>
+</tr>
+<tr>
+<td>1,100초 초과</td>
+<td>프로세스를 중지하고 종료로 처리</td>
+</tr>
+<tr>
+<td>호스트·소비자 재시작</td>
+<td><code>accepted_at</code>이 빈 요청을 다시 실행. 완료된 분석은 워커가 반복하지 않음</td>
+</tr>
+<tr>
+<td>전날(KST) 요청이 남음</td>
+<td>실행하지 않고 닫음. 경고 로그에 <code>analysis_id</code> 기록</td>
+</tr>
+<tr>
+<td>가격 복귀</td>
+<td>기존과 같이 회수 기록 후 닫음. 분석 대기열과 무관하게 즉시 처리</td>
+</tr>
+</tbody>
+</table>
+<p>| 장 마감 뒤 VM 정지 | <code>stop-minute-session</code>이 설명 사건과 끝나지 않은 요청이 빌 때까지 기다린 뒤에만 exit 0. 상한(기본 7,200초, <code>MINUTE_SESSION_ANALYSIS_DRAIN_TIMEOUT_SEC</code>)을 넘기면 exit 1. 성공하면 <code>batch_lane_success</code>에 (<code>minute_session_stop</code>, 그날 16:10 KST) 행을 쓰고, 감시가 그 행을 보고 VM을 내림 |</p>
+<ul>
+<li>필요한 DB 권한: <code>V202611271200__allow_v2_outbox_claim.sql</code>(writer에 outbox 배달 상태 컬럼만). 이 테이블의 소유자는 data-pipeline이고, 이 권한은 단일 writer 원칙의 예외다(<a href="../../implementation/">implementation.md</a> §4에 기록).</li>
+<li>자식 프로세스는 허용 목록의 환경변수만 물려받는다(<code>cloud/local.py</code> <code>CHILD_ENV</code>).</li>
+</ul>
+<p><strong>대기 시간 산식.</strong> 분석 1건은 약 588초다(AWS 실측, <code>analysis_autoscaling.tf</code> 주석. VM에서는 재지 않았다). 대기 N건을 슬롯 S개로 비우는 데 약 N × 588 ÷ S초가 걸린다. 슬롯 3이면 30건에 약 98분, 기본 상한 7,200초 안에는 약 36건이 끝난다. 2026-11-20에는 설명 사건이 분당 최대 63건 몰렸다. 그 규모면 슬롯 2~4로는 당일 안에 못 비우며, 그때는 상한에 걸려 exit 1이 난다. 슬롯 수와 "오래된 순" 실행 순서는 첫 장중에 재고 다시 정한다.</p>
+<p><strong><code>accepted_at</code>을 읽는 다른 쪽.</strong> 운영 콘솔(<code>super-admin-api</code> <code>JdbcConsoleFactsRepository</code>의 <code>BOUNDARY_SQL</code>·<code>ANALYSIS_CHAIN_SQL</code>)은 <code>accepted_at</code>을 "실행이 시작된 시각"으로 읽는다. db 모드에서는 종료 시각이라 대기·실행 중인 요청이 "요청으로 이어지지 못함"으로, 실행 없이 닫은 전날 요청이 "요청됐는데 분석이 시작 안 됨"으로 집계된다. 콘솔은 OCI로 옮기지 않기로 해 그 쿼리는 고치지 않았다. db 모드의 DB를 콘솔로 보면 이 두 수치는 틀린다.
+- 워커는 <code>ANALYSIS_EXECUTION_ARN</code> 없이 뜬다. 실행 수 제한과 ETF별 직렬화는 워커의 세션 잠금이 한 번 더 지킨다.</p>
 <p>Refs: ALPHA-1143, ALPHA-1146</p>
 
 

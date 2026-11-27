@@ -2109,7 +2109,8 @@
 <p><strong>소유권 원칙</strong>
 - 모든 테이블은 <strong>단일 쓰기 소유자(writer)</strong> 를 갖는다. 그 서비스만 INSERT/UPDATE/DELETE 한다.
 - 읽기는 여러 서비스가 할 수 있다(reader). 소유자가 아닌 서비스의 쓰기는 금지.
-- 소유자는 그 테이블의 컬럼 변경에 책임을 진다 — 확장-수축 절차를 주도하고, 다른 reader가 깨지지 않도록 보장한다.</p>
+- 소유자는 그 테이블의 컬럼 변경에 책임을 진다 — 확장-수축 절차를 주도하고, 다른 reader가 깨지지 않도록 보장한다.
+- <strong>예외 1건 — <code>dataset_commit_outbox</code>의 배달 상태.</strong> 소유자는 data-pipeline이다. SQS가 없는 db 큐 모드에서만 분석 v2(<code>edge_analysis_v2_writer</code>)가 <code>price-explanation-realtime</code> 행을 직접 집고 닫는다. 쓸 수 있는 것은 배달 상태 컬럼(<code>status</code>·<code>attempt_count</code>·<code>claimed_by</code>·<code>claim_expires_at</code>·<code>published_at</code>·<code>last_error</code>)뿐이고 사건 내용(<code>payload</code>·<code>destination</code> 등)과 INSERT·DELETE는 권한이 없다. 어느 destination 행인지는 컬럼 권한으로 막을 수 없어 코드(<code>cloud/local.py</code>)가 진다. 컬럼 구성은 <code>libs/schema/tests/analysis_v2_writer.sql</code>이 검사한다. 근거: <a href="../contracts/analysis-v2-admission/">v2 실행 접수 계약</a> "db 모드", <code>V202611271200__allow_v2_outbox_claim.sql</code>.</p>
 <p><strong>확장-수축(expand-contract) 절차 — 왜 필요한가</strong>
 머지 ≠ 배포다. PR이 머지돼도 서비스 롤아웃에는 시차가 있어, 한순간 <strong>구버전 코드와 신버전 코드가 같은 DB</strong>를
 동시에 바라본다. 그래서 스키마를 한 번에 파괴적으로 바꾸면(컬럼 rename/drop) 롤아웃 도중 한쪽이 깨진다.
